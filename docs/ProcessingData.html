@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Processing Metabolomics Data</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="processing-metabolomics-data">Processing Metabolomics Data</h1>
+<h2 id="table-of-contents"><strong>Table of Contents</strong></h2>
+<ol>
+<li><strong><a href="#introduction">Introduction</a></strong>
+<ul>
+<li><em><a href="#how-to-use-this-document">How to use this document</a></em></li>
+<li><em><a href="#further-reading">Further reading</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#metabolite-extraction-protocol">Metabolite Extraction Protocol</a></strong>
+<ul>
+<li><em><a href="#untargeted-metabolomics-extraction">Untargeted protocol</a></em></li>
+<li><em><a href="#hints-and-tips">Hints and Tips</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#processing-the-raw-data">Processing the Raw Data</a></strong>
+<ul>
+<li><em><a href="#to-calibrate-and-save">To calibrate and save</a></em></li>
+<li><em><a href="#hints-and-tips-1">Hints and Tips</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#running-ipo">Running IPO</a></strong>
+<ul>
+<li><em><a href="#determining-xcms-parameters-with-ipo">Determining XCMS parameters with IPO</a></em></li>
+<li><em><a href="#hints-and-tips-2">Hints and Tips</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#running-xcms-and-camera">Running XCMS and CAMERA</a></strong>
+<ul>
+<li><em><a href="#creating-directories">Creating directories</a></em></li>
+<li><em><a href="#xcms-parameters">XCMS parameters</a></em></li>
+<li><em><a href="#running-your-xcms-script">Running your XCMS script</a></em></li>
+<li><em><a href="#interpreting-xcms-results">Interpreting XCMS results</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#preparation-and-filtering-of-xcms-and-camera-output">Preparation and filtering of XCMS and CAMERA output</a></strong>
+<ul>
+<li><em><a href="#preliminary-analysis-of-xcms-results">Preliminary analysis of XCMS results</a></em></li>
+<li><em><a href="#npeaks">Npeaks</a></em></li>
+<li><em><a href="#number-of-0-values">Number of 0 values</a></em></li>
+<li><em><a href="#generating-unique-identifiers">Generating unique identifiers</a></em></li>
+<li><em><a href="#removing-adducts-and-isotopes">Removing Adducts and Isotopes</a></em></li>
+<li><em><a href="#preparing-data-for-metaboanalyst">Preparing data for MetaboAnalyst</a></em></li>
+<li><em><a href="#data-filtering-by-qcs">Data Filtering by QCs</a></em></li>
+<li><em><a href="#data-layout">Data Layout</a></em></li>
+<li><em><a href="#hints-tips-and-cheats">Hits, Tips, and Cheats</a></em></li>
+<li><em><a href="#processing-xcms-output-automatically-with-r">Processing XCMS Output Automatically with R</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#statistical-analysis-with-metaboanalyst">Statistical Analysis with MetaboAnalyst</a></strong>
+<ul>
+<li><em><a href="#preliminary-analysis">Preliminary analysis</a></em></li>
+<li><em><a href="#following-analyses">Following Analyses</a></em></li>
+<li><em><a href="#summary-of-statistical-analysis">Summary of Statistical Analysis</a></em></li>
+<li><em><a href="#hits-tips-and-cheats-1">Hints, Tips, and Cheats</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#filtering-data-from-metaboanalyst">Filtering data from MetaboAnalyst</a></strong>
+<ul>
+<li><em><a href="#hits-tips-and-cheats">Hits, Tips, and Cheats</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#annotating-features-using-the-bruker-dataanalysis-software">Annotating features using the Bruker DataAnalysis Software</a></strong>
+<ul>
+<li><em><a href="#to-annotate-a-peak">To annotate a peak</a></em></li>
+<li><em><a href="#points-to-remember-when-annotating">Points to remember when annotating</a></em></li>
+<li><em><a href="#common-lc-ms-adducts">Common LC-MS adducts</a></em></li>
+<li><em><a href="#common-differences-observed">Common differences observed</a></em></li>
+<li><em><a href="#add-an-extracted-ion-chromatogram">Add an Extracted Ion Chromatogram</a></em></li>
+<li><em><a href="#hits-tips-and-cheats-1">Hits, Tips, and Cheats</a></em></li>
+</ul>
+</li>
+<li><strong><a href="#glossary">Glossary</a></strong></li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<p>Metabolomics studies are often categorised by the type of analysis, targeted or untargeted. In targeted metabolomics a set of desired compounds are identified. This, typically, is applied when quantitive analysis is required and uses complex extraction protocols. In untargeted metabolomics, an undefined set of features are identified. This allows for novel discoveries in a broad range of compounds, including unknown compounds and metabolites. Untargeted metabolomics uses simple extraction and detection procedures compared to targeted studies but results in highly complex data with increased false discovery burden requiring significantly more effort in data analysis and interpretation. Our lab has developed state-of-the-art untargeted metabolomic profiling methods (figure below) (e.g., methodology from Sambles <em>et al.</em>, (2017), Sidda <em>et al.</em>, (2020)) which is laid out here.</p>
+<p><img src="file:////Volumes/Jamie_EXT/Projects/Metabolomics/docs/figures/PipelineOverview.png" alt="Pipeline Overview from Sidda et al., (2020)"></p>
+<h2 id="how-to-use-this-document">How to use this document</h2>
+<p>This document is intended to function as guide to the untargeted metabolomics pipeline developed and divided into the following sections:</p>
+<ol>
+<li>Metabolite Extraction Protocol</li>
+<li>Processing the Raw Data</li>
+<li>Running IPO</li>
+<li>Running XCMS and CAMERA</li>
+<li>Preparation of XCMS and CAMERA output</li>
+<li>Statistical Analysis with MetaboAnalyst</li>
+<li>Filtering data from MetaboAnalyst</li>
+<li>Annotating features using the Bruker DataAnalysis Software</li>
+<li>Glossary</li>
+</ol>
+<p>Each section provides a brief overview and explanation for the process, step-by-step guide to the task, as well as a Hints and Tips section.</p>
+<p>It is in the hints and tips sections I have explained the bugs, challenges, and things to bear in mind throughout each step. It is worthwhile reading this section before you start each process.</p>
+<p>Code in the text is provided in this format.</p>
+<p>Large blocks of code can be found in code blocks like this.</p>
+<h2 id="further-reading">Further reading</h2>
+<p>Sambles, C.M., Salmon, D.L., Florance, H., Howard, T.P., Smirnoff, N., Nielsen, L.R., McKinney, L.V., Kjær, E.D., Buggs, R.J., Studholme, D.J. and Grant, M., 2017. <a href="https://www.nature.com/articles/sdata2017190">Ash leaf metabolomes reveal differences between trees tolerant and susceptible to ash dieback disease</a>. <em>Scientific data</em>, <em>4</em>(1), pp.1-13.</p>
+<p>Sidda, J.D., Song, L., Parker, J.L., Studholme, D.J., Sambles, C. and Grant, M., 2020<a href="https://www.nature.com/articles/s41598-020-76140-z">. Diversity of secoiridoid glycosides in leaves of UK and Danish ash provide new insight for ash dieback management</a>. <em>Scientific reports</em>, <em>10</em>(1), pp.1-12.</p>
+<h2 id="metabolite-extraction-protocol">Metabolite Extraction Protocol</h2>
+<p>Depending on the sample volume, this whole procedure may have to be done in fume hood (until centrifugation step). Work out how much total solvent you will need and carefully decant from the large 2.5 L bottles into a smaller (e.g., glass 20 mL sample vial or 100 mL <strong>clean</strong> Duran bottle). Do not pipette directly out of the solvent bottles to avoid contaminating the rest of solvent bottle. The only exception to this is acids, where it may be safer to pipette directly out of the bottle but if so check what kind of pipette to use e.g., glass.</p>
+<p>If sample volumes are ≤1 mL (as they will be in the majority of cases), once solvent has been added to each tube then the samples can be removed from fume hood.</p>
+<p>Solvents MUST be <strong>HPLC grade</strong> (for acids analytical reagent grade will do) please check we have them in the lab before starting for experiment. If not, you will have to order them from Stores 24 h before you need them or other from OPeRA.</p>
+<p><em>For procedures where extractions are performed on ice</em>, pre-cool solvents on ice for ~30 min before starting</p>
+<p>1 L / 2.5 L bottes of solvent MUST be handled in fume hood with the sash down and concentrated acids (acetic acid, formic acid) MUST be handled in fume hood at all times.</p>
+<p><strong>Waste streams:</strong></p>
+<ul>
+<li><strong>Please read</strong> <a href="https://warwick.ac.uk/fac/sci/lifesci/intranet/staffpg/support/safety/sops/generalsops/"><strong>SOP_SLSWMS 007 Waste Chemical Disposal.</strong></a></li>
+<li><strong>Solid waste</strong> contaminated with chemical traces (e.g., tubes once the solvents have been pipetted out) are to be disposed of in solid waste containers (round plastic bottles with yellow lids)</li>
+<li><strong>Solvent waste</strong> bottles are to be stored in the yellow solvent cabinet. Please check if there is a bottle currently in use before starting a new one. Labels for these can be found on top of the yellow waste solvent cabinet.</li>
+<li>GLP chemicals need to be put down the sink with plenty of water and the container rinsed out with water.</li>
+<li>Any chemical with a hazard <strong>MUST</strong> be disposed of via chemical waste route.</li>
+<li>Do <strong>NOT</strong> put in autoclave tins at any concentration.</li>
+</ul>
+<h3 id="untargeted-metabolomics-extraction">Untargeted metabolomics extraction</h3>
+<p><em>Bananas - Add 400 µL solvent to 10 mg sample.</em></p>
+<p><em>solvent A <strong>usually</strong> 80% methanol plus internal standard.</em></p>
+<p><em>solvent B <strong>usually</strong> 80% methanol.</em></p>
+<ol>
+<li>Add solvent A to sample and incubate on ice, ensuring sample is resuspended. Then vortex for 30 seconds every 10 min for 30 minutes, returning to ice in between.</li>
+<li>Sonicate for 15 minutes in ice-cold sonicator.</li>
+<li>Centrifuge at 13000 rpm speed for 10 minutes at 4oC.</li>
+<li>Carefully remove supernatant with pipette and transfer to a clean Eppendorf.</li>
+<li>Repeat step 1 with solvent B, but only 20 min extraction this time.</li>
+<li>Sonicate for 15 minutes in ice-cold sonicator.</li>
+<li>Centrifuge at 13000 rpm speed for 10 minutes at 4oC. Carefully combine supernatant with that from step 4.
+<ul>
+<li><em>If your sample won`t be run right away, store the combined supernatants in the dark at 4°C.</em></li>
+</ul>
+</li>
+<li>Carefully filter each sample through a PVDF syringe filter (max 600 µL volume at a time) and transfer the filtrate into a glass LC-MS vial.</li>
+<li>Create Quality control samples which are interspersed evenly through the run by aliquoting <strong>a few μL</strong> (this will depend on the total number of samples you have) from each sample into an empty LC-MS vial.</li>
+</ol>
+<h3 id="hints-and-tips">Hints and Tips</h3>
+<ul>
+<li>We have experienced salt build up around the source of the instrument. To limit this, please consider the following:</li>
+</ul>
+<ol>
+<li><em>Centrifuge filters at &lt;2000 g.</em></li>
+<li><em>Don`t cool samples after filtering to stop anything precipitating out.</em></li>
+<li><em>You may wish to add additional centrifugation step before filtering of samples if they have sat in fridge overnight.</em></li>
+</ol>
+<p>*We have not been using an internal standard for Banana Metabolomics.</p>
+<h2 id="processing-the-raw-data">Processing the Raw Data</h2>
+<p>Once the raw data has been supplied, ensure that it is saved on the high-capacity shared server, HCSS3 in Shared258. You may wish to have a compressed version saved on here to maintain space. A further copy should be saved on your machine or the workstation in B1.34. It is worthwhile duplicating and compressing the data again on this machine, providing an additional back-up of the original data.</p>
+<p>Data should then be loaded into the DataAnalysis software (available on the workstation in B1.34), calibrated to the sodium formate peak, and saved as MzXML files for XCMS. Rename the MzXML file after its order in the run and the sample name. Save the MzXML file in another directory. Again, once you have calibrated, saved, and renamed all the samples, consider duplicating and compressing the MzXML directory.</p>
+<h3 id="to-calibrate-and-save">To calibrate and save</h3>
+<ol>
+<li>Open the files in the Bruker DataAnalysis software by dragging and dropping.</li>
+<li>Ensure that you are viewing the chromatograms in analysis view.</li>
+<li>Double click on a sample and open chromatogram. Select the sodium formate by right clicking and dragging over the peak. This will have eluted between 0 and 1 minute and is typically between the dashed blue lines.
+<ol>
+<li><em>Note the sodium formate peak m/z and retention time in your lab book.</em></li>
+</ol>
+</li>
+<li>Select the <code>spectrum view</code> pane and right click, copy to compound spectra.</li>
+<li>Select Calibrate, then Internal.
+<ol>
+<li>You will need to select the <code>Na Formate (neg)</code> in the calibration dropdown list for negative mode data.</li>
+</ol>
+</li>
+<li>Remove samples with PPM &gt;0.1</li>
+<li>Once all samples with PPM &gt;0.1 have been removed, recalibrate.</li>
+<li>Then  Save and export: <code>Export-&gt; Chromatogram Analysis-&gt; MzXML</code>. Rename the MzXML file including its position in the run, mode (+ve or -ve) and the sample name.</li>
+<li>Ensure you save positive and negative data sets in different sub folders.
+<ol>
+<li><em>You may also want to rename all the raw files in this directory, following the same formula used for the MzXML files.</em></li>
+</ol>
+</li>
+<li>Repeat for each sample.</li>
+</ol>
+<h3 id="hints-and-tips-1">Hints and Tips</h3>
+<p>Now is a good opportunity to look at the entire chromatograms and consider how messy they are. Does there seem to be a high amount of noise? Are there any samples you may wish to exclude?</p>
+<h2 id="running-ipo">Running IPO</h2>
+<p>Before identifying features, we must first determine parameters for XCMS. To do this we use IPO. IPO, or Isotopologue Parameter Optimization, is a tool developed by <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-015-0562-8">Libiseller, G <em>et al.,</em> (2015)</a> which optimises the peak picking parameters by using natural, stable 13C isotopic peaks. Retention time correction is optimized by minimizing relative retention time differences within peak groups. Grouping parameters are optimized by maximizing the number of peak groups that show one peak from each injection of a pooled sample.</p>
+<p>An IPO script for both windows and Mac OS is available in the directory with which this document was shared.</p>
+<h3 id="determining-xcms-parameters-with-ipo">Determining XCMS parameters with IPO</h3>
+<ol>
+<li>Create a directory in which you can run IPO. I like to create three subdirectories, one for scripts, one for input, and one for output.</li>
+<li>Copy your calibrated MzXML files and the example script into the appropriate directories (e.g., <code>IPO_Input</code>).</li>
+<li>The IPO script will need amending to suit the new directories you have created. For <code>setwd()</code>enter the path the to the master IPO directory. Under <code>datafile &lt;- list.filesenter</code> the path to the input MzXML files saved for IPO. You can do this using the full path, or by using the <code>./[Input_Directory_Name]</code>.
+<ol>
+<li><em>Check that IPO has been installed. If it needs to be installed, run the section of code at the top of the script titled: Install IPO. This will have been commented out. To run it you will need to remove the #. Replace the hashtags once IPO has been successfully installed.</em></li>
+</ol>
+</li>
+<li>You will need to adjust the <code>time.xcmsSet, optimizeXcmsSet filesparameter</code> to the total number of MzXML files you have <code>[1:X]</code>. This is line 42 in the example script, and in this instance there are 32 input files.</li>
+<li>Save your adapted script with a new name in the scripts folder.</li>
+<li>Run each line, checking that the working directory has been set and the entry for <code>datafiles</code> is correct.</li>
+<li>Once IPO has finished, an R script will be produced as output. Save this output in a text file.</li>
+</ol>
+<h3 id="hints-and-tips-2">Hints and Tips</h3>
+<ul>
+<li>Ensure that file paths are in quotation marks <code>(&quot;/Path/to/File&quot;)</code>. These appear in green text in R.</li>
+<li>IPO can take several days, especially when there are large numbers of files. If it is taking a long time, consider removing the blanks from the analysis. You can also use the following commands to see how long each section of IPO was running (the time is given in seconds):</li>
+</ul>
+<p><code>&gt; time.xcmsSet</code></p>
+<p><code>&gt; time.RetGroup</code></p>
+<h2 id="running-xcms-and-camera">Running XCMS and CAMERA</h2>
+<p>XCMS is a bioinformatics software designed for statistical analysis of mass spectrometry data. Both an online cloud version and R package are available. We primarily use the R version as it allows for greater modification of parameters. XCMS uses the parameters you enter (informed by the results from IPO) to identify features within your data. For more information on XCMS, see the chapter <a href="https://pubmed.ncbi.nlm.nih.gov/31953810/">Metabolomics Data Processing Using XCMS</a> by Xavier Domingo-Almenara and Gary Siuzdak (2020).</p>
+<h3 id="creating-directories">Creating directories</h3>
+<p>Directories are important for XCMS, and you`re going to end up with <strong>A LOT</strong> so keeping an organized system it essential. This is how I do it and I recommend doing something similar.</p>
+<p>First, I create a new directory for all the XCMS analysis. Within this directory, I create two sub directories. One for XCMS scripts and one for the MzXML inputs, like that which was created for IPO.</p>
+<blockquote>
+<p><em>Note: XCMS uses the directories to define sample groups. If you wish to combine the treatment groups differently, you will have to create another input directory and rearrange your samples to suit. It is worthwhile removing your blanks at this point. You can also encounter some difficulties with QCs. If you have the same number of QCs as samples in each group, then you can create a separate directory for the QCs. If, however, you have fewer QCs than samples in each group, you should ensure that there is one QC sample in each treatment group directory (you may need to duplicate QCs for this).</em></p>
+</blockquote>
+<p>I copy the example XCMS script and paste it in the <code>XCMS_Scripts</code> directory. I then copy all the original MzXML files into the <code>XCMS_Input</code> directory. Once the input files have been copied, I create a directory for each treatment group within the <code>XCMS_Input</code> directory, e.g., <code>Mock_TimePoint_A</code>, <code>Mock_TimePoint_B</code>, <code>Inoculated_TimePoint_A</code>, <code>Inoculated_TimePoint_B</code>, and I then move the MzXML files into the appropriate directories.</p>
+<p>You will run XCMS multiple times while you determine the ideal parameters for your dataset. It is therefore best to create a new directory for each run. I try to maintain a directory naming system for this whereby each directory is given a number, the parameters tested, and a date e.g., <code>01_IPOBasicParameters_3-7-2021</code>. This will make finding the directories and remembering what you have done easier later.</p>
+<p>Here is an example directory layout:
+<img src="file:////Volumes/Jamie_EXT/Projects/Metabolomics/docs/figures/ExampleFolderLayout.png" alt="Example layout of all folders for xcms"></p>
+<p>Additionally, I create an excel spreadsheet. In it I note the name of the new XCMS directory, the input files, the parameters I am using – highlighting the parameters each time I change them, and the name of the new XCMS script.</p>
+<p>Your input files must be in your working directory, I therefore copy the <code>XCMS_Input</code> files into the directory for each iteration of XCMS (e.g., <code>XCMS_Input</code> is copied to <code>01_IPOBasicParameters_3-7-2021</code>).</p>
+<h2 id="xcms-parameters">XCMS parameters</h2>
+<p>The following are parameters which are included in the R script provided. For more information on parameter selection in XCMS, see <a href="https://link.springer.com/article/10.1007/s11306-020-1636-9">Optimization of XCMS parameters for LC–MS metabolomics: an assessment of automated versus manual tuning and its effect on the final results</a> by Albóniga <em>et al.,</em> (2020).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>Function</strong></th>
+<th style="text-align:center"><strong>Parameter</strong></th>
+<th style="text-align:center"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">xcmsSet</td>
+<td style="text-align:center">method</td>
+<td style="text-align:center">“centWave”</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">peakwidth</td>
+<td style="text-align:center">The expected approximate peak width in chromatographic space. Given as a range (min, max) in seconds.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">ppm</td>
+<td style="text-align:center">Defines the maximal tolerated m/z deviation in consecutive scans in parts per million (ppm) for the initial ROI definition.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">noise</td>
+<td style="text-align:center">Set a minimum intensity required for centroids to be considered in the first analysis step (centroids with intensity &lt; noise are omitted from ROI detection).</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">snthresh</td>
+<td style="text-align:center">The signal to noise ratio cut-off.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">mzdiff</td>
+<td style="text-align:center">The minimum difference in m/z dimension required for peaks with overlapping retention times; can be negative to allow overlap. During peak post-processing, peaks defined to be overlapping are reduced to the one peak with the largest signal.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">prefilter</td>
+<td style="text-align:center">Specifying the prefilter step for the first analysis step (ROI detection). Mass traces are only retained if they contain at least k peaks with intensity &gt;= I.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">mzCenterFun</td>
+<td style="text-align:center">Name of the function to calculate the m/z center of the chromatographic peak. Allowed are: &quot;wMean&quot;: intensity weighted mean of the peak<code>s m/z values, &quot;mean&quot;: mean of the peak</code>s m/z values, &quot;apex&quot;: use the m/z value at the peak apex, &quot;wMeanApex3&quot;: intensity weighted mean of the m/z value at the peak apex and the m/z values left and right of it and &quot;meanApex3&quot;: mean of the m/z value of the peak apex and the m/z values left and right of it.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">intergrate</td>
+<td style="text-align:center">Integration method. For integrate = 1 peak limits are found through descent on the Mexican hat filtered data, for integrate = 2 the descent is done on the real data. The latter method is more accurate but prone to noise, while the former is more robust, but less exact.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">fitgauss</td>
+<td style="text-align:center">Determines whether or not a Gaussian should be fitted to each peak. This affects mostly the retention time position of the peak.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">verbose.coloumns</td>
+<td style="text-align:center">Whether additional peak meta data columns should be returned.</td>
+</tr>
+<tr>
+<td style="text-align:center">retcor</td>
+<td style="text-align:center">method</td>
+<td style="text-align:center">“obiwarp”</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">plottype</td>
+<td style="text-align:center">Plot retention time deviation.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">distFunc</td>
+<td style="text-align:center">DistFunc function: cor (Pearson`s R) or cor_opt (default, calculate only 10% diagonal band of distance matrix, better runtime), cov (covariance), prd (product), euc (Euclidean distance).</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">profStep</td>
+<td style="text-align:center">Step size (in m/z) to use for profile generation from the raw data files.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">center</td>
+<td style="text-align:center">The index of the sample all others will be aligned to. If center==NULL, the sample with the most peaks is chosen as default.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">response</td>
+<td style="text-align:center">Responsiveness of warping. 0 will give a linear warp based on start and end points. 100 will use all bijective anchors.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">gapInit</td>
+<td style="text-align:center">Penalty for gap opening.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">gapExtend</td>
+<td style="text-align:center">Penalty for gap enlargement.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">factorDiag</td>
+<td style="text-align:center">Local weighting applied to diagonal moves in alignment.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">factorGap</td>
+<td style="text-align:center">Local weighting applied to gap moves in alignment.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">localAlignment</td>
+<td style="text-align:center">Local rather than global alignment.</td>
+</tr>
+<tr>
+<td style="text-align:center">Group</td>
+<td style="text-align:center">method</td>
+<td style="text-align:center">“density”</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">bw</td>
+<td style="text-align:center">Bandwidth (standard deviation or half width at half maximum) of gaussian smoothing kernel to apply to the peak density chromatogram.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">mzwid</td>
+<td style="text-align:center">Width of overlapping m/z slices to use for creating peak density chromatograms and grouping peaks across samples.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">minfrac</td>
+<td style="text-align:center">Minimum fraction of samples necessary in at least one of the sample groups for it to be a valid group.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">minsamp</td>
+<td style="text-align:center">Minimum number of samples necessary in at least one of the sample groups for it to be a valid group.</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">max</td>
+<td style="text-align:center">Maximum number of groups to identify in a single m/z slice.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="running-your-xcms-script">Running your XCMS script</h2>
+<ol>
+<li>Open the Example XCMS script and save it with a new name, preferably in the new directory you have generated for XCMS scripts (remember to do this each time you adjust a parameter).</li>
+<li>The output from IPO can be used as parameters for your starting XCMS code. It is best to adapt the example XCMS script already prepared and supplied with this document. Once you have opened the example XCMS script, either copy and paste the IPO output into the &quot;settings&quot; section of the example XCMS script, or manually change each parameter.
+<ul>
+<li><em>Check that XCMS and CAMERA are installed. If it needs to be installed, run the section of code at the top of the script titled: Install XCMS and CAMERA. This will have been commented out. To run it you will need to remove the <code>#</code>. Replace the hashtags once the packages have been successfully installed.</em></li>
+<li><em>Consider the MinFrac value at this point. IPO often sets it to 1, meaning the feature will have to appear in all your samples.</em></li>
+</ul>
+</li>
+<li>Now adjust the working directory within the XCMS script. This should be set to the current iteration of XCMS, e.g., <code>01_IPOBasicParameters_3-7-2021</code>. Remember to adjust this each time you run XCMS! E.g.:</li>
+</ol>
+<pre><code class="language-bash">setwd(<span class="hljs-string">&quot;~Untargeted Metabolomics/XCMS/01_IPOBasicParameters_3-7-2021&quot;</span>)
+</code></pre>
+<ol start="4">
+<li>Your input files must be in your working directory, I therefore copy the <code>XCMS_Input</code> directory into the current directory in which XCMS will be run (e.g., <code>01_IPOBasicParameters_3-7-2021</code>) and then set the <code>datafiles</code> path to this directory.</li>
+</ol>
+<pre><code class="language-bash">datafiles &lt;- list.files(<span class="hljs-string">&quot;`~Untargeted Metabolomics/XCMS/01_IPOBasicParameters_3-7-2021``/XCMS\_Input&quot;</span>, recursive = TRUE, full.names = TRUE)
+</code></pre>
+<ol start="5">
+<li>Lines 71 and 76 have a <code>write.csvcommand</code>. These lines create two excel files will be produced as output from this script and direct the outputs to the current working directory. Now is your opportunity to name the output files following on from <code>file=</code> in the command. Ensure the new name is in quotation marks, e.g., <code>file=&quot;NEW_NAME.csv&quot;</code>.</li>
+<li>Once you have adjusted the parameters, changed the paths, and renamed the output files, run the <code>setwd()</code> and <code>datafileslines</code>, ensuring the correct directories have been set and the correct sample files chosen.</li>
+<li>You can now run the entire script; this may take some time depending on the number of samples you have.</li>
+</ol>
+<h2 id="interpreting-xcms-results">Interpreting XCMS results</h2>
+<p>XCMS will generate several graphs showing retention time and m/z deviation in samples in the plot window of R studio. You should look through these graphs checking data are normal distributed. Look for any samples which deviate significantly and consider whether these samples should be removed from the analysis.</p>
+<p>You will be presented with two excel spreadsheets you named in step 5 of <a href="#running-your-xcms-script">Running your XCMS script</a>. The one in which most of the work is done the CAMERA and XCMS combined file, the spreadsheet written at line 76 in the example code. Open the combined csv and scroll to the bottom. Look at the number of rows you have. This will tell you the number of features you have identified plus one (as the first row is column headers). Record the number of features for this iteration of XCMS in your master Excel spreadsheet (the one documenting directory names and parameters).</p>
+<p>Consider the number of features you have identified. Is this an appropriate amount? This is a challenging question to answer because, unless you already have a rough idea of the number of features you might expect based on previous research, it really is hard to determine what number is acceptable and consequently how much you should tweak you XCMS parameters. Ideally you want less than 5000 (For MetaboAnalyst), while still maximizing the number of true features.</p>
+<p>How does changing parameters affect the number of features and will it get you nearer to a desired or more reasonable amount? To answer this, you must run XCMS multiple times tweaking a parameter each time. The parameters I suggest you start with are:</p>
+<ul>
+<li>Peakwidth</li>
+<li>Noise – this can be informed by your raw data.</li>
+<li>Center – Consider which sample would be good to align all other too.</li>
+<li>Minfrac</li>
+</ul>
+<p>Your samples will also affect the number of features you identify, it is therefore beneficial to conduct some preliminary analysis of the XCMS results before you repeat the XCMS analysis with a parameter adjusted. See the <a href="#preliminary-analysis-of-xcms-results"><em>Preliminary analysis of XCMS</em></a> section of this document for an explanation of the types of analysis you can do to determine whether any contaminated samples are significantly affecting your XCMS output.</p>
+<p>Once the primary analysis has been completed in Excel and you are happy with your samples, repeat the steps outlined in <a href="#running-your-xcms-script">Running your XCMS script</a> adjusting the XCMS parameters with each run to determine the final set of parameters you will use.</p>
+<blockquote>
+<p><img src="file:////Volumes/Jamie_EXT/Projects/Metabolomics/docs/figures/ExampleXCMSOutput.png" alt="Example XCMS output">
+In the example shown here, we have a total of 463 features. This is small considering we can submit 5000 features to MetaboAnalyst. We therefore decided to continue tweaking the XCMS parameters using what we know about each parameter and recording the increase/decrease in the number of features. The final set of XCMS parameters included a decreased noise threshold, lower Minfrac value and an increased peak width compared to the suggested parameters generated by IPO for this dataset.</p>
+</blockquote>
+<h2 id="preparation-and-filtering-of-xcms-and-camera-output">Preparation and filtering of XCMS and CAMERA output</h2>
+<p>We can use the Excel sheet produced by XCMS and CAMERA to assess the efficacy of our XCMS parameters and to infer the quality of our samples. The first column of the excel document is the name that XCMS has allocated to the feature it has identified where &quot;M&quot; is the m/z and &quot;T&quot; is the retention time. The following 11 columns are the outputs for basic statistical analysis which XCMS performs. The following columns will be labeled with the sample groups you have created, with each row indicating the number of samples which contain peaks for that feature XCMS has identified. Then, following columns will provide the peak area for a given feature in each sample.</p>
+<h3 id="preliminary-analysis-of-xcms-results">Preliminary analysis of XCMS results</h3>
+<p>You can follow the steps outlined below if you would like to perform this step manually, further, you can read the steps below to gain a greater understanding of the post-processing of the XCMS result. However, there is an R script available, <a href="#processing-xcms-output-automatically-with-r"><code>ProcessingXCMSOutput-Automated.R</code></a> which will do all of the post-processing for you, speeding up this process. It is best to have read this section to be able to interpret the outputs, however.</p>
+<h4 id="npeaks">Npeaks</h4>
+<p>In theory, the total number of peaks identified for each feature should be roughly equal to or less than the total number of samples. If the number of peaks for a given feature is significantly greater than the number of samples, it <strong><em>may</em></strong> suggest that the feature is not real or a contaminant. We therefore check to see for how many features the number of peaks is greater than the number of samples, and for any features which have more peaks than the number of samples, how much higher this value is than the number of samples. This can be done by following the steps below in your XCMS and CAMERA Excel output:</p>
+<ol>
+<li>Locate the npeaks column and scroll to the bottom, empty cell.</li>
+<li>Input the following formula, adapting the text in square brackets to suit the values you have:</li>
+</ol>
+<pre><code class="language-excel">=<span class="hljs-built_in">countif</span>(<span class="hljs-symbol">M2</span>:[End of Features <span class="hljs-built_in">Cell</span>], <span class="hljs-string">&quot;\&gt;[NumberOfSamples]&quot;</span>)
+</code></pre>
+<ol start="3">
+<li>If the value is higher than 0, locate the features which are greater than the number of samples (you may wish to use the highlight cell rules feature in Excel). Is the value much greater than the number of samples, could this feature be a contaminant or is something else going on? Are your XCMS parameters too lenient?</li>
+</ol>
+<h4 id="number-of-0-values">Number of 0 values</h4>
+<p>Similarly, we want to calculate the number of features that are not identified within each sample. If this is significantly high (&gt; ~10%) for only a few samples, then look at the raw data for that sample and check to see if there are any anomalies in the run. Additionally, we can consider removing the sample.</p>
+<p>To calculate the number of 0 values for each sample, enter the following code at the bottom of each sample peak area column:</p>
+<pre><code class="language-excel">=<span class="hljs-built_in">countif</span>([sample <span class="hljs-built_in">column</span>]<span class="hljs-symbol">2:</span>[bottom of sample <span class="hljs-built_in">column</span>], <span class="hljs-string">&quot;=0&quot;</span>)
+</code></pre>
+<p>To express this as a percentage in the cell below:</p>
+<pre><code class="language-excel">=<span class="hljs-built_in">sum</span>([number of <span class="hljs-number">0</span> values]/[Number of samples]\*<span class="hljs-number">100</span>)
+</code></pre>
+<h4 id="identification-of-outliers-university-of-birmingham-approach">Identification of Outliers (University of Birmingham Approach)</h4>
+<p>We want to identify potential outliers in our data for various reasons, including ensuring sample integrity. Here`s how you can do it in Excel:</p>
+<ol>
+<li>Group your data by separating it into two categories: biological samples on the left and QC samples on the right of the worksheet.</li>
+<li>Count the number of peaks in each biological sample using Excel<code>s </code>COUNT` function. For the first sample in the left-hand column</li>
+</ol>
+<pre><code class="language-excel">=<span class="hljs-built_in">count</span>([sample <span class="hljs-built_in">column</span>]<span class="hljs-symbol">2:</span>[bottom of sample <span class="hljs-built_in">column</span>])
+</code></pre>
+<ol>
+<li>Total the peaks in each biological sample by using the <code>SUM</code> function in the same left-hand column</li>
+</ol>
+<pre><code class="language-excel">=<span class="hljs-built_in">sum</span>([sample <span class="hljs-built_in">column</span>]<span class="hljs-symbol">2:</span>[bottom of sample <span class="hljs-built_in">column</span>])
+</code></pre>
+<ol start="3">
+<li>Apply these formulas to all samples by dragging and highlighting the cells. This will calculate <code>COUNT</code> and <code>SUM</code> for all samples. Optionally, calculate the mean or median peak area to account for extreme values.</li>
+<li>Visualise the data with a scatter plot. Highlight the row with the count of peaks in each sample and create a scatter plot using Excel<code>s </code>Insert<code>and</code>X Y (Scatter)` option. Use the scatter plot to identify potential outliers in your data.</li>
+<li>Repeat this for the sum of peaks. Are there any outliers in the data?</li>
+<li>You can also do this for individual features. If you have added any internal standards, you can repeat the previous steps for them, selecting the rows which correspond and identifying any outliers in your samples.</li>
+</ol>
+<h4 id="generating-unique-identifiers">Generating unique identifiers</h4>
+<p>For downstream analysis, it is beneficial if each feature has a unique identifier. If features share a m/z and retention time, XCMS will simply append &quot;_1&quot; to the feature name. This makes it difficult to identify which features are significant in the raw data once the statistical analysis has been done. We therefore generate unique identifiers for each feature. This can be done following the steps below:</p>
+<ol>
+<li>Create a new column in column A called Round MZ. In the top cell enter <code>=round([mzmed Cell], 1)</code>. Then drag the formula down so that the formula is applied to all features.</li>
+<li>Create a new column in column B called Round RT. In the top cell enter <code>=round([rtmed Cell], 1)</code>. Then drag the formula down so that the formula is applied to all features.</li>
+<li>Then create an additional column in row A and title it <code>Unique Identifiers</code>. Using the output in the two new rounded cells (Round MZ, Round RT) concatenate the values into the <code>Unique Identifiers</code> column using the following command <code>=concat(&quot;M&quot;,[Round MZ],&quot;T&quot;,[Round RT])</code>. Then drag the formula down so that the formula is applied to all features.</li>
+<li>The data in these cells is currently the output of a formula. To complete the next steps, Excel needs to recognize the data as &quot;values&quot;. To do this, create a further column in column A. Copy the concatenated results as well as the column name, <code>Unique Identifiers</code> and paste them as values using the &quot;paste special&quot; option.</li>
+<li>You can now use conditional formatting to highlight duplicates. On Mac, select the <code>conditional formatting</code> -&gt; <code>highlight cell rules</code> -&gt; <code>duplicate values</code>.</li>
+<li>Now sort the column by selecting the <code>Sort &amp; Filter</code> tab, then <code>custom sort</code>. If the sort warning appears, select <code>expand current selection</code>. Now select the appropriate drop downs so that the column of unique identifiers is organized by colour, with coloured cells appearing at the top.</li>
+<li>Delete the two new columns created for rounding (Round MZ, Round RT). Rename any duplicates adding more decimal places to the m/z or retention time for that feature so it can be easily identified later. Save the file with a new name using Save As.</li>
+</ol>
+<h4 id="removing-adducts-and-isotopes">Removing Adducts and Isotopes</h4>
+<p>Isotopic peaks and adducts, although useful for annotating features later, will increase your data unnecessarily, they can therefore be removed.</p>
+<ol>
+<li>To prevent the loss of any data and keep a record of the initial output form XCMS and CAMERA, copy and paste the data in the .csv you generated to a new sheet called <code>Isotopes removed</code> (you may have to save the file as an .xls file to do this).</li>
+<li>Locate the isotopes column in your copied spreadsheet and apply a filter.</li>
+<li>Enter <code>M+1</code> in the filter search bar and apply the filter.</li>
+<li>Highlight all the rows which have been identified by the filter and delete the cells.</li>
+<li>Continue to work through the M+ data: M+2, M+3, M+4 …</li>
+</ol>
+<h3 id="preparing-data-for-metaboanalyst">Preparing data for MetaboAnalyst</h3>
+<p>Now that the features have been given unique identifiers and isotopes have been removed, the data must be filtered for MetaboAnalyst.</p>
+<h4 id="data-filtering-by-qcs">Data Filtering by QCs</h4>
+<ol>
+<li>Copy the data from the previous step to a new sheet called <code>Filtered</code>.</li>
+<li>Cut the QC columns from the sheet and paste them in new columns at the end of the sheet.</li>
+<li>Calculate the average the peak area values in the QC columns for each feature using <code>=AVERAGE([QC Cells for Feature]</code>. Then generate the standard deviation for the QCs using <code>=STDEV([QC Cells for Feature]</code>.</li>
+<li>Drag the formula down so that the formula is applied to all features for the QC samples.</li>
+<li>Using the average and standard deviation of peak area for each feature in the QC samples, calculate the relative standard deviation for each feature identified in the QC samples. The following formula can be used <code>=sum([STDEV]/[AVERAGE])*100</code>.</li>
+<li>Apply conditional formatting as we did for the generating the Unique Identifiers, this time select <code>Condition Formatting</code>, <code>Greater Than</code> and enter 30. This will highlight all cells &gt;30% relative standard deviation. Remove these rows from the dataset.</li>
+</ol>
+<p>MetaboAnalyst requires less 5000 features, we will therefore need to reduce the number of features we have identified if it is greater than 5000. If you have &lt; 5000 features continue to the next step (data layout). If you have &gt;5000 features, try a more stringent relative standard deviation threshold, such as 20%.</p>
+<h4 id="data-layout">Data Layout</h4>
+<p>The data must be laid out in a different format from the one which we have been using. The .xls file produced in the previous steps <a href="#generating-unique-identifiers">Generating Unique Identifiers</a> and <a href="#preparing-data-for-metaboanalyst">Preparing data for MetaboAnalyst</a> can be adapted for MetaboAnalyst by following the steps below:</p>
+<ol>
+<li>Copy the data from the <code>Filtered</code> sheet generated in the <a href="#preparing-data-for-metaboanalyst">Preparing data for MetaboAnalyst</a> step and paste the data into a new sheet called <code>MetaboAnalyst Input</code> using copy, paste special, <strong>transpose</strong>.</li>
+<li>Remove all rows <strong>apart from</strong> the unique identifiers and the peak areas for the individual samples. Rename the unique identifier column to <code>sample</code>.</li>
+<li>Remove rows such as: name, fold, tstat, pvalue, anova, mzmed, mzmin, mzmax, rtmed, rtmin, rtmax, npeaks, and your sample groups.</li>
+<li>Insert a new column between column A and B called <code>condition</code>. In this column enter the treatment group that the sample listed in column A belongs.
+<ul>
+<li><em>Ensure that you are consistent with naming here. Differences in capitalisation and spelling will result in different groupings in MetaboAnalyst.</em></li>
+</ul>
+</li>
+<li>Ensure that the QC samples are removed.</li>
+<li>Identify the sodium formate peak using the m/z and retention time you noted down when preparing your raw data in <a href="#processing-the-raw-data">Processing the raw data</a> section of this document. You may wish to rename the column to <code>sodium_formate</code>, but you should at least note the Unique Identifier. It will likely be a feature with a mass of around 227 and a retention time between T = 1 and 18.</li>
+<li>Save this sheet as a <code>.cvs</code> file. Ensure that you use <code>Save As</code> and rename the document so as not to save over the original outputs.</li>
+</ol>
+<h3 id="hits-tips-and-cheats">Hits, Tips, and Cheats</h3>
+<ul>
+<li>Retention time is given in seconds.</li>
+<li>Any features identified before 60 seconds are unlikely to be real.</li>
+<li>You can quickly navigate around an Excel spreadsheet by pressing CMD, and then the arrow key pointing in the direction you wish to go.</li>
+<li>Filter by QC if you have more than 2 QCs.</li>
+<li>The number of rows -1 will give you your total number of features.</li>
+<li>To avoid typing the code for each sample, enter the code for in one cell then drag the formula across all the columns or rows.</li>
+</ul>
+<hr>
+<h3 id="processing-xcms-output-automatically-with-r">Processing XCMS Output Automatically with R</h3>
+<p>You will need to edit some of the parameters at the top of the document, which are clearly marked in the R script and explained below.</p>
+<p>This script will take the XCMS and CAMERA output csv file and process it for MetaboAnalyst, following steps normally performed manually in Excel and uses as part of the University of Warwick and University of Birmingham data processing steps.</p>
+<p><strong>Processing includes:</strong></p>
+<ul>
+<li>count number of features &amp; number of features when no peaks identified in blank group [University of Warwick].</li>
+<li>count n peaks &gt; n samples and n peaks &gt; double n samples  [University of Warwick]</li>
+<li>count number of 0 values for each feature per sample, and express as a percentage. [University of Warwick]</li>
+<li>count the number of peaks per sample and produce scatter plot [University of Birmingham]</li>
+<li>sum the area of all peaks per sample  and produce scatter plot [University of Birmingham]</li>
+<li>calculate the mean, stdev, relative standard deviation (RSD) and count of given set of QC samples (PrecisionQCs) to calculate precision. [University of Birmingham]</li>
+<li>calculate the blank mean and percentage contribution of given set of blank samples (Blank_samples) to calculate blank contribution. [University of Birmingham]</li>
+<li>filter based on the RSD of QCs and % blank contribution: thresholds can be changed below.</li>
+<li>filter out isotopes detected by CAMERA.</li>
+<li>add unique identifiers to each feature.</li>
+<li>convert the table to csv for MetaboAnalyst, inputting unique IDs and sample peaks, as well as creating an empty column for condition.</li>
+</ul>
+<p>At the top of the script, there are some variables which will need to be changed to suit. You will need to input your file path, sample list (including blanks and QCs), a separate QC list, a separate Blanks list, as well as the RSD filter and Blank contribution filter. I have provided an example set up below.</p>
+<pre><code class="language-R"><span class="hljs-comment"># Define the input file path and sample lists. </span>
+
+<span class="hljs-comment"># Set your working directory. </span>
+setwd<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;/Volumes/Jamie_EXT/Research/Metabolomics/NovDec22/XCMS/05_EarlySamplesRemoved_121023/&quot;</span><span class="hljs-punctuation">)</span>
+<span class="hljs-comment"># Replace with your data file. </span>
+data_file <span class="hljs-operator">&lt;-</span> <span class="hljs-string">&quot;./result_CAMERA_xcms_pos_Basic_Param.raw.csv&quot;</span>
+
+<span class="hljs-comment"># Replace with your sample list</span>
+sample_list  <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;C9-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C9-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C9-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C9-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D9-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D9-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D9-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D9-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F9-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F9-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F9-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F9-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X9-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X9-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X9-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X9-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C12-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C12-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C12-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D12-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D12-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D12-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D12-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F12-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F12-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F12-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F12-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X12-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X12-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X12-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C15-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C15-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C15-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;C15-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D15-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D15-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D15-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;D15-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F15-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F15-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F15-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;F15-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X15-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X15-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X15-3&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;X15-4&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;BLANK_2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;QC-1_Dup&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;QC-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;QC-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;QC-3&quot;</span><span class="hljs-punctuation">)</span>  
+
+<span class="hljs-comment">###################################</span>
+<span class="hljs-comment">#Filtering</span>
+<span class="hljs-comment">###################################</span>
+
+<span class="hljs-comment">#Filtering Samples:</span>
+<span class="hljs-comment">#Please list the QC samples you wish to pool to calculate precision.</span>
+PrecisionQCs <span class="hljs-operator">&lt;-</span>  <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;QC-1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;QC-2&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;QC-3&quot;</span><span class="hljs-punctuation">)</span>
+<span class="hljs-comment">#Please list the Blank samples you wish to pool to calculate the blank contribution. </span>
+Blank_samples <span class="hljs-operator">&lt;-</span>  <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;BLANK_2&quot;</span><span class="hljs-punctuation">)</span> 
+
+<span class="hljs-comment">#Filtering parameters:</span>
+RSD_Filter <span class="hljs-operator">&lt;-</span> 29.99 <span class="hljs-comment">#The University of Birmingham filter their data based on the relative standard deviation of their QC samples. They use a threshold of 30%, which is set here as default. You can change if you would like. Set too 100 if you do not want to use the RSD_Filter.  </span>
+Blank_contribution_filter <span class="hljs-operator">&lt;-</span> 100 <span class="hljs-comment">#The University of Birmingham filter there data based on the percentage blank contribution. They use a threshold of 5%, which is set here as default. You can change if you would like. Set too 100 if you do not want to use the Blank_contribution_Filter  </span>
+
+</code></pre>
+<p>You will need to modify the MetaboAnalyst csv, ensuring that you fill in the empty column (<code>column B</code>) with the treatment group corresponding to the sample in <code>column A</code>.</p>
+<p>This script also sometimes filters out the sodium formate peak, and you may need to add it back in if you wish to normalise to it.</p>
+<h2 id="statistical-analysis-with-metaboanalyst">Statistical Analysis with MetaboAnalyst</h2>
+<p>All statistical analysis is performed using the publicly available tool, <a href="https://www.metaboanalyst.ca/">MetaboAnalyst</a>. Although an R package is available, we will focus on the web tools as it has a user interface. For more information about MetaboAnalyst please see <a href="https://www.metaboanalyst.ca/MetaboAnalyst/docs/Publications.xhtml">this list of publications</a>.</p>
+<h3 id="data-upload">Data upload</h3>
+<p>To perform the analysis, we must first <a href="https://www.metaboanalyst.ca/MetaboAnalyst/ModuleView.xhtml">open the platform</a> and select <code>Statistical Analysis [one factor]</code>.</p>
+<p>Once selected, you will be presented with the data upload page. In the <code>A plain text file (.tsv or .csv)</code> box, select <code>Peak intensities</code>, ensure that the format is <code>samples in rows (unpaired)</code>, and upload your data file generated in the previous step (<a href="#data-layout">Preparing data for MetaboAnalyst: Data Layout</a> or the output from <a href="#processing-xcms-output-automatically-with-r">the r processing script</a>) and click submit.</p>
+<p>You will then be presented with a <code>Data processing information:</code> box. Check the number of features matches the number you have produced following the <a href="#preparation-and-filtering-of-xcms-and-camera-output">Preparation and filtering of XCMS and CAMERA output</a> section of this document. Click proceed if it matches.</p>
+<h3 id="data-filtering">Data filtering</h3>
+<p>The ‘Data Filtering’ page: This is used to identify and remove variables that hinder
+the identification of biologically important signals. For example:</p>
+<ol>
+<li>Very small values (close to baseline or detection limit).</li>
+<li>Variables that are constant across conditions</li>
+<li>Variables that show low repeatability using %RSD for example.</li>
+<li>The dataset is reduced is size for ease of processing and analysis.</li>
+</ol>
+<p>Next, we must tell MetaboAnalyst how to filter our data. We typically filter using one of two options, either <code>none</code> or using the default <code>Interquartile Range</code>.</p>
+<p>You will note that we have already done most of the data filtering, and so, in this instance the, <code>None (less than 5000 features)</code> option can be selected and we can proceed.</p>
+<h3 id="data-normalisation">Data normalisation</h3>
+<p>Again, we use one of two methods for normailsation. Either we <code>normalise by reference feature</code> or by <code>sum</code> (as well as selecting; <code>log transformation</code> for data transformation and <code>Pareto scaling</code> under Data scaling)</p>
+<p>Normalise by reference feature if you want to compare to an internal standard. If you do not have an internal standard, you can normalise using the the sodium formate peak, which elutes at the start of the run. You should have noted this down or renamed the column as instructed in the <a href="#data-layout">Preparing data for MetaboAnalyst: Data Layout</a> section of this document. Select the <code>Normalization by reference feature</code> option and then click specify. Enter the unique identifier for the sodium formate. Then select <code>Normalize</code> and <code>View Result</code>. This will generate a graph which is saved at the end of the analysis. Once complete, select <code>Proceed</code>.</p>
+<p>If you do not wish to normalise to a reference feature, select <code>normalise by sum</code> and select <code>log transformation</code> for data transformation and <code>Pareto scaling</code> under Data scaling.</p>
+<blockquote>
+<p><em>Remember to view the result of your normalisation and check that you data follow a normal distribution. Further, you can use (non‐hierarchically clustered) heat maps (found in the statistical analysis section) to assess the effect of different data‐driven normalisation approaches. This is usually a good practice as it gives you a visual overview of the entire dataset and allows you to inspect and verify the effect of the data processing parameters (e.g. compare their
+effects).</em></p>
+</blockquote>
+<h3 id="preliminary-analysis">Preliminary analysis</h3>
+<p>Depending on your sample groupings, you will either need to perform an ANOVA or t-test. Select the appropriate test and then wait for the results. You may wish to alter the FDR adjusted P values. This can be done using the FDR adjusted P Value boxes.</p>
+<p>Click the small table symbol (<img src="file:////Volumes/Jamie_EXT/Projects/Metabolomics/docs/figures/TableSymbol.png" alt="Table symbol">) each time you adjust the P value and save the output. MetaboAnalyst will only save the last table generated for each statistical test. So, if you try multiple FDR adjusted P Values you will lose the earlier cut-offs.</p>
+<p>You may also just want to use just the P value rather than the FDR adjusted P value. To do this, set the FDR adjusted P value to a higher value (e.g., 1) and view the table. Using the P value column, find the P value you wish to use, then look at the value in the FDR adjusted P value column. Copy this value and enter it in the FDR adjusted P value box once the table has been closed.</p>
+<p>Also select the <code>Principal Component Analysis</code> and <code>Heatmap</code> options - listed on the left-hand side - to see how samples cluster. For data with only two groups (t-test), you should also select the volcano fold change plots, changing P values as necessary.</p>
+<p>Once complete, select the <code>Download</code> tab then <code>Generate Report</code> and <code>Download.zip</code>. This will download a summary of the statistical tests performed as well as the plots and tables generated. This data can be saved for later analysis.</p>
+<h3 id="following-analyses">Following Analyses</h3>
+<p>Once the preliminary analysis has been performed and you have your set of significant features, you can remove any features that are not significant from the MetaboAnalyst input <code>.csv</code>. Ensure that the sodium formate peak is not removed and that you <code>Save As</code> with a new file name.</p>
+<p>You can now generate PCAs and Heatmaps with only the significant features and consider group clustering. You may also wish to complete pairwise comparisons using only two groups. This too can be done by copying significant features and specific groups from the original MetaboAnalyst input <code>.csv</code> and inputting that data into a new <code>.csv</code> to upload to MetaboAnalyst.</p>
+<p>Fold-change data is very useful for identifying whether features which have a similar m/z and retention time are likely to be from the same compound. If the fold change is in opposite directions, they are likely to be from different compounds. If it is in the same direction and a similar amount, the features are likely to be from the same compound. I therefore encourage you to perform Fold-change analysis of significant features with each of your groupings in MetaboAnalyst and save the outputs.</p>
+<h2 id="summary-of-statistical-analysis">Summary of Statistical Analysis</h2>
+<ol>
+<li>Preliminary ANOVA</li>
+<li>Load data in MetaboAnalyst</li>
+<li>Select normalisation and filtering parameters</li>
+<li>Perform ANOVA and generate heatmap</li>
+<li>This reduces number of features to manageable size</li>
+<li>Pairwise Comparisons</li>
+<li>Select the features which are significant from XCMS output and order them into all the possible pairwise comparisons you would like to do.
+<ol>
+<li>e.g., mock vs inoculated at time point A; mock vs inoculated at time point B.</li>
+</ol>
+</li>
+<li>Submit data to MetaboAnalyst again performing t-test, fold change analysis, and generate a heatmap.</li>
+<li>Sort fold change analysis by retention time.</li>
+<li>Now use significant features (from t-test output), sort the fold change analysis data with sig. features at top (highlighted) and rest of features below.</li>
+<li>Now we can begin to work out the number of molecules we have by filtering the MetaboAnalyst data.</li>
+</ol>
+<h2 id="hints-tips-and-cheats">Hints, Tips, and Cheats</h2>
+<ul>
+<li>Ensure your key is correctly labelled and well coloured now to save you having to generate these figures again later.</li>
+<li>Save the images as the highest res pdf, so that they can be edited and adapted later without having to reload your data.</li>
+<li>MetaboAnalyst saves the last csv it generates for each stat by default, so you should save each one individually if you change the P values.</li>
+</ul>
+<h1 id="filtering-data-from-metaboanalyst">Filtering data from MetaboAnalyst</h1>
+<p>Once you have identified your significant features in MetaboAnalyst, you should filter the data and establish a sensible number of features to annotate. There are number of ways we can reduce the number of features, the first being interactions.</p>
+<p>Using the fold change excel file you have generated in MetaboAnalyst, identify the significant features for each pairwise comparison and enter them into <a href="http://www.interactivenn.net/">InteractiVenn</a> (See example figure). You can now choose to focus on features which interact, or do not interact, depending on what you are looking for.</p>
+<p>Say you are looking for a feature which is present in infected samples over time, you would select the intersection in the example figure where I (infected) vs M (mock) – Time A and I vs M – Time B overlap, focusing on those 25 significant features.</p>
+<p><img src="file:////Volumes/Jamie_EXT/Projects/Metabolomics/docs/figures/InteractiVenn.png" alt="InteractiVenn example output"></p>
+<p><em>Figure 1: Example Figure: InteractiVenn output for mock vs inoculated and inoculated vs mock comparisons at two different time points. I = Inoculated, M = Mock.</em></p>
+<p>If you select that section of the Venn diagram in InteractiVenn, a new tab will open which lists all the features. I recommend selecting each section of the Venn diagram and copying all the shared or single features and pasting them in to an excel document. Once you have done this, you can look at the features for the groups you wish to compare. Using our example of infected over time, you would select the intersection where 25 features are shared.</p>
+<p>Looking at the features for the intersection you have selected, you may notice that some of the retention times (TXX) are the same or are very close to one another. Features with the same retention time are likely to be the same molecule, as a result you can quickly scan through your list and determine how many molecules you are likely to have. If this list seems too long to go through, consider repeating the statistical analysis with a lower P value. Likewise, you can now consider if this number of features and molecules is too low. For our example, the 25 features correspond to about 14 molecules. As this is a relatively small number, we decided that we could repeat the statistical analysis using MetaboAnalyst with a P value of 0.05 instead of 0.01.</p>
+<p>Once you have a reasonable number of features and potential molecules, you can begin to determine more accurately how many molecules you have. To do this, I take the list of features I have identified from InteractiVenn (inoculated across both time points) and identify them in the Fold change excel spreadsheet which was produced using MetaboAnalyst.</p>
+<p>To do this I paste the list of interacting features generated by InteractiVenn into a new column in the fold change .csv for those groupings, e.g., I vs M – Time A. I then identify the specific features using the same highlight duplicates option in Excel. I then filter the cells by colour, putting the coloured (duplicate) cells at the top.</p>
+<p>To identify features which may correspond to the same molecule:</p>
+<ol>
+<li>Once you have your set of significant features and your fold change data aligned, identify all features with the same retention time.
+<ol>
+<li><em>I like to colour code my features by retention time.</em></li>
+<li><em>It is useful to ensure that the features are ordered by retention time. You can do this by delimiting the features cell by the letter &quot;T&quot; using the text to column tool (</em><a href="https://support.microsoft.com/en-us/office/split-text-into-different-columns-with-the-convert-text-to-columns-wizard-30b14928-5550-41f5-97ca-7a3e9c363ed7"><em>see here for instructions</em></a><em>), then using sort and filter, ensuring that you are expanding the current section so that all cells move together (m/z and FC values stay with corresponding retention times).</em></li>
+<li><em>Remember that the retention time does not have to match exactly, there may be a difference of a second or two.</em></li>
+</ol>
+</li>
+<li>Now consider the fold change. If it is in different directions for features at the same retention time, they are unlikely to be from the same molecule.</li>
+<li>Consider the different masses. Features with the same retention time, and a fold change in the same direction with a mass difference of 1 or 2 are likely to be features from the same molecule ([M+1]+ or [M+2]+) peak, which CAMERA has missed.</li>
+<li>To continue identifying features which belong to the same molecule, you will need to use the raw data. See: <a href="#annotating-features-using-the-bruker-dataanalysis-software"><em>Annotating features using the Bruker DataAnalysis Software</em></a>for more information regarding identifying molecules from features.</li>
+</ol>
+<h3 id="hits-tips-and-cheats-1">Hits, Tips, and Cheats</h3>
+<ul>
+<li>I like to Save As the fold change excel spreadsheet with a new name, so that, should anything happen, the original is not corrupted or lost.</li>
+<li>I also like to add additional column to the output. One for notes, and then one for each potential adduct listed in the common adducts table in <em>Annotating features using the Bruker DataAnalysis Software</em>.</li>
+</ul>
+<h2 id="annotating-features-using-the-bruker-dataanalysis-software">Annotating features using the Bruker DataAnalysis Software</h2>
+<p>Once the significant features have been identified and filtered, we can begin annotation. This can be done using the SmartFormula Manually in Bruker DataAnalysis, where the software suggests potential chemical formulae.</p>
+<h3 id="to-annotate-a-peak">To annotate a peak</h3>
+<ol>
+<li>Load features in the DataAnalysis software.
+<ol>
+<li>It may be useful here to only load samples you are interested in. If you are looking at two groups at one timepoint, only load those. This will limit confusion later.</li>
+<li>It may also be useful to re-label your samples to make finding/sorting them easier. It is worth retaining some information in the filenames that tell you what position in the run each sample was.</li>
+<li><em>Recalibrate the dataset(s) you are looking at as this will make sure the generated formulae are form more accurate m/z values</em></li>
+</ol>
+</li>
+<li>Using your Excel spreadsheet of significant features, identify the feature(s) of interest in the Chromatogram window by right clicking and dragging over that region.
+<ol>
+<li>Remember the retention time (rt) in your Excel spreadsheet may be in seconds. You will need to convert to minutes to identify the feature(s) using the DataAnalysis software.</li>
+<li>Additionally, this will display the average MS spectrum over the time range selected, so don`t pick too great a time window.</li>
+<li>The number of spectra selected will be displayed in top right of mass spectrum/compound spectrum pane.</li>
+</ol>
+</li>
+<li>It is best to left click on the spectrum view and copy to compound spectra at this point, continuing the annotation in the compound spectra window. Any work you do in spectrum view window is not saved.</li>
+<li>We can now generate potential chemical formulae for the peak of interest. Once you have located the peak with the m/z charge given in your Excel spreadsheet, select the Chemistry tab, then SmartFormula Manually. A window will appear, using the cursor, click on the peak of interest. A list of potential formulae should appear in the SmartFormula Manually window.
+<ol>
+<li>For tips on deciding the best formula, consider the <em>Points to remember when annotating</em> and look for <em>Common LC-MS adducts,</em> and <em>Common differences observed</em>.</li>
+</ol>
+</li>
+<li>Once you have decided on a likely formula, you can annotate the peak. To do this, right click on the formula in the SmartFormula Manually window and select Add Formula as Spectrum Annotation.</li>
+<li>To save the annotation, you can use Ctrl+S. Note: this will only save the annotation for this sample, if you want to save changes to all samples, you will need to press Ctrl+A, then Ctrl+S.</li>
+</ol>
+<h3 id="points-to-remember-when-annotating">Points to remember when annotating</h3>
+<ul>
+<li>If you have fold change data for your significant features, and the features share a rt but the fold change is in different directions, it is unlikely these features are from the same molecule.</li>
+<li>Generate and Extracted Ion Chromatogram (EIC) for peaks which you believe may be from the same molecule. If the EICs overlap, you can be more confident they`re the same molecule which has broken up in the mass spec (See: <a href="#add-an-extracted-ion-chromatogram">Add an Extracted Ion Chromatogram</a>).</li>
+<li>If the sodiated peak is not obvious (+22 from [M+H]+), the feature(s) we are looking at may be sodiated [M+Na]+ not protonated [M+H]+ . It is difficult to tell, so generate formula which include Na and see what appears to be more likely. You may struggle to find only one viable formula for a peak.</li>
+<li>A feature may be from a peptide containing cysteines, in which case S will need to be included in the chemical formula – If you`re struggling to generate a chemical formula, consider including S and you may find one which is more plausible. If there is S in your molecule, you may see the [M+H+2]+ isotopic peak is bigger than expected due to the relative abundance of 34S (4%)</li>
+<li>A high number of N is rare for small molecules; however, it may be high if the feature is a nucleic acid, or contains e.g., histidine.</li>
+<li>If the difference in peaks is an unfamiliar number (not in the Common LC-MS adducts or Common differences observed lists), identify potential formula and then google the potential loss. i.e., There is a mass difference in two peaks of 82, and the chemical formula generated shows a difference of H2O5. If you google H2O5, you will see that it is ozone hydrogen peroxide, which, although it has a molecular weight of 82, is very unlikely to appear in a natural system, so is unlikely to be what is lost/different. This suggest that the formula you have create which include the additional H2O5 is incorrect.</li>
+<li>Dimers and trimers may be observed, when looking for peaks from the same molecule, look for features where a peak at double/half the mass can also be observed (dimer). The same [M+1]+, [M+2]+ peak pattern may also be observed between the peaks which are half/double the mass, which is further indication the peaks are from the same molecule.</li>
+<li>If there is MS2 data for a peak you suspect is a dimer or trimer, it is very likely that when you look at the MS2 spectrum you will only see [2M+H]+ &gt;&gt;&gt; [M+H]+ or [2M+Na]+ &gt;&gt;&gt; [M+Na]+ transition, with few or no fragments of intermediate masses</li>
+<li>Remember to check annotations/EICs with other samples. This is useful for finding peaks with MS2 data – for example, peak intensity may only be high enough in 1 or 2 of your samples for you to be able to see the fragments in the MS2 data.</li>
+</ul>
+<p>Molecules may break up when they enter the mass spec, we can use this to aid feature annotation. The common mass differences which are observed are outlined below.</p>
+<h4 id="common-lc-ms-adducts">Common LC-MS adducts</h4>
+<table>
+<thead>
+<tr>
+<th>Positive Adducts</th>
+<th>Obs. Weight</th>
+<th>∆ From M+H</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M+H</td>
+<td>+1.00728</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>M+Na</td>
+<td>+22.98922</td>
+<td>+21.98194</td>
+</tr>
+<tr>
+<td>M+K</td>
+<td>+38.96316</td>
+<td>+37.95588</td>
+</tr>
+<tr>
+<td>M+NH4</td>
+<td>+18.03383</td>
+<td>+17.02655</td>
+</tr>
+<tr>
+<td>M+CH3OH+H</td>
+<td>+33.03349</td>
+<td>+32.02655</td>
+</tr>
+<tr>
+<td>M+Ca</td>
+<td>+39.96204</td>
+<td>+38.95476</td>
+</tr>
+<tr>
+<td>M+ACN+H</td>
+<td>+41.03383</td>
+<td>+41.02655</td>
+</tr>
+<tr>
+<td>M+ACN+Na</td>
+<td>+64.01577</td>
+<td>+63.00849</td>
+</tr>
+<tr>
+<td>M+DMSO+H</td>
+<td>+79.02121</td>
+<td>+78.01393</td>
+</tr>
+<tr>
+<td>Negative Adducts</td>
+<td>Obs. Weight</td>
+<td>∆ From M-H</td>
+</tr>
+<tr>
+<td>M-H</td>
+<td>-1.007825</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>M+Cl</td>
+<td>+34.96940</td>
+<td>+35.977225</td>
+</tr>
+<tr>
+<td>M+Na-2H</td>
+<td>+20.97466</td>
+<td>+21.982485</td>
+</tr>
+<tr>
+<td>M+K-2H</td>
+<td>+36.94860</td>
+<td>+37.956425</td>
+</tr>
+<tr>
+<td>M+Formic-H</td>
+<td>+44.99820</td>
+<td>+46.006025</td>
+</tr>
+</tbody>
+</table>
+<h4 id="common-differences-observed">Common differences observed</h4>
+<table>
+<thead>
+<tr>
+<th>Molecule(s)</th>
+<th>Formula</th>
+<th>Weight difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Glucose</td>
+<td>C6H12O6</td>
+<td>180</td>
+</tr>
+<tr>
+<td>Water</td>
+<td>H2O</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Water + Sodiated peak</td>
+<td>H2O</td>
+<td>Na</td>
+</tr>
+<tr>
+<td>Ammonated and sodiated</td>
+<td>NH3</td>
+<td>Na</td>
+</tr>
+<tr>
+<td>Hexose</td>
+<td>C6H10O5</td>
+<td>162</td>
+</tr>
+<tr>
+<td>Hexose x2</td>
+<td>2x C6H10O5</td>
+<td>324</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><em>Note: you may observe different fragments in the MS1 (full scan spectrum) than you do in the MS2 spectra (from masses in MS1 spectra denoted with a red diamond above them). Fragments present in the MS1 spectra are called in-source fragments and arise due to the molecule breaking up on its way to the detector, rather than them being 'deliberately' fragmented to give us the MS2 spectra. Combining these data together can give better insight into what substructures may be present in your molecule of interest.</em></p>
+</blockquote>
+<h3 id="add-an-extracted-ion-chromatogram">Add an Extracted Ion Chromatogram</h3>
+<ol>
+<li>Right click on a peak of interest, select Add Extracted Ion Chromatogram. Once loaded, one should appear under the chromatograms tab on the left of the screen of that sample.</li>
+<li>You can do this for multiple peaks to compare the time they elute. This will help you to determine if multiple peaks are from the same metabolite as they will overlap.</li>
+<li>You can copy and paste the EICs to other samples to compare the peaks. If they overlap other samples too you can be more confident that the peaks are from the same metabolite. Simply use Ctrl+C and Ctrl+V to copy EICs for specific samples or include Ctrl+A to generate and EIC for a given peak for all samples. Then Ctrl+S to save the EICs generated.</li>
+</ol>
+<h3 id="hits-tips-and-cheats-2">Hits, Tips, and Cheats</h3>
+<ul>
+<li>Use Ctrl A Ctrl S to save, or you will only save the sample you currently have open.</li>
+<li>The pinwheel gets stuck spinning even when it has finished saving, just move your mouse to stop this.</li>
+<li>Sometimes the cursor gets stuck in a specific box when trying to generate a formula, simply press the Esc key.</li>
+<li><strong>Save regularly</strong> because it likes to crash.</li>
+</ul>
+<h1 id="glossary">Glossary</h1>
+<p><a href="https://pubs.acs.org/doi/10.1021/acs.jcim.1c00579"><strong>Adduct</strong></a></p>
+<blockquote>
+<p>&quot;<em>Here, adduct refers to a version of a parent molecule [M] that is charged due to addition or loss of atoms and electrons resulting in a charged ion, for example, [M + H]+.&quot;</em></p>
+</blockquote>
+
+        
+        
+    </body>
+    </html>
