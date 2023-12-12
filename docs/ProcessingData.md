@@ -70,10 +70,6 @@ Each section provides a brief overview and explanation for the process, step-by-
 
 It is in the hints and tips sections I have explained the bugs, challenges, and things to bear in mind throughout each step. It is worthwhile reading this section before you start each process.
 
-Code in the text is provided in this format.
-
-Large blocks of code can be found in code blocks like this.
-
 ## Further reading
 
 Sambles, C.M., Salmon, D.L., Florance, H., Howard, T.P., Smirnoff, N., Nielsen, L.R., McKinney, L.V., Kjær, E.D., Buggs, R.J., Studholme, D.J. and Grant, M., 2017. [Ash leaf metabolomes reveal differences between trees tolerant and susceptible to ash dieback disease](https://www.nature.com/articles/sdata2017190). _Scientific data_, _4_(1), pp.1-13.
