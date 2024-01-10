@@ -1,7 +1,5 @@
 # Untargeted Metabolomics Data Processing
 
-All scripts and docs used for my untargeted metabolomics data analysis.
+All scripts and docs used for the untargeted metabolomics chapter of my thesis.
 
-A detailed guide for all analysis can be found [here](./docs/ProcessingData.md).
-
-The scripts references in the guide can be found in the [bin directory](./bin).
+Processing approach can be found [here](./docs/ProcessingData.md).
