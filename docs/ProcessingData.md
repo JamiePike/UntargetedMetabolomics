@@ -537,6 +537,8 @@ Once you have identified your significant features in MetaboAnalyst, you should 
 
 Using the fold change excel file you have generated in MetaboAnalyst, identify the significant features for each pairwise comparison and enter them into [InteractiVenn](http://www.interactivenn.net/) (See example figure). You can now choose to focus on features which interact, or do not interact, depending on what you are looking for.
 
+>Update: there is now an R script ([`SharedFeaturesVenn.R`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/SharedFeaturesVenn.R)) for this which produces an excel file full of sheets which show the shared features, so you don't have to copy and paste into interactiVenn.
+
 Say you are looking for a feature which is present in infected samples over time, you would select the intersection in the example figure where I (infected) vs M (mock) – Time A and I vs M – Time B overlap, focusing on those 25 significant features.
 
 ![InteractiVenn example output](./figures/InteractiVenn.png)

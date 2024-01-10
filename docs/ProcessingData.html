@@ -646,6 +646,9 @@ effects).</em></p>
 <h1 id="filtering-data-from-metaboanalyst">Filtering data from MetaboAnalyst</h1>
 <p>Once you have identified your significant features in MetaboAnalyst, you should filter the data and establish a sensible number of features to annotate. There are number of ways we can reduce the number of features, the first being interactions.</p>
 <p>Using the fold change excel file you have generated in MetaboAnalyst, identify the significant features for each pairwise comparison and enter them into <a href="http://www.interactivenn.net/">InteractiVenn</a> (See example figure). You can now choose to focus on features which interact, or do not interact, depending on what you are looking for.</p>
+<blockquote>
+<p>Update: there is now an R script (<a href="https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/SharedFeaturesVenn.R"><code>SharedFeaturesVenn.R</code></a>) for this which produces an excel file full of sheets which show the shared features, so you don't have to copy and paste into interactiVenn.</p>
+</blockquote>
 <p>Say you are looking for a feature which is present in infected samples over time, you would select the intersection in the example figure where I (infected) vs M (mock) – Time A and I vs M – Time B overlap, focusing on those 25 significant features.</p>
 <p><img src="file:////Volumes/Jamie_EXT/Projects/Metabolomics/docs/figures/InteractiVenn.png" alt="InteractiVenn example output"></p>
 <p><em>Figure 1: Example Figure: InteractiVenn output for mock vs inoculated and inoculated vs mock comparisons at two different time points. I = Inoculated, M = Mock.</em></p>
