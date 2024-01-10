@@ -46,9 +46,7 @@ I think I will have to narrow down at a particular time point of interest, and f
 
 The first time point separates treatment groups best, by the second and third time points feature profiles between the samples can vary a lot within a treatment group. But the symptoms overlap between between Foc and Xvm best at second time point.
 
-
 Going to also look at time as a factor and not treatment.
-
 
 ## MetaboAnalyst Preliminary Analysis
 
@@ -87,6 +85,8 @@ I then uploaded the new csv which contains only the significant features for tha
 
 ### Venn Diagram of shared sig features over time
 
-The csv files generated for `ExtractColumns.py ` contain a list of the signifcant features, we can use these lists to generate a Venn Diagramm of significant features which are shared over time.
+The csv files generated for `ExtractColumns.py` contain a list of the signifcant features, we can use these lists to generate a Venn Diagramm of significant features which are shared over time.
 
----
+![Figure 1: Venn of the shared features between timepoints when using p<0.05 for each timepoint individually. T1 = first time point, T2 = second time point, T3 = third time point](/docs/figures/SharedFeaturesVenn.png)
+
+None of the significant features identified were shared between all time points. Interestingly, more signifcant features are shared between the first time point and the third timepoint, than between the second and first and second and third.
