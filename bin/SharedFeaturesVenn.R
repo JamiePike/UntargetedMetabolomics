@@ -4,15 +4,19 @@
 # # Install the venn package if you haven't already
 # install.packages("venn")
 
+# --------- Setup the script --------- #
+
 # Load the venn library
 library(ggplot2)
 library(ggvenn)
-
+library(tidyverse)
+library(openxlsx)
 
 # Read the TSV file
 setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/VennDiagrams")
 data <- read.table("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/VennDiagrams/Shared-sig_features_0.05.csv", header = T, sep = ",")
 
+# the data are laid out in columns, with features in a list under each header. ggvenn will identify the shared and unique features.
 # Convert data to a format suitable for ggvenn
 ggvenn_data <- list(
   T1 = data$T1,
@@ -20,6 +24,7 @@ ggvenn_data <- list(
   T3 = data$T3
 )
 
+# --------- Build the plot --------- #
 # Create the Venn diagram using ggplot2 and ggvenn
 ggvenn_plot <- ggvenn(ggvenn_data, fill_color = c("#0073C2FF", "#EFC000FF", "#CD534CFF"),
   stroke_size = 0.5 ) +
@@ -28,3 +33,20 @@ ggvenn_plot <- ggvenn(ggvenn_data, fill_color = c("#0073C2FF", "#EFC000FF", "#CD
 
 # Save the Venn diagram
 ggsave("SharedFeaturesVenn.png", plot = ggvenn_plot, width = 8, height = 6, units = "in")
+
+# --------- Output Groups --------- #
+# generate csv files of shared features.
+# a list to store results
+shared_items <- list()
+
+# loop through all of the pairwise combinations ggvenn_data list.
+for (i in 2:length(ggvenn_data)) {
+  cols_combinations <- combn(names(ggvenn_data), i, simplify = FALSE)
+  for (cols in cols_combinations) {
+    sheet_name <- paste(cols, collapse = "_and_")
+    shared_items[[sheet_name]] <- Reduce(intersect, ggvenn_data[cols])
+  }
+}
+
+# write shared items to a CSV with separate sheets
+write.xlsx(shared_items, "Shared_Items_Sheets.xlsx")
