@@ -8,11 +8,12 @@ Been as though we are looking at different features between treatment groups, an
 
 ### External symptom development
 
-![External Symptom development](./figures/../../../docs/figures/External_plot.png)
+
+![External Symptom development](/docs/figures/External_plot.png)
 
 ### Internal symptom development
 
-![Internal Symptom development](./figures/../../../docs/figures/Internal_plot.png)
+![Internal Symptom development](/docs/figures/Internal_plot.png)
 
 ## IPO Runs
 
