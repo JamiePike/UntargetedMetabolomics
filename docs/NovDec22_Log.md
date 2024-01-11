@@ -4,7 +4,7 @@ For all analysis I followed the protocol outlined in the Processing Metabolomics
 
 ## Overview of symptom development
 
-Been as though we are looking at different features between treatment groups, and trying to attribute these to treatment, it is useful to have symptom development as context. Figures were generated using [`SymptomDevStats.R`](../../bin/SymptomDevStats.R).
+Been as though we are looking at different features between treatment groups, and trying to attribute these to treatment, it is useful to have symptom development as context. Figures were generated using [`SymptomDevStats.R`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/SymptomDevStats.R).
 
 ### External symptom development
 
@@ -35,7 +35,7 @@ Individual graphs and datasets can be found in the corresponding XCMS output fol
 
 ---
 
-Eventually, I used the XCMS parameters in `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis. Groups were separated by treatment and time for this parameted set, and contamininated features identifed at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants).
+Eventually, I used the XCMS parameters in `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis. Groups were separated by treatment and time for this parameter set, and contaminated features identified at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants).
 
 ## MetaboAnalyst
 
@@ -45,9 +45,9 @@ Once processed using the filtering R script, data were uploaded to MetaboAnalyst
 
 ### MetaboAnalyst Preliminary Analysis
 
-All results saved here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst`. For each analysis, I ensured that data were normailly distributed (followed appropriate normalisation steps), then generated heatmaps for each different grouping:
+All results saved here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst`. For each analysis, I ensured that data were normally distributed (followed appropriate normalisation steps), then generated heatmaps for each different grouping:
 
-- Deafult
+- Default
 - Samples not clustered
 - only significant features
 
@@ -83,13 +83,13 @@ A list of significant features was used to generate a Venn Diagram to identify w
 
 *Figure 1: Venn of the shared features between timepoints when using p<0.05 for each timepoint individually. T1 = first time point, T2 = second time point, T3 = third time point.*
 
-None of the significant features identified were shared between all time points. More signifcant features are shared between the first time point and the third timepoint, than between the second and first and second and third. The majority of the significant features were not shared between timepoints.
+None of the significant features identified were shared between all time points. More significant features are shared between the first time point and the third timepoint, than between the second and first and second and third. The majority of the significant features were not shared between timepoints.
 
 ---
 
 ### MetaboAnalyst Secondary Analysis
 
-Once the significant features were identified (raw p <0.05), I separated these from the original input file using the [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py). This reduced the set of features that can be uploaded to MetaboAnaylst. I normalised and generated heatmaps, dendograms, feature plots and PCAs for only the signifcant features, so analysis such as PCA will not be skewed by features that are not significant (p <0.05).
+Once the significant features were identified (raw p <0.05), I separated these from the original input file using the [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py). This reduced the set of features that can be uploaded to MetaboAnaylst. I normalised and generated heatmaps, dendrograms, feature plots and PCAs for only the significant features, so analysis such as PCA will not be skewed by features that are not significant (p <0.05).
 
 For this, I symlinked the original MetaboAnalyst input file to the MetaboAnalyst output directory for each timepoint, I manually generated a csv file listing the columns to extract for that timepoint (significant (p <0.05) features identified by preliminary anova)(including Sodium_formate and text), and used them as input for [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py).
 
@@ -102,13 +102,13 @@ ln -s /Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_17112
 touch Extract-sig_features_0.05.csv
 # I then pasted teh data manually for them the MetaboAnalyst anova_posthoc.csv file. 
 
-# extact columns command
+# extract columns command
 python ../../../bin/ExtractColumns.py Extract-sig_features_0.05.csv MetaboAnalyst_Input.csv > MetaboAnalyst_sig_features_0.05.csv
 ```
 
 I then edited the csv file so only one time point (corresponding to the dir) were present in the csv.
 
-I then uploaded the new csv which contains only the significant features for that time point to MetaboAnalyst, and repeated the initial anaylsis.
+I then uploaded the new csv which contains only the significant features for that time point to MetaboAnalyst, and repeated the initial analysis.
 
 ### Features of interest
 
@@ -118,8 +118,8 @@ I think the features which are shared between T1 and T3 are curious, why are the
 
 | Feature             |Share | Viability | Tukey's HSD | Notes
 |:-------------------:|:----:|:---------:|:-----------:|:-----
-|**M1279.087T13.111** |T1-T2 | low       |      -      |Shared as a signifcant feature between T1 and T2, and is reduced in Xvm and Foc treatments (average), but increased in Con and  Dro.
-|**M882.812T18.125**  |T1-T2 | high      |dro_9-con_9; foc_9-dro_9| Also shared between T1 and T2 and is redcued in Xvm and Foc, but increased in Dro and Con.
+|**M1279.087T13.111** |T1-T2 | low       |      -      |Shared as a significant feature between T1 and T2, and is reduced in Xvm and Foc treatments (average), but increased in Con and  Dro.
+|**M882.812T18.125**  |T1-T2 | high      |dro_9-con_9; foc_9-dro_9| Also shared between T1 and T2 and is reduced in Xvm and Foc, but increased in Dro and Con.
 |**M1239.758T16.118** |T1-T2 | low       |foc_9-dro_9| The 3 Foc samples varied in peak intensity for this feature dramatically (F9_1 = -1.13; F9_2 = 1.72; F9_3 = 1.92), so this does not appear to be a stable feature to use as a biomarker.
 |**M632.472T1474.795**|T1-T3 |   mid     |      -      | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
 |**M633.474T1424.866**|T1-T3 |   mid     |      -      | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
@@ -129,7 +129,7 @@ I think the features which are shared between T1 and T3 are curious, why are the
 |**M650.482T1423.88** |T1-T3 |    mid     |      -     | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
 |**M573.464T1458.338**|T1-T3 |    mid     |      -     | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
 |**M575.48T1424.867** |T1-T3 |    mid     |      -     | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
-|**M367.151T397.982** |T2-T3 |    low       |xvm_15-con_15| Increased in Xvm and one Dro sample but reduced in all othe treatments.
+|**M367.151T397.982** |T2-T3 |    low       |xvm_15-con_15| Increased in Xvm and one Dro sample but reduced in all other treatments.
 |**M831.338T16.12**   |T2-T3 |   low      |      -     | This is a sig feature shared between T1 and T3, but appears to be an adduct of M835.826T17.121, which is a sig feature at T3 and separates Xvm for all other treatments.
 
 ---
