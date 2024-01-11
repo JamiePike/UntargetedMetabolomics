@@ -2,6 +2,18 @@
 
 For all analysis I followed the protocol outlined in the Processing Metabolomics Data protocol: `/Volumes/Jamie_EXT/Projects/Metabolomics/docs`.
 
+## Overview of symptom development
+
+Been as though we are looking at different features between treatment groups, and trying to attribute these to treatment, it is useful to have symptom development as context. Figures were generated using [`SymptomDevStats.R`](../../bin/SymptomDevStats.R).
+
+### External symptom development
+
+![External Symptom development](./figures/../../../docs/figures/External_plot.png)
+
+### Internal symptom development
+
+![Internal Symptom development](./figures/../../../docs/figures/Internal_plot.png)
+
 ## IPO Runs
 
 IPO was run twice;
@@ -15,40 +27,22 @@ Outputs can be found here, `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/IP
 
 XCMS was run multiple times, first using the parameters from IPO, followed by changes to adjust the outputs. A summary file of these changes and outputs can be found; `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/XCMS_Params.xlsx`.
 
-### Filtering
-
 The features were filtered using the custom R script, `/Volumes/Jamie_EXT/Projects/Metabolomics/bin/ProcessingXCMSOutput-Automated.R`.
 
 Summary outputs were recorded in `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/XCMS_Params.xlsx`.
 Individual graphs and datasets can be found in the corresponding XCMS output folder.
 
+---
+
+Eventually, I used the XCMS parameters in `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis. Groups were separated by treatment and time for this parameted set, and contamininated features identifed at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants).
+
 ## MetaboAnalyst
 
-Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalise (using the approach which produced the best normal distribution - typically this included normalizing by the Sodium Formate peak).
-
-Most XCMS outputs produced heatmaps which did not cluster by default sample groups. Some samples commonly displayed a different feature profile from most other samples within that treatment/time group. The samples are;
-
-- C9-4
-- D9-3
-- F9-1
-- X15-3
-- C12-1
-- F9-4
-- D12-2
+Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalised (using the approach which produced the best normal distribution - typically this included normalizing by the Sodium Formate peak).
 
 ---
 
-I have found that the best way to ensure that the heatmap clusters into groups, is to separate by time and remove blanks and QCs. In this way, significant features group the samples by treatment.
-
-I think I will have to narrow down at a particular time point of interest, and find features there.
-
----
-
-The first time point separates treatment groups best, by the second and third time points feature profiles between the samples can vary a lot within a treatment group. But the symptoms overlap between between Foc and Xvm best at second time point.
-
-Going to also look at time as a factor and not treatment.
-
-## MetaboAnalyst Preliminary Analysis
+### MetaboAnalyst Preliminary Analysis
 
 All results saved here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst`. For each analysis, I ensured that data were normailly distributed (followed appropriate normalisation steps), then generated heatmaps for each different grouping:
 
@@ -60,33 +54,83 @@ Performed an ANOVA to identify sig. features (raw p <0.05), and generated a PCA 
 
 I used the `edit groups` feature  in MetaboAnalyst to separate each group and process them all individually.
 
-## MetaboAnalyst Secondary Analysis
+Most XCMS outputs produced heatmaps which did not cluster by default sample groups. Some samples commonly displayed a different feature profile from most other samples within that treatment/time group. The samples are;
 
-Once the significant features were identified (raw p <0.05), I separated these from the original input file using the [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py).
+- C9-4
+- D9-3
+- F9-1
+- X15-3
+- C12-1
+- F9-4
+- D12-2
 
-This reduced set of features can be uploaded to MetaboAnaylst again and normalised and we can generate heatmaps, dendograms, featuer plots and PCAs for only the signifcant features, so analysis such as PCA will not be skewed by features that are not significant (p <0.05).
+I have found that the best way to ensure that the heatmap clusters into groups, is to separate by time and remove blanks and QCs. In this way, significant features group the samples by treatment.
+
+**The first time point separates treatment groups best, by the second and third time points feature profiles between the samples can vary a lot within a treatment group**. But the symptoms overlap between between Foc and Xvm best at second time point.
+
+I think I will have to narrow down at a particular time point of interest, find features there, and see if they appear over time.
+
+[Going to also look at time as a factor and not treatment](#time-as-a-factor).
+
+---
+
+### Venn Diagram of shared sig features over time
+
+A list of significant features was used to generate a Venn Diagram to identify which of these significant features are shared over time.
+
+![venn of shared features](/docs/figures/SharedFeaturesVenn.png)
+
+*Figure 1: Venn of the shared features between timepoints when using p<0.05 for each timepoint individually. T1 = first time point, T2 = second time point, T3 = third time point.*
+
+None of the significant features identified were shared between all time points. More signifcant features are shared between the first time point and the third timepoint, than between the second and first and second and third. The majority of the significant features were not shared between timepoints.
+
+---
+
+### MetaboAnalyst Secondary Analysis
+
+Once the significant features were identified (raw p <0.05), I separated these from the original input file using the [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py). This reduced the set of features that can be uploaded to MetaboAnaylst. I normalised and generated heatmaps, dendograms, feature plots and PCAs for only the signifcant features, so analysis such as PCA will not be skewed by features that are not significant (p <0.05).
 
 For this, I symlinked the original MetaboAnalyst input file to the MetaboAnalyst output directory for each timepoint, I manually generated a csv file listing the columns to extract for that timepoint (significant (p <0.05) features identified by preliminary anova)(including Sodium_formate and text), and used them as input for [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py).
 
 ```bash
 # example of command line for previous step - this shows the first time point.
 # symlink file
-ln -s /Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input-TimeGroups.csv ./
+ln -s /Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input.csv ./
 
 # generate csv of features to extract
 touch Extract-sig_features_0.05.csv
 # I then pasted teh data manually for them the MetaboAnalyst anova_posthoc.csv file. 
 
 # extact columns command
-python ../../../bin/ExtractColumns.py Extract-sig_features_0.05.csv MetaboAnalyst_Input-TimeGroups.csv > MetaboAnalyst_sig_features_0.05.csv
+python ../../../bin/ExtractColumns.py Extract-sig_features_0.05.csv MetaboAnalyst_Input.csv > MetaboAnalyst_sig_features_0.05.csv
 ```
+
+I then edited the csv file so only one time point (corresponding to the dir) were present in the csv.
 
 I then uploaded the new csv which contains only the significant features for that time point to MetaboAnalyst, and repeated the initial anaylsis.
 
-### Venn Diagram of shared sig features over time
+### Features of interest
 
-The csv files generated for `ExtractColumns.py` contain a list of the signifcant features, we can use these lists to generate a Venn Diagramm of significant features which are shared over time.
+I was mindful of the shared features which were identified in using the [Venn diagram](#venn-diagram-of-shared-sig-features-over-time). Its better to look for features which appear over a longer time period as targets for biomarkers. No point having a marker that can only be used for a day or so, and it narrows down the number of features to process!
 
-![Figure 1: Venn of the shared features between timepoints when using p<0.05 for each timepoint individually. T1 = first time point, T2 = second time point, T3 = third time point](/docs/figures/SharedFeaturesVenn.png)
+I think the features which are shared between T1 and T3 are curious, why are they not identified as sig. in the middle timepoint? It appears to be all the same metabolite whose adducts have not been automatically identified using CAMERA and XCMS and filtered out. They all; similar retention time, similar mass, same profile in heatmap.
 
-None of the significant features identified were shared between all time points. Interestingly, more signifcant features are shared between the first time point and the third timepoint, than between the second and first and second and third.
+| Feature             |Share | Viability | Tukey's HSD | Notes
+|:-------------------:|:----:|:---------:|:-----------:|:-----
+|**M1279.087T13.111** |T1-T2 | low       |      -      |Shared as a signifcant feature between T1 and T2, and is reduced in Xvm and Foc treatments (average), but increased in Con and  Dro.
+|**M882.812T18.125**  |T1-T2 | high      |dro_9-con_9; foc_9-dro_9| Also shared between T1 and T2 and is redcued in Xvm and Foc, but increased in Dro and Con.
+|**M1239.758T16.118** |T1-T2 | low       |foc_9-dro_9| The 3 Foc samples varied in peak intensity for this feature dramatically (F9_1 = -1.13; F9_2 = 1.72; F9_3 = 1.92), so this does not appear to be a stable feature to use as a biomarker.
+|**M632.472T1474.795**|T1-T3 |   mid     |      -      | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
+|**M633.474T1424.866**|T1-T3 |   mid     |      -      | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
+|**M634.485T1424.862**|T1-T3 |   mid     |xvm_9-foc_9  | Elutes at same time with similar mass and same profile in heatmap at T1. Probably adducts of same feature. Why this one detected in Tukey's HSD but not others?
+**M648.465T1441.075**|T1-T3 |    mid     |      -      | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
+|**M649.479T1424.057**|T1-T3 |    mid     |      -     | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
+|**M650.482T1423.88** |T1-T3 |    mid     |      -     | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
+|**M573.464T1458.338**|T1-T3 |    mid     |      -     | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
+|**M575.48T1424.867** |T1-T3 |    mid     |      -     | Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.
+|**M367.151T397.982** |T2-T3 |    low       |xvm_15-con_15| Increased in Xvm and one Dro sample but reduced in all othe treatments.
+|**M831.338T16.12**   |T2-T3 |   low      |      -     | This is a sig feature shared between T1 and T3, but appears to be an adduct of M835.826T17.121, which is a sig feature at T3 and separates Xvm for all other treatments.
+
+---
+
+### Time as a factor
