@@ -48,5 +48,20 @@ for (i in 2:length(ggvenn_data)) {
   }
 }
 
+# calculate groups unique to each column
+for (col_name in names(ggvenn_data)) {
+  unique_to_col <- ggvenn_data[[col_name]]
+  for (shared_col in names(ggvenn_data)) {
+    if (shared_col != col_name) {
+      unique_to_col <- setdiff(unique_to_col, ggvenn_data[[shared_col]])
+    }
+  }
+  sheet_name <- paste("Unique_to_", col_name)
+  
+  # add the group even if it's empty
+  shared_items[[sheet_name]] <- unique_to_col
+  }
+
+
 # write shared items to a CSV with separate sheets
 write.xlsx(shared_items, "Shared_Items_Sheets.xlsx")
