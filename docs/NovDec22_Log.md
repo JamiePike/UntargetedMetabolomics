@@ -1,6 +1,6 @@
 # Progress with NovDec data analysis
 
-For all analysis I followed the protocol outlined in the Processing Metabolomics Data protocol: `/Volumes/Jamie_EXT/Projects/Metabolomics/docs`.
+For all analysis I followed the protocol outlined in the [Processing Metabolomics Data protocol](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/docs/ProcessingData.md).
 
 ## Overview of symptom development
 
@@ -157,7 +157,7 @@ To do this I performed a pairwise comparison of each group to control at T2, the
 
 *Figure 2: Venn of the shared significant (p<0.05) features between treatments. Using the significant features from the previous ANOVA, each treatment was compared to the control for a pairwise analysis. Significant features were extracted and then shared features were identified using `SharedFeaturesVenn.R`. Dro = significant features (p <0.05) from drought vs control pairwise analysis; Foc = significant features (p <0.05) from Fusarium vs control pairwise analysis; Xvm = significant features (p <0.05) from Xanthomonas vs control pairwise analysis.*
 
-Of these features, **M830.837T11.111** was identified a significantly different from the control in every treatment, and may be a marker of wilting/water stress. **But, it has a retention time of 11.111?**
+Of these features, **M830.837T11.111** was identified a significantly different from the control in every treatment (shared feature in centre of Venn), and may be a marker of wilting/water stress. **But, it has a retention time of 11.111?**
 
 ---
 
