@@ -24,11 +24,14 @@ ggvenn_data <- list(
   T3 = data$T3
 )
 
+# added to drop empty elements from my data
+ggvenn_data <- ggvenn_data |> 
+  lapply(\(x) x[!x == ""]) 
+
 # --------- Build the plot --------- #
 # Create the Venn diagram using ggplot2 and ggvenn
 ggvenn_plot <- ggvenn(ggvenn_data, fill_color = c("#0073C2FF", "#EFC000FF", "#CD534CFF"),
-  stroke_size = 0.5 ) +
-  coord_fixed() +
+  stroke_size = 0.5, show_percentage = F, show_elements = F) +
   theme_void()
 
 # Save the Venn diagram
