@@ -34,12 +34,12 @@
 # Define the input file path and sample lists. 
 
 # Set your working directory. 
-setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/")
+setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Neg/01_IPO-Basic")
 # Replace with your data file. 
-data_file <- "./result_CAMERA_xcms_pos_Basic_Param.raw.csv"
+data_file <- "result_CAMERA_xcms_pos_Basic_Param.raw.csv"
 
-# Replace with your sample list
-sample_list  <- c("C9.1","C9.2","C9.3","C9.4","D9.1","D9.2","D9.3","D9.4","F9.1","F9.2","F9.3","F9.4","X9.1","X9.2","X9.3","X9.4","C12.1","C12.3","C12.4","D12.1","D12.2","D12.3","D12.4","F12.1","F12.2","F12.3","F12.4","X12.1","X12.2","X12.3","C15.1","C15.2","C15.3","C15.4","D15.1","D15.2","D15.3","D15.4","F15.1","F15.2","F15.3","F15.4","X15.1","X15.2","X15.3","X15.4","BLANK_2_Dup1","BLANK_2_Dup2","BLANK_2_Dup3","BLANK_2","QC.1.Dup","QC.1","QC.2","QC.3")  
+# Replace with your sample list - (you can just copy and paste from the csv if you use terminal to cat the file!)
+sample_list  <- c("16_C9-3_neg","19_C9-2_neg","21_C9-4_neg","45_C9-1_neg","13_D9-4_neg","20_D9-1_neg","48_D9-3_neg","49_D9-2_neg","26_F9-1_neg","34_F9-2_neg","36_F9-3_neg","46_F9-4_neg","14_X9-2_neg","23_X9-1_neg","27_X9-3_neg","40_X9-4_neg","02_C12-2_neg","07_C12-1_neg","18_C12-3_neg","33_C12-4_neg","12_D12-2_neg","28_D12-3_neg","44_D12-1_neg","52_D12-4_neg","05_F12-4_neg","22_F12-1_neg","38_F12-2_neg","43_F12-3_neg","03_X12-4_neg","09_X12-3_neg","32_X12-2_neg","41_X12-1_neg","15_C15-4_neg","31_C15-3_neg","47_C15-1_neg","50_C15-2_neg","04_D15-4_neg","06_D15-2_neg","35_D15-1_neg","37_D15-3_neg","17_F15-3_neg","25_F15-1_neg","30_F15-2_neg","51_F15-4_neg","08_X15-4_neg","11_X15-3_neg","29_X15-1_neg","42_X15-2_neg","01_Blank_neg","53_Blank_neg","10_QC1_neg","24_QC2_neg","39_QC3_neg")  
 
 ###################################
 #Filtering
@@ -47,9 +47,9 @@ sample_list  <- c("C9.1","C9.2","C9.3","C9.4","D9.1","D9.2","D9.3","D9.4","F9.1"
 
 #Filtering Samples:
 #Please list the QC samples you wish to pool to calculate precision.
-PrecisionQCs <-  c("QC.1.Dup","QC.1","QC.2","QC.3")
+PrecisionQCs <-  c("10_QC1_neg","24_QC2_neg","39_QC3_neg")
 #Please list the Blank samples you wish to pool to calculate the blank contribution. 
-Blank_samples <-  c("BLANK_2_Dup1","BLANK_2_Dup2","BLANK_2_Dup3","BLANK_2") 
+Blank_samples <-  c("01_Blank_neg","53_Blank_neg") 
 
 #Filtering parameters:
 RSD_Filter <- 29.99 #The Univeristy of Birmingham filter there data based on the relative standard deviation of their QC samples. They use a threshold of 30%, which is set here as deafult. You can change if you would like. Set too 100 if you do not want to use the RSD_Filter.  
@@ -81,7 +81,7 @@ if (length(sample_list) == 0) {
   # Check if the file exists
   if (file.exists(data_file)) {
     # Read the CSV data
-    data <- read.csv(data_file)
+    data <- read.csv(data_file) #prevent it adding an X to the start of numbered headers
     
     # Calculate the total number of sample columns based on the sample list
     total_samples <- length(sample_list)
@@ -135,6 +135,24 @@ if (length(sample_list) == 0) {
           Metric = c("Number of features", "Features without peaks in blank samples", "Number of features with n peaks > n samples", "Number of features with n peaks > double n samples "),
           Value = c(num_features, num_features_without_blank_peaks, num_features_with_more_peaks, num_features_double_peaks)
         )
+        
+        ###########################################
+        #Check if list starts with special characters
+        ###########################################
+        
+        # Function to add 'X' to values starting with a number or special character, this will prevent errors when R processes the csv as R will add an X to tables which do not start with text.
+        add_X <- function(my_list) {
+          for (i in seq_along(my_list)) {
+            if (grepl("^[0-9@#$%^&*]", my_list[i])) {
+              my_list[i] <- paste0("X", my_list[i])
+            }
+          }
+          return(my_list)
+        }
+        
+        sample_list <- add_X(sample_list) # check sample list and add X to start of headers which start with a number special char
+        PrecisionQCs <- add_X(PrecisionQCs) # repeat for precision qc list
+        Blank_samples <-add_X(Blank_samples) # repeat for blanks list.
         ###########################################
         #Build Table
         ###########################################
@@ -160,13 +178,14 @@ if (length(sample_list) == 0) {
         )
         
         #Amend the names of the samples to match R formatting. R does not like the "-" special character!
+        #modified_sample_list <- gsub("_", ".", modified_sample_list)
         modified_sample_list <- gsub("-", ".", sample_list)
         
         for (i in 1:length(modified_sample_list)) {
           sample_col_name <- modified_sample_list[i]
           
           if (sample_col_name %in% names(data)) {
-            sample_data <- features_without_blank_peaks[[sample_col_name]]
+            sample_data <- data[[sample_col_name]]
             
             # Calculate the number of 0 values
             zeros_count <- sum(sample_data == 0)
@@ -200,7 +219,7 @@ if (length(sample_list) == 0) {
         # Create a scatter plot for Count_of_Peaks
         count_plot <- ggplot(sample_analysis_results, aes(x = Sample, y = Count_of_Peaks)) +
           geom_point() +
-          labs(title = "Scatter Plot: Count of Peaks", x = "", y = "Count of Peaks") +
+          labs(title = "Scatter Plot: Count of all Peaks (unfiltered)", x = "", y = "Count of all Peaks (unfiltered)") +
           theme_minimal() +
           theme(axis.text.x = element_text(angle = 90, hjust = 1), 
                 axis.title.y = element_text(hjust = 0.5)) +
@@ -209,15 +228,15 @@ if (length(sample_list) == 0) {
         # Create a scatter plot for Sum_of_Peaks
         sum_plot <- ggplot(sample_analysis_results, aes(x = Sample, y = Sum_of_Peaks)) +
           geom_point() +
-          labs(title = "Scatter Plot: Sum of Peak Areas", x = "", y = "Sum of Peaks") +
+          labs(title = "Scatter Plot: Sum of Peak Areas (unfiltered)", x = "", y = "Sum of Peaks (unfiltered)") +
           theme_minimal() +
           theme(axis.text.x = element_text(angle = 90, hjust = 1), 
                 axis.title.y = element_text(hjust = 0.5)) +
           scale_y_continuous(limits = c(0, max(sample_analysis_results$Sum_of_Peaks) + 10))
         
         # Save the plots produced as PDFs. 
-        ggsave("count_plot.pdf",count_plot, width=3, height=3, units="in", scale=3)
-        ggsave("sum_plot.pdf",sum_plot, width=3, height=3, units="in", scale=3)
+        ggsave("count_plot-unfiltered.pdf",count_plot, width=3, height=3, units="in", scale=3)
+        ggsave("sum_plot-unfiltered.pdf",sum_plot, width=3, height=3, units="in", scale=3)
         ###########################################
         #Calculate Precision
         ###########################################
@@ -225,9 +244,9 @@ if (length(sample_list) == 0) {
         cat(paste0("Done.\nCalculating precision..."))
         #Adapted from Univeristy of Birmingham data filtering document. 
         
-        # Ensure PrecisionQCs is a character vector of the modified column names
-        PrecisionQCs <- unlist(lapply(PrecisionQCs, function(x) gsub("[^[:alnum:].]", ".", x)))
-        #Blank_samples <- unlist(lapply(Blank_samples, function(x) gsub("[^[:alnum:].]", ".", x)))
+        # # Ensure PrecisionQCs is a character vector of the modified column names
+        # PrecisionQCs <- unlist(lapply(PrecisionQCs, function(x) gsub("[^[:alnum:].]", ".", x)))
+        # Blank_samples <- unlist(lapply(Blank_samples, function(x) gsub("[^[:alnum:].]", ".", x)))
         
         # Calculate the row mean, standard deviation, and count for each row
         features_without_blank_peaks_stat <- features_without_blank_peaks %>%
@@ -244,7 +263,7 @@ if (length(sample_list) == 0) {
         ###########################################
         #Filter Dataset
         ###########################################
-        cat(paste0("Done.\n\nFiltering the dataset..."))
+        cat(paste0("Done.\n\nFiltering the dataset...\nRemoving features with peaks in Blank samples...\nFiltering by RSD value and Blank Contribution filter...\n"))
         filtered_features <- features_without_blank_peaks_stat %>%
           filter(QCRelStandDev <= RSD_Filter) %>%
           filter(PercentBlankContribution <= Blank_contribution_filter)
@@ -265,94 +284,172 @@ if (length(sample_list) == 0) {
         #Report Results
         ###########################################
         
-        cat(paste0("Done.\n-> RSD filter: ", RSD_Filter, "%.\n-> Blank Contribution filter: ", Blank_contribution_filter, "%.\nTotal features after filters: ", AfterFilters, ".\nAfter isotopes removed: ", AfterIsosRemoved, "."))
+        cat(paste0("Done.\n-> RSD filter: ", RSD_Filter, "%.\n-> Blank Contribution filter: ", Blank_contribution_filter, "%.\nTotal features after filters: ", AfterFilters, ".\nAfter isotopes removed: ", AfterIsosRemoved, ".\n"))
+        
+        
+        #Used the number of 0 values approach from Dr. John Sidda as well as the Count and Sum approaches by Univeristy of Birmingham. 
+        
         
         ###########################################
-        #Generate Unique IDs
+        #Build updated plots
         ###########################################
-        cat(paste0("\n\nGenerating Unique Identifiers for each feature..."))
-        # Create two new columns with rounded values
-        filtered_data <- filtered_data %>%
-          mutate(
-            RoundMZ = round(mzmed, 3),
-            RoundRT = round(rtmed, 3)
-          )
         
-        # Create the 'Unique Identifiers' column by concatenating values
-        filtered_data <- filtered_data %>%
-          mutate(
-            `Unique Identifiers` = paste("M", RoundMZ, "T", RoundRT, sep = "")
-          )
+        cat(paste0("\nIdentifying peak distribution across filtered samples..."))
+        # Perform sample-specific analysis and store the results in a data frame
+        filtered_sample_analysis_results <- data.frame(
+          Sample = sample_list,
+          ZeroNum = numeric(length(sample_list)),
+          Percentage_Zeros = numeric(length(sample_list)),
+          Count_of_Peaks = numeric(length(sample_list)),
+          Sum_of_Peaks = numeric(length(sample_list))
+        )
         
-        # Convert the 'Unique Identifiers' column to character data type
-        filtered_data$`Unique Identifiers` <- as.character(filtered_data$`Unique Identifiers`)
+        #Amend the names of the samples to match R formatting. R does not like the "-" special character!
+        #modified_sample_list <- gsub("_", ".", modified_sample_list)
+        modified_sample_list <- gsub("-", ".", sample_list)
         
-        # Remove duplicates with more decimal places
-        filtered_data <- filtered_data %>%
-          group_by(`Unique Identifiers`) %>%
-          mutate(
-            `Unique Identifiers` = ifelse(n() == 1, `Unique Identifiers`, row_number())
-          ) %>%
-          ungroup()
-        
-        # Sort the data frame by 'Unique Identifiers' (if needed)
-        filtered_data <- filtered_data %>%
-          select(`Unique Identifiers`, everything())
-        
-        ###########################################
-        #Generate Ouptut XLSX File with all data
-        ###########################################
-        # Save the output into an xlxs, with a sheet for each dataset. 
-        
-        cat(paste0("Done.\nSaving to output xlsx file..."))
-        
-        dataset_names <- list('SummaryStats' = results, 'SampleDistrib' = sample_analysis_results, 'FilteredFeatures_preIsos' = filtered_features, 'FilteredFeatures_postIso' = filtered_data )
-        write.xlsx(dataset_names, file = 'ProcessingXCMSOutput.xlsx')
-        
-        ###########################################
-        #Modify the data for MetaboAnalyst
-        ###########################################
-        cat(paste0("Done.\nCreating csv for MetaboAnalyst..."))
-        
-        # Select the 'Unique Identifiers' and columns from the 'modified_sample_list'
-        filtered_data <- filtered_data %>%
-          select("Unique Identifiers", all_of(modified_sample_list))
-        
-        # Transpose the data frame
-        transposed_data <- t(filtered_data)
-        
-        # Create a new data frame for MetaboAnalyst Input
-        metabo_analyst_input <- as.data.frame(transposed_data)
-        
-        # Set column names based on the first row (unique identifiers)
-        colnames(metabo_analyst_input) <- metabo_analyst_input[1, ]
-        
-        metabo_analyst_input <- cbind(sample = rownames(metabo_analyst_input), metabo_analyst_input)
-        rownames(metabo_analyst_input) <- 1:nrow(metabo_analyst_input)
-        
-        # Remove the first row as it's now used for column names
-        metabo_analyst_input <- metabo_analyst_input[-1, ]
-        
-        # Reset row names
-        rownames(metabo_analyst_input) <- NULL
-        
-        # Add the 'condition' column as the second column
-        metabo_analyst_input <- metabo_analyst_input %>%
-          mutate(`condition` = NA) %>%
-          select(1, condition, everything())
-        
-        ###########################################
-        #Generate Ouptut CSV Files
-        ###########################################
-        # Save the data frame as a CSV file.
-        write.csv(metabo_analyst_input, "MetaboAnalyst_Input.csv", row.names = F) #MetaboAnalyst Dataset.
-        
-        cat(paste0("Done.\n-----------------\nOutput files:\n-> count_plot.pdf\n-> sum_plot.pdf\n-> ProcessingXCMSOutput.xlsx\n-> MetaboAnalyst_Input.csv\nThey can be found here:\n", getwd(), "\n\nPlease be aware that any peaks you wish to normalise by, e.g. sodium formate, may have been filtered out. You will need to check for this in the MetaboAnalyst csv, and add it in manually if needed."))
+        for (i in 1:length(modified_sample_list)) {
+          sample_col_name <- modified_sample_list[i]
+          
+          if (sample_col_name %in% names(data)) {
+             filtered_sample_data <- filtered_data[[sample_col_name]]
+          #   
+          # Calculate the number of 0 values
+          zeros_count <- sum(filtered_sample_data == 0)
+          filtered_sample_analysis_results$ZeroNum[i] <- zeros_count
+          
+          # Calculate the percentage of 0 values
+          percentage_zeros <- (zeros_count / length(modified_sample_list)) * 100
+          sample_analysis_results$Percentage_Zeros[i] <- percentage_zeros
+          
+          # Calculate the count of peaks
+          count_of_peaks_above_0 <- sum(filtered_sample_data > 0)
+          filtered_sample_analysis_results$Count_of_Peaks[i] <- count_of_peaks_above_0
+          
+          # Calculate the sum of peaks
+          sum_of_peaks <- sum(filtered_sample_data)
+          filtered_sample_analysis_results$Sum_of_Peaks[i] <- sum_of_peaks
+          
+          ###########################################
+          #Build Table
+          ###########################################
+          # Display the sample-specific analysis results
+          filtered_sample_analysis_results %>%
+            kable("html") %>%
+            kable_styling()
+        }
       }
+      ###########################################
+      #Build ScatterPlots
+      ###########################################
+      cat(paste0("Plotting..."))
+      # Create a scatter plot for Count_of_Peaks
+      count_plot <- ggplot(filtered_sample_analysis_results, aes(x = Sample, y = Count_of_Peaks)) +
+        geom_point() +
+        labs(title = "Scatter Plot: Count of all Peaks (filtered)", x = "", y = "Count of all Peaks (filtered)") +
+        theme_minimal() +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+              axis.title.y = element_text(hjust = 0.5)) +
+        scale_y_continuous(limits = c(0, max(sample_analysis_results$Count_of_Peaks) + 10))
+      
+      # Create a scatter plot for Sum_of_Peaks
+      sum_plot <- ggplot(filtered_sample_analysis_results, aes(x = Sample, y = Sum_of_Peaks)) +
+        geom_point() +
+        labs(title = "Scatter Plot: Sum of Peak Areas (filtered)", x = "", y = "Sum of Peaks (filtered)") +
+        theme_minimal() +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+              axis.title.y = element_text(hjust = 0.5)) +
+        scale_y_continuous(limits = c(0, max(sample_analysis_results$Sum_of_Peaks) + 10))
+      
+      # Save the plots produced as PDFs. 
+      ggsave("count_plot-filtered.pdf",count_plot, width=3, height=3, units="in", scale=3)
+      ggsave("sum_plot-filtered.pdf",sum_plot, width=3, height=3, units="in", scale=3)
+      
+       ###########################################
+      #Generate Unique IDs
+      ###########################################
+      cat(paste0("\n\nGenerating Unique Identifiers for each feature..."))
+      # Create two new columns with rounded values
+      filtered_data <- filtered_data %>%
+        mutate(
+          RoundMZ = round(mzmed, 3),
+          RoundRT = round(rtmed, 3)
+        )
+      
+      # Create the 'Unique Identifiers' column by concatenating values
+      filtered_data <- filtered_data %>%
+        mutate(
+          `Unique Identifiers` = paste("M", RoundMZ, "T", RoundRT, sep = "")
+        )
+      
+      # Convert the 'Unique Identifiers' column to character data type
+      filtered_data$`Unique Identifiers` <- as.character(filtered_data$`Unique Identifiers`)
+      
+      # Remove duplicates with more decimal places
+      filtered_data <- filtered_data %>%
+        group_by(`Unique Identifiers`) %>%
+        mutate(
+          `Unique Identifiers` = ifelse(n() == 1, `Unique Identifiers`, row_number())
+        ) %>%
+        ungroup()
+      
+      # Sort the data frame by 'Unique Identifiers' (if needed)
+      filtered_data <- filtered_data %>%
+        select(`Unique Identifiers`, everything())
+      
+      ###########################################
+      #Generate Ouptut XLSX File with all data
+      ###########################################
+      # Save the output into an xlxs, with a sheet for each dataset. 
+      
+      cat(paste0("Done.\nSaving to output xlsx file..."))
+      
+      dataset_names <- list('SummaryStats' = results, 'SampleDistrib' = sample_analysis_results, 'FilteredFeatures_preIsos' = filtered_features, 'FilteredFeatures_postIso' = filtered_data )
+      write.xlsx(dataset_names, file = 'ProcessingXCMSOutput.xlsx')
+      
+      ###########################################
+      #Modify the data for MetaboAnalyst
+      ###########################################
+      cat(paste0("Done.\nCreating csv for MetaboAnalyst..."))
+      
+      # Select the 'Unique Identifiers' and columns from the 'modified_sample_list'
+      filtered_data <- filtered_data %>%
+        select("Unique Identifiers", all_of(modified_sample_list))
+      
+      # Transpose the data frame
+      transposed_data <- t(filtered_data)
+      
+      # Create a new data frame for MetaboAnalyst Input
+      metabo_analyst_input <- as.data.frame(transposed_data)
+      
+      # Set column names based on the first row (unique identifiers)
+      colnames(metabo_analyst_input) <- metabo_analyst_input[1, ]
+      
+      metabo_analyst_input <- cbind(sample = rownames(metabo_analyst_input), metabo_analyst_input)
+      rownames(metabo_analyst_input) <- 1:nrow(metabo_analyst_input)
+      
+      # Remove the first row as it's now used for column names
+      metabo_analyst_input <- metabo_analyst_input[-1, ]
+      
+      # Reset row names
+      rownames(metabo_analyst_input) <- NULL
+      
+      # Add the 'condition' column as the second column
+      metabo_analyst_input <- metabo_analyst_input %>%
+        mutate(`condition` = NA) %>%
+        select(1, condition, everything())
+      
+      ###########################################
+      #Generate Ouptut CSV Files
+      ###########################################
+      # Save the data frame as a CSV file.
+      write.csv(metabo_analyst_input, "MetaboAnalyst_Input.csv", row.names = F) #MetaboAnalyst Dataset.
+      cat(paste0("Done.\n-----------------\nOutput files:\n-> count_plot.pdf\n-> sum_plot.pdf\n-> ProcessingXCMSOutput.xlsx\n-> MetaboAnalyst_Input.csv\nThey can be found here:\n", getwd(), "\n\nPlease be aware that any peaks you wish to normalise by, e.g. sodium formate, may have been filtered out. You will need to check for this in the MetaboAnalyst csv, and add it in manually if needed."))
     }
-  } else {
-    print("The specified file does not exist. Please check the file path.\n")
   }
+} else {
+  print("The specified file does not exist. Please check the file path.\n")
+}
 }
 
 

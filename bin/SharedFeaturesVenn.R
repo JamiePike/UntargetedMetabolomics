@@ -13,15 +13,15 @@ library(tidyverse)
 library(openxlsx)
 
 # Read the TSV file
-setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/VennDiagrams")
-data <- read.table("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/VennDiagrams/Shared-sig_features_0.05.csv", header = T, sep = ",")
+setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/XCMS-10_SecondTimePoint/Pairwise/VennDiagram")
+data <- read.table("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/XCMS-10_SecondTimePoint/Pairwise/VennDiagram/SigFeatures_pairwise.csv", header = T, sep = ",")
 
 # the data are laid out in columns, with features in a list under each header. ggvenn will identify the shared and unique features.
 # Convert data to a format suitable for ggvenn
 ggvenn_data <- list(
-  T1 = data$T1,
-  T2 = data$T2,
-  T3 = data$T3
+  Dro = data$Dro_v_Con,
+  Foc = data$Foc_v_Con,
+  Xvm = data$Xvm_v_Con
 )
 
 # added to drop empty elements from my data
