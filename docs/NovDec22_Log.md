@@ -16,16 +16,18 @@ Been as though we are looking at different features between treatment groups, an
 
 ## IPO Runs
 
-IPO was run twice;
+IPO was run twice for positive mode data;
 
 - First with all samples (minus blanks)
 - Then without the samples C12-2 and X12-4 (minus blanks)
 
-Outputs can be found here, `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/IPO`.
+Outputs can be found here, `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/IPO/Pos`.
 
 ## XCMS Runs
 
-XCMS was run multiple times, first using the parameters from IPO, followed by changes to adjust the outputs. A summary file of these changes and outputs can be found; `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/XCMS_Params.xlsx`.
+### Positive mode
+
+XCMS was run multiple times, first using the parameters from IPO, followed by changes to adjust the outputs. A summary file of these changes and outputs can be found; `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Pos/XCMS_Params.xlsx`.
 
 The features were filtered using the custom R script, `/Volumes/Jamie_EXT/Projects/Metabolomics/bin/ProcessingXCMSOutput-Automated.R`.
 
@@ -151,13 +153,15 @@ To do this I performed a pairwise comparison of each group to control at T2, the
 |T2   |Foc v Con | 10 up, 22 down   | 10                  |
 |T2   |Xvm v Con | 15 up, 17 down   | 3                   |
 
-#### Venn Diagram of shared features from control vs treatment pairwise comparisons
+#### Venn Diagram of shared features from control vs treatment pairwise comparisons T2
 
 ![venn of shared features from con v treatment pairwise comparisons](figures/Pairwise_SharedFeaturesVenn.png)
 
-*Figure 2: Venn of the shared significant (p<0.05) features between treatments. Using the significant features from the previous ANOVA, each treatment was compared to the control for a pairwise analysis. Significant features were extracted and then shared features were identified using `SharedFeaturesVenn.R`. Dro = significant features (p <0.05) from drought vs control pairwise analysis; Foc = significant features (p <0.05) from Fusarium vs control pairwise analysis; Xvm = significant features (p <0.05) from Xanthomonas vs control pairwise analysis.*
+*Figure 2: Venn of the shared significant (p<0.05) features between treatments T2. Using the significant features from the previous ANOVA, each treatment was compared to the control for a pairwise analysis. Significant features were extracted and then shared features were identified using `SharedFeaturesVenn.R`. Dro = significant features (p <0.05) from drought vs control pairwise analysis; Foc = significant features (p <0.05) from Fusarium vs control pairwise analysis; Xvm = significant features (p <0.05) from Xanthomonas vs control pairwise analysis.*
 
 Of these features, **M830.837T11.111** was identified a significantly different from the control in every treatment (shared feature in centre of Venn), and may be a marker of wilting/water stress. **But, it has a retention time of 11.111?**
+
+**M883.492T15.092** was identified a significantly different from the control in the drought and Fusarium treatments and has a similar mass and retention time to **M831.338T16.12**, which was identified as [a featur of interest](#features-of-interest) from the comparison of signifcant features over time.
 
 ---
 
