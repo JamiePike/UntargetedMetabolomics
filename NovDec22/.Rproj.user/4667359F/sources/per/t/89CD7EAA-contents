@@ -1,0 +1,59 @@
+library(ggplot2)
+library(tidyverse)
+
+setwd("/Users/u1983390/Library/CloudStorage/OneDrive-UniversityofWarwick/Writing/CourseSubmissions/Figures/GlobalBananaProduction/")
+
+bananaprod <- read.csv("/Users/u1983390/Library/CloudStorage/OneDrive-UniversityofWarwick/Writing/CourseSubmissions/Figures/GlobalBananaProduction/banana-production.csv")
+#Source of data:https://www.bananalink.org.uk/all-about-bananas/
+
+view(bananaprod)
+
+#Filter by regions year, so use 2021 data
+bananaprod_2021<- bananaprod %>% filter(Year == "2021")
+head(bananaprod_2012)
+
+#get map data for world
+mapdata_og <- map_data("world")
+view(mapdata_og)
+
+#Merge the two datasets by region
+linedata <- left_join(mapdata_og, bananaprod, by="region")
+head(mapdata)
+
+mapdata <- left_join(mapdata_og, bananaprod_2021, by="region")
+head(mapdata)
+
+#create a table of items that are not in the final dataframe but exist in the input dataframes. 
+notinbananaprod <- anti_join(mapdata, bananaprod_2021, by = "region")
+head(notinbananaprod)
+
+#Log transform the map data 
+mapdata$logtonnes <- log(mapdata$Bananas.tonnes)
+
+mapdata$Year
+
+prodmap <- ggplot(mapdata, aes(x = long, y = lat, group=group)) +
+  geom_polygon(aes(fill = Bananas.tonnes), color = "black", linewidth = 0.2) +
+  scale_fill_gradient(breaks = c(1000000,10000000,20000000, 30000000),
+                      labels = c("1mt","10mt", "20mt","30mt" ),
+                      name="Banana Production\nin 2021 (Million tonnes)", 
+                      low = "#FFFFFF", 
+                      high = "#FF0000",
+                      limits = c(0, NA),
+                      na.value="grey")+
+  coord_quickmap() +
+  theme_void() +
+  theme(legend.position = "bottom")
+prodmap
+
+ggsave("./BananaProdMap.pdf", height = 3.5, width =6.5)
+
+linedata <- linedata %>% filter(!is.na(linedata$Year))
+
+prodline <- ggplot(linedata, aes(x = Year, y = Bananas.tonnes, group=region, color=region)) +
+  geom_line() + 
+  scale_fill_gradient(breaks = c(1000000,10000000,20000000, 30000000),
+                      labels = c("1 million","10 million", "20 million","30 million" ),
+                      name="Banana Production\nfor 2021 (Tonnes)") + 
+  theme(legend.position="none")
+prodline

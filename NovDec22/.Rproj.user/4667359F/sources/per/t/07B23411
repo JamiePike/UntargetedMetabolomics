@@ -1,0 +1,26 @@
+{
+    "id": "07B23411",
+    "path": "/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Scripts/XCMS_EarlySamplesRemoved_121023.R",
+    "project_path": "XCMS/Scripts/XCMS_EarlySamplesRemoved_121023.R",
+    "type": "r_source",
+    "hash": "1098524712",
+    "contents": "",
+    "dirty": false,
+    "created": 1696433347489.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "74,83",
+        "scrollLine": "56"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1697140292,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1697140292042,
+    "read_only": false,
+    "read_only_alternatives": []
+}

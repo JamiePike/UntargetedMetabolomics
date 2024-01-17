@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Progress with NovDec data analysis</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="progress-with-novdec-data-analysis">Progress with NovDec data analysis</h1>
+<p>For all analysis I followed the protocol outlined in the Processing Metabolomics Data protocol: <code>/Volumes/Jamie_EXT/Projects/Metabolomics/docs</code>.</p>
+<h2 id="overview-of-symptom-development">Overview of symptom development</h2>
+<p>Been as though we are looking at different features between treatment groups, and trying to attribute these to treatment, it is useful to have symptom development as context. Figures were generated using <a href="../../bin/SymptomDevStats.R"><code>SymptomDevStats.R</code></a>.</p>
+<h3 id="external-symptom-development">External symptom development</h3>
+<p>![External Symptom developmen</p>
+<h3 id="internal-symptom-development">Internal symptom development</h3>
+<p><img src="file:////figures/Internal_plot.png" alt="Internal Symptom development"></p>
+<h2 id="ipo-runs">IPO Runs</h2>
+<p>IPO was run twice;</p>
+<ul>
+<li>First with all samples (minus blanks)</li>
+<li>Then without the samples C12-2 and X12-4 (minus blanks)</li>
+</ul>
+<p>Outputs can be found here, <code>/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/IPO</code>.</p>
+<h2 id="xcms-runs">XCMS Runs</h2>
+<p>XCMS was run multiple times, first using the parameters from IPO, followed by changes to adjust the outputs. A summary file of these changes and outputs can be found; <code>/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/XCMS_Params.xlsx</code>.</p>
+<p>The features were filtered using the custom R script, <code>/Volumes/Jamie_EXT/Projects/Metabolomics/bin/ProcessingXCMSOutput-Automated.R</code>.</p>
+<p>Summary outputs were recorded in <code>/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/XCMS_Params.xlsx</code>.
+Individual graphs and datasets can be found in the corresponding XCMS output folder.</p>
+<hr>
+<p>Eventually, I used the XCMS parameters in <code>/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123</code> for the +ve mode analysis. Groups were separated by treatment and time for this parameted set, and contamininated features identifed at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants).</p>
+<h2 id="metaboanalyst">MetaboAnalyst</h2>
+<p>Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalised (using the approach which produced the best normal distribution - typically this included normalizing by the Sodium Formate peak).</p>
+<hr>
+<h3 id="metaboanalyst-preliminary-analysis">MetaboAnalyst Preliminary Analysis</h3>
+<p>All results saved here: <code>/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst</code>. For each analysis, I ensured that data were normailly distributed (followed appropriate normalisation steps), then generated heatmaps for each different grouping:</p>
+<ul>
+<li>Deafult</li>
+<li>Samples not clustered</li>
+<li>only significant features</li>
+</ul>
+<p>Performed an ANOVA to identify sig. features (raw p &lt;0.05), and generated a PCA using all features using the following input file: <code>/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input-TimeGroups.csv</code>.</p>
+<p>I used the <code>edit groups</code> feature  in MetaboAnalyst to separate each group and process them all individually.</p>
+<p>Most XCMS outputs produced heatmaps which did not cluster by default sample groups. Some samples commonly displayed a different feature profile from most other samples within that treatment/time group. The samples are;</p>
+<ul>
+<li>C9-4</li>
+<li>D9-3</li>
+<li>F9-1</li>
+<li>X15-3</li>
+<li>C12-1</li>
+<li>F9-4</li>
+<li>D12-2</li>
+</ul>
+<p>I have found that the best way to ensure that the heatmap clusters into groups, is to separate by time and remove blanks and QCs. In this way, significant features group the samples by treatment.</p>
+<p><strong>The first time point separates treatment groups best, by the second and third time points feature profiles between the samples can vary a lot within a treatment group</strong>. But the symptoms overlap between between Foc and Xvm best at second time point.</p>
+<p>I think I will have to narrow down at a particular time point of interest, find features there, and see if they appear over time.</p>
+<p><a href="#time-as-a-factor">Going to also look at time as a factor and not treatment</a>.</p>
+<hr>
+<h3 id="venn-diagram-of-shared-sig-features-over-time">Venn Diagram of shared sig features over time</h3>
+<p>A list of significant features was used to generate a Venn Diagram to identify which of these significant features are shared over time.</p>
+<p><img src="file:////docs/figures/SharedFeaturesVenn.png" alt="venn of shared features"></p>
+<p><em>Figure 1: Venn of the shared features between timepoints when using p&lt;0.05 for each timepoint individually. T1 = first time point, T2 = second time point, T3 = third time point.</em></p>
+<p>None of the significant features identified were shared between all time points. More signifcant features are shared between the first time point and the third timepoint, than between the second and first and second and third. The majority of the significant features were not shared between timepoints.</p>
+<hr>
+<h3 id="metaboanalyst-secondary-analysis">MetaboAnalyst Secondary Analysis</h3>
+<p>Once the significant features were identified (raw p &lt;0.05), I separated these from the original input file using the <a href="https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py"><code>ExtractColumns.py</code></a>. This reduced the set of features that can be uploaded to MetaboAnaylst. I normalised and generated heatmaps, dendograms, feature plots and PCAs for only the signifcant features, so analysis such as PCA will not be skewed by features that are not significant (p &lt;0.05).</p>
+<p>For this, I symlinked the original MetaboAnalyst input file to the MetaboAnalyst output directory for each timepoint, I manually generated a csv file listing the columns to extract for that timepoint (significant (p &lt;0.05) features identified by preliminary anova)(including Sodium_formate and text), and used them as input for <a href="https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py"><code>ExtractColumns.py</code></a>.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># example of command line for previous step - this shows the first time point.</span>
+<span class="hljs-comment"># symlink file</span>
+<span class="hljs-built_in">ln</span> -s /Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input.csv ./
+
+<span class="hljs-comment"># generate csv of features to extract</span>
+<span class="hljs-built_in">touch</span> Extract-sig_features_0.05.csv
+<span class="hljs-comment"># I then pasted teh data manually for them the MetaboAnalyst anova_posthoc.csv file. </span>
+
+<span class="hljs-comment"># extact columns command</span>
+python ../../../bin/ExtractColumns.py Extract-sig_features_0.05.csv MetaboAnalyst_Input.csv &gt; MetaboAnalyst_sig_features_0.05.csv
+</code></pre>
+<p>I then edited the csv file so only one time point (corresponding to the dir) were present in the csv.</p>
+<p>I then uploaded the new csv which contains only the significant features for that time point to MetaboAnalyst, and repeated the initial anaylsis.</p>
+<h3 id="features-of-interest">Features of interest</h3>
+<p>I was mindful of the shared features which were identified in using the <a href="#venn-diagram-of-shared-sig-features-over-time">Venn diagram</a>. Its better to look for features which appear over a longer time period as targets for biomarkers. No point having a marker that can only be used for a day or so, and it narrows down the number of features to process!</p>
+<p>I think the features which are shared between T1 and T3 are curious, why are they not identified as sig. in the middle timepoint? It appears to be all the same metabolite whose adducts have not been automatically identified using CAMERA and XCMS and filtered out. They all; similar retention time, similar mass, same profile in heatmap.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Feature</th>
+<th style="text-align:center">Share</th>
+<th style="text-align:center">Viability</th>
+<th style="text-align:center">Tukey's HSD</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>M1279.087T13.111</strong></td>
+<td style="text-align:center">T1-T2</td>
+<td style="text-align:center">low</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">Shared as a signifcant feature between T1 and T2, and is reduced in Xvm and Foc treatments (average), but increased in Con and  Dro.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M882.812T18.125</strong></td>
+<td style="text-align:center">T1-T2</td>
+<td style="text-align:center">high</td>
+<td style="text-align:center">dro_9-con_9; foc_9-dro_9</td>
+<td style="text-align:left">Also shared between T1 and T2 and is redcued in Xvm and Foc, but increased in Dro and Con.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M1239.758T16.118</strong></td>
+<td style="text-align:center">T1-T2</td>
+<td style="text-align:center">low</td>
+<td style="text-align:center">foc_9-dro_9</td>
+<td style="text-align:left">The 3 Foc samples varied in peak intensity for this feature dramatically (F9_1 = -1.13; F9_2 = 1.72; F9_3 = 1.92), so this does not appear to be a stable feature to use as a biomarker.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M632.472T1474.795</strong></td>
+<td style="text-align:center">T1-T3</td>
+<td style="text-align:center">mid</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M633.474T1424.866</strong></td>
+<td style="text-align:center">T1-T3</td>
+<td style="text-align:center">mid</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M634.485T1424.862</strong></td>
+<td style="text-align:center">T1-T3</td>
+<td style="text-align:center">mid</td>
+<td style="text-align:center">xvm_9-foc_9</td>
+<td style="text-align:left">Elutes at same time with similar mass and same profile in heatmap at T1. Probably adducts of same feature. Why this one detected in Tukey's HSD but not others?</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M648.465T1441.075</strong></td>
+<td style="text-align:center">T1-T3</td>
+<td style="text-align:center">mid</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M649.479T1424.057</strong></td>
+<td style="text-align:center">T1-T3</td>
+<td style="text-align:center">mid</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M650.482T1423.88</strong></td>
+<td style="text-align:center">T1-T3</td>
+<td style="text-align:center">mid</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M573.464T1458.338</strong></td>
+<td style="text-align:center">T1-T3</td>
+<td style="text-align:center">mid</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M575.48T1424.867</strong></td>
+<td style="text-align:center">T1-T3</td>
+<td style="text-align:center">mid</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">Elutes at same time with very similar mass and same profile in heatmap at T1. Probably adducts of same feature.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M367.151T397.982</strong></td>
+<td style="text-align:center">T2-T3</td>
+<td style="text-align:center">low</td>
+<td style="text-align:center">xvm_15-con_15</td>
+<td style="text-align:left">Increased in Xvm and one Dro sample but reduced in all othe treatments.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>M831.338T16.12</strong></td>
+<td style="text-align:center">T2-T3</td>
+<td style="text-align:center">low</td>
+<td style="text-align:center">-</td>
+<td style="text-align:left">This is a sig feature shared between T1 and T3, but appears to be an adduct of M835.826T17.121, which is a sig feature at T3 and separates Xvm for all other treatments.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="time-as-a-factor">Time as a factor</h3>
+
+        
+        
+    </body>
+    </html>
