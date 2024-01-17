@@ -34,27 +34,26 @@
 # Define the input file path and sample lists. 
 
 # Set your working directory. 
-setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Neg/01_IPO-Basic")
+setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Pos/12_BlankGroup3_191123")
 # Replace with your data file. 
 data_file <- "result_CAMERA_xcms_pos_Basic_Param.raw.csv"
 
 # Replace with your sample list - (you can just copy and paste from the csv if you use terminal to cat the file!)
-sample_list  <- c("16_C9-3_neg","19_C9-2_neg","21_C9-4_neg","45_C9-1_neg","13_D9-4_neg","20_D9-1_neg","48_D9-3_neg","49_D9-2_neg","26_F9-1_neg","34_F9-2_neg","36_F9-3_neg","46_F9-4_neg","14_X9-2_neg","23_X9-1_neg","27_X9-3_neg","40_X9-4_neg","02_C12-2_neg","07_C12-1_neg","18_C12-3_neg","33_C12-4_neg","12_D12-2_neg","28_D12-3_neg","44_D12-1_neg","52_D12-4_neg","05_F12-4_neg","22_F12-1_neg","38_F12-2_neg","43_F12-3_neg","03_X12-4_neg","09_X12-3_neg","32_X12-2_neg","41_X12-1_neg","15_C15-4_neg","31_C15-3_neg","47_C15-1_neg","50_C15-2_neg","04_D15-4_neg","06_D15-2_neg","35_D15-1_neg","37_D15-3_neg","17_F15-3_neg","25_F15-1_neg","30_F15-2_neg","51_F15-4_neg","08_X15-4_neg","11_X15-3_neg","29_X15-1_neg","42_X15-2_neg","01_Blank_neg","53_Blank_neg","10_QC1_neg","24_QC2_neg","39_QC3_neg")  
-
+sample_list  <- c("C9-1","C9-2","C9-3","C9-4","D9-1","D9-2","D9-3","D9-4","F9-1","F9-2","F9-3","F9-4","X9-1","X9-2","X9-3","X9-4","C12-1","C12-3","C12-4","D12-1","D12-2","D12-3","D12-4","F12-1","F12-2","F12-3","F12-4","X12-1","X12-2","X12-3","C15-1","C15-2","C15-3","C15-4","D15-1","D15-2","D15-3","D15-4","F15-1","F15-2","F15-3","F15-4","X15-1","X15-2","X15-3","X15-4","BLANK_1_Dup2","BLANK_1_Dup3","BLANK_1","BLANK_2_Dup2","BLANK_2_Dup3","BLANK_2_Dup4","BLANK_2","QC-1_Dup","QC-1","QC-2","QC-3")
 ###################################
 #Filtering
 ###################################
 
 #Filtering Samples:
 #Please list the QC samples you wish to pool to calculate precision.
-PrecisionQCs <-  c("10_QC1_neg","24_QC2_neg","39_QC3_neg")
+PrecisionQCs <-  c("QC-1_Dup","QC-1","QC-2","QC-3")
 #Please list the Blank samples you wish to pool to calculate the blank contribution. 
-Blank_samples <-  c("01_Blank_neg","53_Blank_neg") 
+Blank_samples <-  c("BLANK_1_Dup2","BLANK_1_Dup3","BLANK_1","BLANK_2_Dup2","BLANK_2_Dup3","BLANK_2_Dup4","BLANK_2") 
 
 #Filtering parameters:
 RSD_Filter <- 29.99 #The Univeristy of Birmingham filter there data based on the relative standard deviation of their QC samples. They use a threshold of 30%, which is set here as deafult. You can change if you would like. Set too 100 if you do not want to use the RSD_Filter.  
 Blank_contribution_filter <- 100 #The Univeristy of Birmingham filter there data based on the pecentage blank contribution. They use a threshold of 5%, which is set here as deafult. You can change if you would like. Set too 100 if you do not want to use the Blank_contribution_Filter  
-
+filter_blank_samples <- TRUE  # Set to TRUE if you want to filter by peaks in all Blank_samples (i.e., all blank column peak values == 0), set to FALSE if you want to skip this filtering
 ##############################################################################################################
 ##############################################################################################################
 
@@ -82,6 +81,7 @@ if (length(sample_list) == 0) {
   if (file.exists(data_file)) {
     # Read the CSV data
     data <- read.csv(data_file) #prevent it adding an X to the start of numbered headers
+    colnames(data) <- gsub("[^[:alnum:].]", ".", colnames(data)) # fix errors caused by special characters.
     
     # Calculate the total number of sample columns based on the sample list
     total_samples <- length(sample_list)
@@ -178,8 +178,7 @@ if (length(sample_list) == 0) {
         )
         
         #Amend the names of the samples to match R formatting. R does not like the "-" special character!
-        #modified_sample_list <- gsub("_", ".", modified_sample_list)
-        modified_sample_list <- gsub("-", ".", sample_list)
+        modified_sample_list <- unlist(lapply(sample_list, function(x) gsub("[^[:alnum:].]", ".", x)))
         
         for (i in 1:length(modified_sample_list)) {
           sample_col_name <- modified_sample_list[i]
@@ -243,11 +242,11 @@ if (length(sample_list) == 0) {
         
         cat(paste0("Done.\nCalculating precision..."))
         #Adapted from Univeristy of Birmingham data filtering document. 
-        
-        # # Ensure PrecisionQCs is a character vector of the modified column names
-        # PrecisionQCs <- unlist(lapply(PrecisionQCs, function(x) gsub("[^[:alnum:].]", ".", x)))
-        # Blank_samples <- unlist(lapply(Blank_samples, function(x) gsub("[^[:alnum:].]", ".", x)))
-        
+
+        ## Ensure PrecisionQCs is a character vector of the modified column names
+        PrecisionQCs <- unlist(lapply(PrecisionQCs, function(x) gsub("[^[:alnum:].]", ".", x)))
+        Blank_samples <- unlist(lapply(Blank_samples, function(x) gsub("[^[:alnum:].]", ".", x)))
+
         # Calculate the row mean, standard deviation, and count for each row
         features_without_blank_peaks_stat <- features_without_blank_peaks %>%
           rowwise() %>%
@@ -268,15 +267,19 @@ if (length(sample_list) == 0) {
           filter(QCRelStandDev <= RSD_Filter) %>%
           filter(PercentBlankContribution <= Blank_contribution_filter)
         
-        AfterFilters <- nrow(filtered_features) -1 
+        # filter out rows where columns in "Blank_samples" have a value greater than 0
+        if (filter_blank_samples) {
+          filtered_data <- filtered_features %>%
+            filter(across(all_of(Blank_samples), ~. <= 0))
+        }
         
-        ###########################################
-        #Filter Isotopes. 
-        ###########################################
+        AfterFilters <- nrow(filtered_data) -1 
         
         # Filter the data frame to remove rows with any text in the 'Isotopes' column
-        filtered_data <- filtered_features %>%
+        filtered_data <- filtered_data %>%
           filter(!grepl("[A-Za-z]+", isotopes))
+        
+        
         
         AfterIsosRemoved <- nrow(filtered_data) 
         
@@ -298,15 +301,11 @@ if (length(sample_list) == 0) {
         # Perform sample-specific analysis and store the results in a data frame
         filtered_sample_analysis_results <- data.frame(
           Sample = sample_list,
-          ZeroNum = numeric(length(sample_list)),
-          Percentage_Zeros = numeric(length(sample_list)),
-          Count_of_Peaks = numeric(length(sample_list)),
-          Sum_of_Peaks = numeric(length(sample_list))
+          ZeroNum = numeric(length(modified_sample_list)),
+          Percentage_Zeros = numeric(length(modified_sample_list)),
+          Count_of_Peaks = numeric(length(modified_sample_list)),
+          Sum_of_Peaks = numeric(length(modified_sample_list))
         )
-        
-        #Amend the names of the samples to match R formatting. R does not like the "-" special character!
-        #modified_sample_list <- gsub("_", ".", modified_sample_list)
-        modified_sample_list <- gsub("-", ".", sample_list)
         
         for (i in 1:length(modified_sample_list)) {
           sample_col_name <- modified_sample_list[i]
