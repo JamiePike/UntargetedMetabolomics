@@ -13,9 +13,9 @@ library(Rmpi)
 
 xset <- xcmsSet( 
   method = "centWave",
-  peakwidth       = c(40, 100),
+  peakwidth       = c(40, 100), # expanded from 84.5
   ppm             = 46.25,
-  noise           = 800,
+  noise           = 800, #changed from 1000
   snthresh        = 10,
   mzdiff          = -0.00815,
   prefilter       = c(3, 100),

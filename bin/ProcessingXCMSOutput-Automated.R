@@ -34,12 +34,12 @@
 # Define the input file path and sample lists. 
 
 # Set your working directory. 
-setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Pos/12_BlankGroup3_191123")
+setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Pos/11_BlankGroup2_181123/")
 # Replace with your data file. 
 data_file <- "result_CAMERA_xcms_pos_Basic_Param.raw.csv"
 
 # Replace with your sample list - (you can just copy and paste from the csv if you use terminal to cat the file!)
-sample_list  <- c("C9-1","C9-2","C9-3","C9-4","D9-1","D9-2","D9-3","D9-4","F9-1","F9-2","F9-3","F9-4","X9-1","X9-2","X9-3","X9-4","C12-1","C12-3","C12-4","D12-1","D12-2","D12-3","D12-4","F12-1","F12-2","F12-3","F12-4","X12-1","X12-2","X12-3","C15-1","C15-2","C15-3","C15-4","D15-1","D15-2","D15-3","D15-4","F15-1","F15-2","F15-3","F15-4","X15-1","X15-2","X15-3","X15-4","BLANK_1_Dup2","BLANK_1_Dup3","BLANK_1","BLANK_2_Dup2","BLANK_2_Dup3","BLANK_2_Dup4","BLANK_2","QC-1_Dup","QC-1","QC-2","QC-3")
+sample_list  <- c("C9-1","C9-2","C9-3","C9-4","D9-1","D9-2","D9-3","D9-4","F9-1","F9-2","F9-3","F9-4","X9-1","X9-2","X9-3","X9-4","C12-1","C12-3","C12-4","D12-1","D12-2","D12-3","D12-4","F12-1","F12-2","F12-3","F12-4","X12-1","X12-2","X12-3","C15-1","C15-2","C15-3","C15-4","D15-1","D15-2","D15-3","D15-4","F15-1","F15-2","F15-3","F15-4","X15-1","X15-2","X15-3","X15-4","BLANK_1","BLANK_2_Dup2","BLANK_2","QC-1_Dup","QC-1","QC-2","QC-3")
 ###################################
 #Filtering
 ###################################
@@ -48,12 +48,12 @@ sample_list  <- c("C9-1","C9-2","C9-3","C9-4","D9-1","D9-2","D9-3","D9-4","F9-1"
 #Please list the QC samples you wish to pool to calculate precision.
 PrecisionQCs <-  c("QC-1_Dup","QC-1","QC-2","QC-3")
 #Please list the Blank samples you wish to pool to calculate the blank contribution. 
-Blank_samples <-  c("BLANK_1_Dup2","BLANK_1_Dup3","BLANK_1","BLANK_2_Dup2","BLANK_2_Dup3","BLANK_2_Dup4","BLANK_2") 
+Blank_samples <-  c("BLANK_1","BLANK_2_Dup2","BLANK_2") 
 
 #Filtering parameters:
-RSD_Filter <- 29.99 #The Univeristy of Birmingham filter there data based on the relative standard deviation of their QC samples. They use a threshold of 30%, which is set here as deafult. You can change if you would like. Set too 100 if you do not want to use the RSD_Filter.  
+RSD_Filter <- 100 #The Univeristy of Birmingham filter there data based on the relative standard deviation of their QC samples. They use a threshold of 30%, which is set here as deafult. You can change if you would like. Set too 100 if you do not want to use the RSD_Filter.  
 Blank_contribution_filter <- 100 #The Univeristy of Birmingham filter there data based on the pecentage blank contribution. They use a threshold of 5%, which is set here as deafult. You can change if you would like. Set too 100 if you do not want to use the Blank_contribution_Filter  
-filter_blank_samples <- TRUE  # Set to TRUE if you want to filter by peaks in all Blank_samples (i.e., all blank column peak values == 0), set to FALSE if you want to skip this filtering
+filter_blank_samples <- F  # Set to TRUE if you want to filter by peaks in all Blank_samples (i.e., all blank column peak values == 0), set to FALSE if you want to skip this filtering
 ##############################################################################################################
 ##############################################################################################################
 
@@ -267,21 +267,22 @@ if (length(sample_list) == 0) {
           filter(QCRelStandDev <= RSD_Filter) %>%
           filter(PercentBlankContribution <= Blank_contribution_filter)
         
-        # filter out rows where columns in "Blank_samples" have a value greater than 0
-        if (filter_blank_samples) {
-          filtered_data <- filtered_features %>%
-            filter(across(all_of(Blank_samples), ~. <= 0))
-        }
-        
-        AfterFilters <- nrow(filtered_data) -1 
         
         # Filter the data frame to remove rows with any text in the 'Isotopes' column
-        filtered_data <- filtered_data %>%
+        filtered_data <- filtered_features %>%
           filter(!grepl("[A-Za-z]+", isotopes))
         
         
+        AfterIsosRemoved <- nrow(filtered_data)
         
-        AfterIsosRemoved <- nrow(filtered_data) 
+        # filter out rows where columns in "Blank_samples" have a value greater than 0
+        if (filter_blank_samples) {
+          filtered_data <- filtered_data %>%
+            filter(across(all_of(Blank_samples), ~. <= 0))
+        }
+        
+        AfterFilters <- nrow(filtered_data) 
+
         
         ###########################################
         #Report Results

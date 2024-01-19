@@ -147,11 +147,11 @@ To do this I performed a pairwise comparison of each group to control at T2, the
 - For volcano plots I used the same FC and statistical significance tests and thresholds.
 - Also generated a PCA and labeled the samples, as well as a dendrogram and heatmap  (euclidean dist and ward clustering)
 
-|Time | Pairwise | No. sig features | No. of Sig features |
-|:---:|:--------:|:----------------:|:-------------------:|
-|T2   |Dro v Con | 12 up, 20 down   | 3                   |
-|T2   |Foc v Con | 10 up, 22 down   | 10                  |
-|T2   |Xvm v Con | 15 up, 17 down   | 3                   |
+|Time | Pairwise | Fold change   | No. of Sig features |
+|:---:|:--------:|:-------------:|:-------------------:|
+|T2   |Dro v Con | 12 up, 20 down| 3                   |
+|T2   |Foc v Con | 10 up, 22 down| 10                  |
+|T2   |Xvm v Con | 15 up, 17 down| 3                   |
 
 #### Venn Diagram of shared features from control vs treatment pairwise comparisons T2
 
@@ -161,7 +161,7 @@ To do this I performed a pairwise comparison of each group to control at T2, the
 
 Of these features, **M830.837T11.111** was identified a significantly different from the control in every treatment (shared feature in centre of Venn), and may be a marker of wilting/water stress. **But, it has a retention time of 11.111?**
 
-**M883.492T15.092** was identified a significantly different from the control in the drought and Fusarium treatments and has a similar mass and retention time to **M831.338T16.12**, which was identified as [a featur of interest](#features-of-interest) from the comparison of signifcant features over time.
+**M883.492T15.092** was identified a significantly different from the control in the drought and Fusarium treatments and has a similar mass and retention time to **M831.338T16.12**, which was identified as [a feature of interest](#features-of-interest) from the comparison of significant features over time.
 
 ---
 
