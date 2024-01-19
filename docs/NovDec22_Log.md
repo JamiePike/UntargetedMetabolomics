@@ -21,24 +21,50 @@ IPO was run twice for positive mode data;
 - First with all samples (minus blanks)
 - Then without the samples C12-2 and X12-4 (minus blanks)
 
-Outputs can be found here, `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/IPO/Pos`.
+Outputs can be found here:
+
+Positive mode -> `Metabolomics/NovDec22/IPO/Pos`.
+
+Negative mode -> `Metabolomics/NovDec22/IPO/Neg`
 
 ## XCMS Runs
 
 ### Positive mode
 
-XCMS was run multiple times, first using the parameters from IPO, followed by changes to adjust the outputs. A summary file of these changes and outputs can be found; `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Pos/XCMS_Params.xlsx`.
+XCMS was run multiple times, first using the parameters from IPO, followed by changes to adjust the outputs. A summary file (displayed below) of these changes and outputs can be found; `/Metabolomics/NovDec22/XCMS/Pos/XCMS_Params.xlsx`
 
-The features were filtered using the custom R script, `/Volumes/Jamie_EXT/Projects/Metabolomics/bin/ProcessingXCMSOutput-Automated.R`.
+| Date       | Directory Name                | Param Summary                                 | Treatment grouping              | Feature No. | Feature No - no peaks in blanks | features after filtering | Notes                                                                                                                                                                     | XCMS Params |              |       |       |          |          |           |             |           |          |                 |         |          |          |          |          |          |         |           |            |           |                |         |                   |        |         |         |     |
+|------------|-------------------------------|-----------------------------------------------|---------------------------------|-------------|---------------------------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|--------------|-------|-------|----------|----------|-----------|-------------|-----------|----------|-----------------|---------|----------|----------|----------|----------|----------|---------|-----------|------------|-----------|----------------|---------|-------------------|--------|---------|---------|-----|
+|            |                               |                                               |                                 |             |                                 |                          |                                                                                                                                                                           | method      | peakwidth    | ppm   | noise | snthresh | mzdiff   | prefilter | mzCenterFun | integrate | fitgauss | verbose.columns | method  | plottype | distFunc | profStep | center   | response | gapInit | gapExtend | factorDiag | factorGap | localAlignment | method  | bw                | mzwid  | minfrac | minsamp | max |
+| 04/10/2023 | 01_IPO_Basic_041023           | IPO deafult output for this data set          | Separated by time and treatment | 1895        | 378                             |                          | A lot of features also identified in the Blank samples                                                                                                                    | centWave    | c(40, 84.5), | 47    | 1000  | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 47       | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 0.879999999999999 | 0.0265 | 1       | 1       | 50  |
+| 05/10/2023 | 02_IPO_Basic_DG_051023        | Changed centre sample                         | Separated by time and treatment | 1902        | 383                             |                          | A lot of features also identified in the Blank samples                                                                                                                    | centWave    | c(40, 84.5), | 47    | 1000  | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 52 (QC1) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 0.879999999999999 | 0.0265 | 1       | 1       | 50  |
+| 06/10/2023 | 03_MinFrac_061023             | Changed min frac                              | Separated by time and treatment | 2781        | 886                             |                          | Minfrac reduction increases number of features (ofc)                                                                                                                      | centWave    | c(40, 84.5), | 47    | 1000  | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 52 (QC1) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 0.879999999999999 | 0.0265 | 0.75    | 1       | 50  |
+| 07/10/2023 | 04_Noise800_071023            | Changed noise                                 | Separated by time and treatment | 3528        | 1179                            |                          | Lowered the Noise threshold                                                                                                                                               | centWave    | c(40, 84.5), | 47    | 800   | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 52 (QC1) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 0.879999999999999 | 0.0265 | 0.75    | 1       | 50  |
+| 12/10/2023 | 05_EarlySamplesRemoved_121023 | Removed samples                               | Separated by time and treatment | 3857        | 1755                            |                          | Early Samples removed (Blamnk_1, C12-2, X12-4: contamination appears to be present).                                                                                      | centWave    | c(40, 84.5), | 47    | 800   | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 50 (QC2) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 0.879999999999999 | 0.0265 | 0.75    | 1       | 50  |
+| 01/11/2023 | 06_EarlySamplesRemoved_011123 | Removed samples                               | Separated by time and treatment | 3010        | 1331                            |                          | Early Samples removed (Blank_1, C12-2: contamination appears to be present, but when you filtere based on "Blanks" column, X12-4 does not appear as much of an outlier).  | centWave    | c(40, 84.5), | 47    | 1000  | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 51 (QC2) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 0.879999999999999 | 0.0265 | 0.75    | 1       | 50  |
+| 02/11/2023 | 07_MinSampThree_021123        | Removed samples                               | Separated by time and treatment | 2725        | 1333                            | 524                      | Early Samples removed (Blank_1, C12-2: contamination appears to be present, but when you filtere based on "Blanks" column, X12-4 does not appear as much of an outlier).  | centWave    | c(40, 84.5), | 47    | 1000  | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 51 (QC2) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 0.879999999999999 | 0.0265 | 0.75    | 3       | 50  |
+|            |                               |                                               |                                 |             |                                 |                          | Ran IPO again with Blanks, C12-2 and X12-4 removed                                                                                                                        |             |              |       |       |          |          |           |             |           |          |                 |         |          |          |          |          |          |         |           |            |           |                |         |                   |        |         |         |     |
+| 06/11/2023 | 08_NewIPO_161123              | Changed settings based on new ipo outout      | Separated by time and treatment | 2095        | 435                             |                          | Ran  again with new IPO params and  Blanks, C12-2 and X12-4 removed                                                                                                       | centWave    | c(40, 84.5), | 46.25 | 1000  | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 50 (QC2) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 14.32             | 0.003  | 0.94    | 1       | 50  |
+| 06/11/2023 | 09_BlankWithQCs_161123        | Changed where blank is stored                 | Separated by time and treatment |             |                                 |                          |                                                                                                                                                                           | centWave    | c(40, 84.5), | 46.25 | 1000  | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 50 (QC2) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 14.32             | 0.003  | 0.94    | 1       | 50  |
+| 06/11/2023 | 10_BlankGrou_171123           | Created separate folder full of Blank_2 dupes | Separated by time and treatment | 3016        | 1358                            | 695                      |                                                                                                                                                                           | centWave    | c(40, 84.5), | 46.25 | 1000  | 10       | -0.00815 | c(3,100)  | wMean       | 1         | FALSE    | FLASE           | obiwarp | none     | cor_opt  | 1        | 54 (QC2) | 1        | 0.32    | 2.7       | 2          | 1         | 0              | density | 14.32             | 0.003  | 0.75    | 1       | 50  |
 
-Summary outputs were recorded in `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/XCMS_Params.xlsx`.
-Individual graphs and datasets can be found in the corresponding XCMS output folder.
+### Negtaive mode
+
+| Date       | Directory Name      | Param Summary                                                                                             | Treatment grouping              | Feature No. | Feature No - no peaks in blanks | features after filtering | Notes                                                   | XCMS Params |                |       |      |    |        |          |       |   |       |       |         |      |         |      |                        |   |      |     |   |   |   |         |      |       |      |   |    |
+|------------|---------------------|-----------------------------------------------------------------------------------------------------------|---------------------------------|-------------|---------------------------------|--------------------------|---------------------------------------------------------|-------------|----------------|-------|------|----|--------|----------|-------|---|-------|-------|---------|------|---------|------|------------------------|---|------|-----|---|---|---|---------|------|-------|------|---|----|
+| 15/01/2023 | 01_IPO_Basic_150124 | IPO deafult output for this data set, but ProfStep adjusted to 0.91 to account for profile matrix error.  | Separated by time and treatment | 1896        | 747                             | 310                      | A lot of features also identified in the Blank samples  | centWave    | c(15.84, 75.5) | 43.25 | 1000 | 10 | -0.012 | c(3,100) | wMean | 1 | FALSE | FLASE | obiwarp | none | cor_opt | 0.91 | 7 - Sample 48_D9-3_neg | 1 | 0.48 | 2.7 | 2 | 1 | 0 | density | 12.4 | 0.047 | 0.94 | 1 | 50 |
 
 ---
 
-Eventually, I used the XCMS parameters in `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis. Groups were separated by treatment and time for this parameter set, and contaminated features identified at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants).
+The features were filtered using the custom R script, `/Metabolomics/bin/ProcessingXCMSOutput-Automated.R`.
+
+Individual graphs and datasets can be found in the corresponding XCMS output folder.
+
+Eventually, I used the XCMS parameters in `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis. Groups were separated by treatment and time for this parameter set, and contaminated features identified at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants).
 
 ## MetaboAnalyst
+
+_So far only positive mode analysed._
 
 Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalised (using the approach which produced the best normal distribution - typically this included normalizing by the Sodium Formate peak).
 
@@ -46,13 +72,13 @@ Once processed using the filtering R script, data were uploaded to MetaboAnalyst
 
 ### MetaboAnalyst Preliminary Analysis
 
-All results saved here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst`. For each analysis, I ensured that data were normally distributed (followed appropriate normalisation steps), then generated heatmaps for each different grouping:
+All results saved here: `/Metabolomics/NovDec22/MetaboAnalyst`. For each analysis, I ensured that data were normally distributed (followed appropriate normalisation steps), then generated heatmaps for each different grouping:
 
 - Default
 - Samples not clustered
 - only significant features
 
-Performed an ANOVA to identify sig. features (raw p <0.05), and generated a PCA using all features using the following input file: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input-TimeGroups.csv`.
+Performed an ANOVA to identify sig. features (raw p <0.05), and generated a PCA using all features using the following input file: `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input-TimeGroups.csv`.
 
 I used the `edit groups` feature  in MetaboAnalyst to separate each group and process them all individually.
 
@@ -97,7 +123,7 @@ For this, I symlinked the original MetaboAnalyst input file to the MetaboAnalyst
 ```bash
 # example of command line for previous step - this shows the first time point.
 # symlink file
-ln -s /Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input.csv ./
+ln -s /Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input.csv ./
 
 # generate csv of features to extract
 touch Extract-sig_features_0.05.csv
