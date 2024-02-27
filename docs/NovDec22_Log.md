@@ -56,15 +56,15 @@ The features were filtered using the custom R script, `/Metabolomics/bin/Process
 
 Individual graphs and datasets can be found in the corresponding XCMS output folder.
 
-I used the XCMS parameters in `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis, as groups were separated by treatment and time for this parameter set, and contaminated features identified at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants). However, the number of features dropped off a lot when processing in metaboAnalyst. The results from the metaboanalyst analysis can be found here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/10_BlankGroup_171123_Analysis`. 
+I used the XCMS parameters in `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis, as groups were separated by treatment and time for this parameter set, and contaminated features identified at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants). However, the number of features dropped off a lot when processing in metaboAnalyst. The results from the metaboanalyst analysis can be found here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/10_BlankGroup_171123_Analysis`.
 
-I decided to repeat the analysis using the `05_EarlySamplesRemoved_121023` dataset. This is becuase it identified the largest number of features, did not contain the contaminant samples. One sample in the Blanks folder will still satisfy the 0.75 minfrac. 
+I decided to repeat the analysis using the `05_EarlySamplesRemoved_121023` dataset. This is becuase it identified the largest number of features, did not contain the contaminant samples. One sample in the Blanks folder will still satisfy the 0.75 minfrac.
 
 ## MetaboAnalyst
 
-### Positive mode
-
 Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalised (using the approach which produced the best normal distribution - typically this included normalizing by the Sodium Formate peak).
+
+### Positive mode
 
 ---
 
@@ -76,7 +76,7 @@ First, I just took the MetaboAnalyst_Input.csv, where all groups and timepoints 
 
 I generated heatmaps from these to see how the samples grouped:
 
-Clustered using all features | clustered using sig 143 features
+Clustered using all features | Clustered using sig 143 features
 :-------:|:-------:
 ![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples/AllSamplesClustered.svg) | ![clustered using sig 143 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples/Sig143FeaturesClustered.svg)
 
@@ -94,7 +94,7 @@ For each analysis, I ensured that data were normally distributed (followed appro
 - Samples not clustered
 - only significant features (n=125, p <0.05, FDR adjustsed p = 0.43232)
 
-Clustered using all features | clustered using sig 125 features
+Clustered using all features | Clustered using sig 125 features
 :-------:|:-------:
 ![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/Time-AllSamples/Heatmap_AllFeaturesClustered-Time.svg) | ![clustered using sig 143 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/Time-AllSamples/Heatmap_Sig125FeaturesClustered-time.svg)
 
@@ -140,16 +140,17 @@ There are a lot fewer significant features at this time point. Why? And how do I
 
 ---
 
-Clustered using all features | Clustered using sig 35 features
+I identified 146 significant features with P = 0.05, FDR adjusted = 0.39259.
+
+Clustered using all features | Clustered using sig 146 features
 :-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples/AllFeatures-ClusteredSecondTimePoint.svg) | ![clustered using sig 100 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples/Sig35Features-ClusteredSecondTimePoint.svg)
+![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/ThirdTimePoint-AllSamples/AllFeatures-ClusteredAllSamples.svg) | ![Clustered using sig 146 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/ThirdTimePoint-AllSamples/Sig149Features-ClusteredAllSamples.svg)
 
-Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples`.
+Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/ThirdTimePoint-AllSamples`.
 
+Samples don't separate into treatment as well at this timepoint. I think it may be becuase some Plants were dead by now, especially in the drought treatment.
 
 ---
-
-I used the `edit groups` feature  in MetaboAnalyst to separate each group and process them all individually.
 
 ### Venn Diagram of shared sig features over time
 
