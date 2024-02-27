@@ -6,13 +6,9 @@ For all analysis I followed the protocol outlined in the [Processing Metabolomic
 
 Been as though we are looking at different features between treatment groups, and trying to attribute these to treatment, it is useful to have symptom development as context. Figures were generated using [`SymptomDevStats.R`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/SymptomDevStats.R).
 
-### External symptom development
-
-![External Symptom development](/docs/figures/External_plot.png)
-
-### Internal symptom development
-
-![Internal Symptom development](/docs/figures/Internal_plot.png)
+External symptom development | Internal symptom development
+:---------------------------:|:------------------:
+![External Symptom development](/docs/figures/External_plot.png) | ![Internal Symptom development](/docs/figures/Internal_plot.png)
 
 ## IPO Runs
 
@@ -60,11 +56,13 @@ The features were filtered using the custom R script, `/Metabolomics/bin/Process
 
 Individual graphs and datasets can be found in the corresponding XCMS output folder.
 
-Eventually, I used the XCMS parameters in `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis. Groups were separated by treatment and time for this parameter set, and contaminated features identified at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants).
+I used the XCMS parameters in `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis, as groups were separated by treatment and time for this parameter set, and contaminated features identified at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants). However, the number of features dropped off a lot when processing in metaboAnalyst. The results from the metaboanalyst analysis can be found here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/10_BlankGroup_171123_Analysis`. 
+
+I decided to repeat the analysis using the `05_EarlySamplesRemoved_121023` dataset. This is becuase it identified the largest number of features, did not contain the contaminant samples. One sample in the Blanks folder will still satisfy the 0.75 minfrac. 
 
 ## MetaboAnalyst
 
-_So far only positive mode analysed._
+### Positive mode
 
 Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalised (using the approach which produced the best normal distribution - typically this included normalizing by the Sodium Formate peak).
 
@@ -72,35 +70,86 @@ Once processed using the filtering R script, data were uploaded to MetaboAnalyst
 
 ### MetaboAnalyst Preliminary Analysis
 
-All results saved here: `/Metabolomics/NovDec22/MetaboAnalyst`. For each analysis, I ensured that data were normally distributed (followed appropriate normalisation steps), then generated heatmaps for each different grouping:
+All results saved here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis`.
+
+First, I just took the MetaboAnalyst_Input.csv, where all groups and timepoints were separated and loaded it in MetaboAnalyst. I then normalised the data to the sodium_formate peaks, pareto scaled and log transformed. Next, I performed an ANOVA, with raw p value <0.05, FDR adjusted p value = 0.39688. This generated 143 significant features out of 1137 features.
+
+I generated heatmaps from these to see how the samples grouped:
+
+Clustered using all features | clustered using sig 143 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples/AllSamplesClustered.svg) | ![clustered using sig 143 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples/Sig143FeaturesClustered.svg)
+
+Interestingly a lot of the significant features with the same profile, they also have similar masses and retention times... likely adducts? 
+
+All results were saved here: `/Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples`
+
+### Grouping by time point
+
+Taking all samples and timepoint groups does not produce any clear clustering. There is a lot of variation between samples within the same groups. In order to simplify the data analysis, I first wanted to look at time, and see if samples separate by time.
+
+For each analysis, I ensured that data were normally distributed (followed appropriate normalisation steps). I then Performed an ANOVA to identify sig. features (raw p <0.05), and generated a PCA using all features using the following input file: `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input-TimeGroups.csv`. Following this, I generated heatmaps for each different grouping:
 
 - Default
 - Samples not clustered
-- only significant features
+- only significant features (n=125, p <0.05, FDR adjustsed p = 0.43232)
 
-Performed an ANOVA to identify sig. features (raw p <0.05), and generated a PCA using all features using the following input file: `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input-TimeGroups.csv`.
+Clustered using all features | clustered using sig 125 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/Time-AllSamples/Heatmap_AllFeaturesClustered-Time.svg) | ![clustered using sig 143 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/Time-AllSamples/Heatmap_Sig125FeaturesClustered-time.svg)
 
-I used the `edit groups` feature  in MetaboAnalyst to separate each group and process them all individually.
+Most XCMS outputs produced heatmaps which did not cluster by default time groups. Some samples commonly displayed a different feature profile from most other samples within that treatment/time group, even when clustering only significant features.
 
-Most XCMS outputs produced heatmaps which did not cluster by default sample groups. Some samples commonly displayed a different feature profile from most other samples within that treatment/time group. The samples are;
+I'm going to focus soley on time point going forward and remove blanks and QCs. In this way, significant features group the samples by treatment.
 
-- C9-4
-- D9-3
-- F9-1
-- X15-3
-- C12-1
-- F9-4
-- D12-2
+To separate by timepoint, I duplicated the `MetaboAnalyst_Input.csv` three times, and deleted the rows which were not from that timepoint. I kept the QC and Blank group, `Other`.
 
-I have found that the best way to ensure that the heatmap clusters into groups, is to separate by time and remove blanks and QCs. In this way, significant features group the samples by treatment.
-
-**The first time point separates treatment groups best, by the second and third time points feature profiles between the samples can vary a lot within a treatment group**. But the symptoms overlap between between Foc and Xvm best at second time point.
+- MetaboAnalyst_Input-FirstTimePoint.csv  
+- MetaboAnalyst_Input-ThirdTimePoint.csv
+- MetaboAnalyst_Input-SecondTimePoint.csv
 
 I think I will have to narrow down at a particular time point of interest, find features there, and see if they appear over time.
 
-[Going to also look at time as a factor and not treatment](#time-as-a-factor).
+#### First Time point only
 
 ---
+
+Data were normalised and scaled as previously, and ANOVA perfromed to identify significant features (p < 0.05). Number of significant features is 100 (FDR adjusted p value = 0.56393).
+
+Clustered using all features | Clustered using sig 100 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/FirstTimePoint-AllSamples/AllFeatures-ClusteredFirstTimePoint.svg) | ![clustered using sig 100 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/FirstTimePoint-AllSamples/Sig100Features-ClusteredFirstTimePoint.svg)
+
+Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/FirstTimePoint-AllSamples`.
+
+#### Second Time point only
+
+---
+
+I identified 35 significant features with P = 0.05, FDR adjusted = 0.68135.
+
+Clustered using all features | Clustered using sig 35 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples/AllFeatures-ClusteredSecondTimePoint.svg) | ![clustered using sig 100 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples/Sig35Features-ClusteredSecondTimePoint.svg)
+
+Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples`.
+
+There are a lot fewer significant features at this time point. Why? And how do I pull out more? I wanted to focus on this time point due to the symptom score overlap.
+
+#### Third Time point only
+
+---
+
+Clustered using all features | Clustered using sig 35 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples/AllFeatures-ClusteredSecondTimePoint.svg) | ![clustered using sig 100 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples/Sig35Features-ClusteredSecondTimePoint.svg)
+
+Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples`.
+
+
+---
+
+I used the `edit groups` feature  in MetaboAnalyst to separate each group and process them all individually.
 
 ### Venn Diagram of shared sig features over time
 

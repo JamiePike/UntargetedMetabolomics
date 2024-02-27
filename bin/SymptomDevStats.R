@@ -22,7 +22,7 @@ external_mean <- do.call(data.frame, aggregate(
 external_plot <- ggplot(data = external_mean, aes(x = time, y = x.Mean, col = treatment)) +
     geom_errorbar(aes(ymin=x.Mean-x.SD, ymax=x.Mean+x.SD), width=.035, alpha = 0.5, linetype = 5) +
     geom_line() + geom_point() +
-    scale_color_manual(values=c("#999999", "#56B4E9", "#E69F00", "#e94646e6")) +
+    scale_color_manual(values=c("#999999", "#56B4E9", "#E69F00", "#e94646e6"), labels = c("Mock", "Drought", "Fusarium", "Xanthomonas")) +
     labs(x="Sampling Time Point", y = "Mean Symptom Score", color="Treatment Group")+
     theme_bw() +
     scale_x_continuous(breaks=c(1,2,3)) +
@@ -40,7 +40,7 @@ internal_mean <- do.call(data.frame, aggregate(
 external_plot <- ggplot(data = internal_mean, aes(x = time, y = x.Mean, col = treatment)) +
     geom_errorbar(aes(ymin=x.Mean-x.SD, ymax=x.Mean+x.SD), width=.035, alpha = 0.5, linetype = 5) +
     geom_line() + geom_point() +
-    scale_color_manual(values=c("#999999", "#56B4E9", "#E69F00", "#e94646e6")) +
+    scale_color_manual(values=c("#999999", "#56B4E9", "#E69F00", "#e94646e6"), labels = c("Mock", "Drought", "Fusarium", "Xanthomonas")) +
     labs(x="Sampling Time Point", y = "Mean Symptom Score", color="Treatment Group")+
     theme_bw() +
     scale_x_continuous(breaks=c(1,2,3)) +
