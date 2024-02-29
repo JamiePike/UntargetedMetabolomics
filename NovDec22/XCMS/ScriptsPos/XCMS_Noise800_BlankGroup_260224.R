@@ -5,6 +5,11 @@
 #setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Pos/13_BlankGroup_1260224")
 datafiles <- list.files("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/XCMS/Pos/13_BlankGroup_1260224", recursive = TRUE, full.names = TRUE)
 
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("xcms")
+BiocManager::install("Rmpi")
 
 library(xcms)
 library(Rmpi)

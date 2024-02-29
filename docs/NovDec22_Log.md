@@ -52,6 +52,12 @@ XCMS was run multiple times, first using the parameters from IPO, followed by ch
 
 ---
 
+All the features I was identifying using this method were from the first minute, which is usually discarded. Changing the XCMS parameters to counter this took a very long time to process. As a result, I switched to [XCMS online](https://xcmsonline.scripps.edu).
+
+I tired different XMCS parameter sets. [XCMS online](https://xcmsonline.scripps.edu) keeps a log of them, so I have not reported them here (yet - I intend to add).
+
+---
+
 The features were filtered using the custom R script, `/Metabolomics/bin/ProcessingXCMSOutput-Automated.R`.
 
 Individual graphs and datasets can be found in the corresponding XCMS output folder.
@@ -183,6 +189,7 @@ A list of significant features was used to generate a Venn Diagram to identify w
 
 I was mindful of the shared features which were identified in using the [Venn diagram](#venn-diagram-of-shared-sig-features-over-time). Its better to look for features which appear over a longer time period as targets for biomarkers. No point having a marker that can only be used for a day or so, and it narrows down the number of features to process! Below is a table of the significant features that are shared between two or more time points.
 
+**A lot of these features have really early retention times...?**
 
 | **Shared all time points** | **First and second** | **First and third** | **Second and third** |
 |---|---|---|---|
@@ -219,12 +226,16 @@ I was mindful of the shared features which were identified in using the [Venn di
 |  |  | M745.85T17.56 |  |
 |  |  | M1092.78T17.56 |  |
 
+I plugged the `.mzXML` files into XCMS online to see whats going on with the data and see if the online version is better at identifying more features with later retenetion times. 
+
+
+
+
+####  MetaboAnalyst thresholds
 
 I think it would now be interesting to look at pairwise comparisons of these significant features, how do we distinguish Foc from Con or Dro at T1, T2, and T3; or Foc from Xvm at T2 - considering symptom scores overlap?
 
 To do this I performed a pairwise comparison of each group to control at T2, then built a Venn diagram to see what is sig compared to control at T2 in each treatment. I chose T2 because of symptom score overlap for Xvm and Foc.
-
-####  MetaboAnalyst thresholds
 
 - Normalised  by reference feature (Sodium Formate) and log transformed (base 10).
 - FC threshold > 1.0 and always Treatment/Control
