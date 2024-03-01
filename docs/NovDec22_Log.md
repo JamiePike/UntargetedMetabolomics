@@ -54,64 +54,121 @@ XCMS was run multiple times, first using the parameters from IPO, followed by ch
 
 All the features I was identifying using this method were from the first minute, which is usually discarded. Changing the XCMS parameters to counter this took a very long time to process. As a result, I switched to [XCMS online](https://xcmsonline.scripps.edu).
 
-I tired different XMCS parameter sets. [XCMS online](https://xcmsonline.scripps.edu) keeps a log of them, so I have not reported them here (yet - I intend to add).
+I tired different XMCS parameter sets. [XCMS online](https://xcmsonline.scripps.edu) 
 
----
+| **Folder   name** | **Number of features** | **Number of features with n peaks   > n samples** | **Number of features with n peaks   > double n samples** | **Features within 30 second rtmed   filter** | **Features without peaks in blank   samples** | **Used features as a % of all   features identified** | **Polarity** | **RT format** | **method (feature identification)** | **ppm** | **snthr** | **peakwidth** | **mzdiff** | **prefilter peaks** | **prefilter intensity** | **noise** | **method (rt correction)** | **profStep** | **method (grouping)** | **bw** | **mzwid** | **minfrac** | **minsamp** |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| XCMSOnline_BrukerQTOFDefault | 2302 | 293 | 3 | 19 | 14 | 0.83% | pos | minutes | centWave | 10 | 6 | 5,20 | 0.01 | 3 | 100 | 100 | obiwarp | 1 | density | 5 | 0.015 | 0.5 | 1 |
+| XCMSOnline_CustomSettings | 832 | 0 | 0 | 135 | 86 | 16.23% | pos | seconds | centWave | 10 | 10 | 5,80 | 0.005 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.015 | 0.5 | 1 |
+| XCMSOnline_NovDecUpdatedSettings | 9248 | 1039 | 0 | 1325 | 466 | 14.33% | pos | minutes | centWave | 47 | 6 | 40,85 | -0.0081 | 3 | 100 | 100 | obiwarp | 1 | density | 1 | 0.026 | 0.75 | 1 |
+| XCMSOnline_NovDecUpdatedSettingsV2 | 3289 | 373 | 0 | 155 | 74 | 4.71% | pos | minutes | centWave | 47 | 10 | 35,90 | -0.0081 | 3 | 100 | 800 | obiwarp | 1 | density | 1 | 0.026 | 0.75 | 1 |
+| XCMSOnline_NovDecUpdatesSettingsV3 | 16664 | 1145 | 2 | 2458 | 1759 | 14.75% | pos | minutes | centWave | 47 | 10 | 35,90 | -0.0081 | 3 | 100 | 100 | obiwarp | 1 | density | 1 | 0.026 | 0.5 | 1 |
+| XCMSOnline_NovDec_withAprMaySettings | 1429 | 200 | 2 | 75 | 45 | 5.25% | pos | seconds | centWave | 10 | 10 | 16.8,50 | -0.001 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
+| XCMSOnline_NovDecSecondTimePoint_AprMay21Settings | 1180 | 157 | 1 | 65 | 35 | 5.51% | pos | seconds | centWave | 10 | 10 | 16.8,50 | -0.001 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
+| XCMSOnline_NovDec22_CombinedAprMayAndNovDecParameters | 1725 | 249 | 0 | 102 | 80 | 5.91% | pos | seconds | centWave | 10 | 10 | 16.8,84.5 | -0.001 | 3 | 100 | 800 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 2 |
+| XCMSOnline_NovDec22_CombinedSettings_NoiseLower | 2286 | 301 | 0 | 169 | 147 | 7.39% | pos | seconds | centWave | 10 | 6 | 16.8,84.5 | -0.001 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 2 |
+| XCMSOnline_NovDec22_CombinedSettings_NoiseLower_v2 | 1622 | 3 | 0 | 189 | 131 | 11.65% | pos | seconds | centWave | 10 | 6 | 10,90 | 0.005 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.5 | 1 |
+| XCMSOnline_NovDec22_CombinedSettings_NoiseLower_V3 | 699 | 0 | 0 | 241 | 121 | 34.48% | pos | seconds | centWave | 10 | 10 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
+| XCMSOnline_NovDec22_CombinedSettings_NoiseLower_V4 | 3564 | 0 | 0 | 794 | 538 | 22.28% | pos | seconds | centWave | 47 | 6 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.026 | 0.4 | 1 |
+| XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25 | 9901 | 0 | 0 | 4206 | 3931 | 42.48% | pos | seconds | centWave | 47 | 6 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.026 | 0.25 | 1 |
 
 The features were filtered using the custom R script, `/Metabolomics/bin/ProcessingXCMSOutput-Automated.R`.
 
-Individual graphs and datasets can be found in the corresponding XCMS output folder.
+Individual graphs and datasets can be found in the corresponding XCMS Online output folder:`/Metabolomics/NovDec22/XCMS/Online`
 
-I used the XCMS parameters in `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123` for the +ve mode analysis, as groups were separated by treatment and time for this parameter set, and contaminated features identified at the start of the run were excluded (C12-2 and X12-4 removed). It also contained a separate folder full of the blanks (duplicated so 4 samples), to satisfy the 0.75c minfrac. Features then identified in the Blank group were removed from the dataset (to remove contaminants). However, the number of features dropped off a lot when processing in metaboAnalyst. The results from the metaboanalyst analysis can be found here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/10_BlankGroup_171123_Analysis`.
+I used the XCMS parameters in `/Metabolomics/NovDec22/XCMS/Online/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25` for the +ve mode analysis, as this identified the most features without a significant number identified within the first 60 seconds. Features then identified in the Blank group were removed from the dataset (to remove contaminants).
 
-I decided to repeat the analysis using the `05_EarlySamplesRemoved_121023` dataset. This is becuase it identified the largest number of features, did not contain the contaminant samples. One sample in the Blanks folder will still satisfy the 0.75 minfrac.
+I have previously tried other XCMS results in MetaboAnalyst, but the number of features dropped off and were often from the first 60 seconds. The results from the metaboanalyst analysis can be found here:
+
+-> `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis`
+
+-> `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/10_BlankGroup_171123_Analysis`.
 
 ## MetaboAnalyst
 
-Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalised (using the approach which produced the best normal distribution - typically this included normalizing by the Sodium Formate peak).
+Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalised (using the Sodium formate peak), log transformed and scaled (pareto scaling).
 
-### Positive mode
+### Positive mode Preliminary Analysis
 
----
+All results saved here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25`.
 
-### MetaboAnalyst Preliminary Analysis
-
-All results saved here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis`.
-
-First, I just took the MetaboAnalyst_Input.csv, where all groups and timepoints were separated and loaded it in MetaboAnalyst. I then normalised the data to the sodium_formate peaks, pareto scaled and log transformed. Next, I performed an ANOVA, with raw p value <0.05, FDR adjusted p value = 0.39688. This generated 143 significant features out of 1137 features.
+First, I just took the MetaboAnalyst_Input.csv, where all groups and timepoints were separated and loaded it in MetaboAnalyst. I then normalised the data to the sodium_formate peaks, pareto scaled and log transformed. Next, I performed an ANOVA, with raw p value <0.05, FDR adjusted p value = 0.18457. This generated 618 significant features out of 2291 features.
 
 I generated heatmaps from these to see how the samples grouped:
 
-Clustered using all features | Clustered using sig 143 features
+Clustered using all features | Clustered using sig 618 features
 :-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples/AllSamplesClustered.svg) | ![clustered using sig 143 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples/Sig143FeaturesClustered.svg)
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesAllSamplesAllGroups/AllFeaturesAllSamples_Clustered.svg) | ![clustered using sig 618 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesAllSamplesAllGroups/Sig618FeaturesAllSamples_Clustered.svg)
 
 Interestingly a lot of the significant features with the same profile, they also have similar masses and retention times... likely adducts?
 
 All results were saved here: `/Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples`
 
+I noticed a group of outlier samples:
+
+- F9.4
+- BLANK_2
+- C12.1
+- F12.3
+- D15.1
+- D15.3
+- D15.4
+- F15.1
+- F15.3
+
+As a result, and considering the symptom development in plants by the third time point. I will exclude these samples from the analysis (except BLANK_2), and will remove the third time point entirely.
+
+Further, I can see that the samples dont follow a normal distribution. I tried a few different apporoaches and none worked. I think this is due to the group of outlier samples.
+
+Normalised distribution of features | Normalised distribution of samples
+:-------:|:-------:
+![Normalised distribution of features](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesAllSamplesAllGroups/norm_0_dpi72.png) | ![Normalised distribution of samples](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesAllSamplesAllGroups/snorm_0_dpi72.png)
+
+---
+
+#### Removing outliers
+
+I removed the outliers and processed the data again. This time I identified 657 significant features (p <0.05, FDR Adjusted = 0.17364).
+
+Clustered using all features | Clustered using sig 657 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroups/AllFeaturesRedSamplesRedGroups.svg) | ![clustered using sig 657 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroups/Sig657FeaturesRedSamplesRedGroups..svg)
+
+Now looking at the clustering, samples mostly cluster by time. There are some outliers, especially among the controls,  but there is an overall trend to time points.
+
+Normalised distribution of features | Normalised distribution of reduced samples
+:-------:|:-------:
+![Normalised distribution of features](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroups/norm_0_dpi72.png) | ![Normalised distribution of reduced samples](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroups/snorm_0_dpi72.png)
+
+The output can be found here: `/Users/u1983390/Downloads/AllFeaturesRedSamplesRedGroups`.
+
+This "improved" the overall clustering and reduced the second peak in the distribution of samples, but a few outliers remain. I'm going to leave these in. I can explain them in the text and I don't want to have 1 sample groups.  
+
 ### Grouping by time point
 
-Taking all samples and timepoint groups does not produce any clear clustering. There is a lot of variation between samples within the same groups. In order to simplify the data analysis, I first wanted to look at time, and see if samples separate by time.
+As clustering the reduced sample set produces a general clustering pattern based on time point, I'm going to focus on each time point individually and then look at whats shared.
+I'm not going to include the third time point due to the number of outliers and severity of symptoms.
 
-For each analysis, I ensured that data were normally distributed (followed appropriate normalisation steps). I then Performed an ANOVA to identify sig. features (raw p <0.05), and generated a PCA using all features using the following input file: `/Metabolomics/NovDec22/XCMS/10_BlankGroup_171123/MetaboAnalyst_Input-TimeGroups.csv`. Following this, I generated heatmaps for each different grouping:
+For each analysis, I ensured that data were normally distributed (followed appropriate normalisation steps). I then Performed an ANOVA to identify sig. features (raw p <0.05), and generated a PCA using all features using the following input file: `/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesAllSamplesAllGroups/MetaboAnalyst_Input-TimeOnly.csv`. Following this, I generated heatmaps for each different grouping:
+I removed the outliers and third time point from this set.
 
 - Default
 - Samples not clustered
-- only significant features (n=125, p <0.05, FDR adjustsed p = 0.43232)
+- Only sig features
 
-Clustered using all features | Clustered using sig 125 features
+Data were normalised and scaled as previously, and ANOVA perfromed to identify significant features (p < 0.05). Number of significant features is 251 (FDR adjusted p value = 0.44499).
+
+Clustered using all features | Clustered using sig 251 features
 :-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/Time-AllSamples/Heatmap_AllFeaturesClustered-Time.svg) | ![clustered using sig 143 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/Time-AllSamples/Heatmap_Sig125FeaturesClustered-time.svg)
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesByTimePoint/AllFeaturesRedSamplesByTimePoint.svg) | ![clustered using sig 251 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesByTimePoint/Sig251FeaturesRedSamplesByTimePoint.svg)
 
-Most XCMS outputs produced heatmaps which did not cluster by default time groups. Some samples commonly displayed a different feature profile from most other samples within that treatment/time group, even when clustering only significant features.
+Output was saved: `/Metabolomics/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesByTimePoint`
 
-I'm going to focus soley on time point going forward and remove blanks and QCs. In this way, significant features group the samples by treatment.
+Next, I wanted to look at how the samples are distributed using this feature set among treatments at each specific time point.
 
 To separate by timepoint, I duplicated the `MetaboAnalyst_Input.csv` three times, and deleted the rows which were not from that timepoint. I kept the QC and Blank group, `Other`.
 
 - MetaboAnalyst_Input-FirstTimePoint.csv  
-- MetaboAnalyst_Input-ThirdTimePoint.csv
 - MetaboAnalyst_Input-SecondTimePoint.csv
 
 I think I will have to narrow down at a particular time point of interest, find features there, and see if they appear over time.
@@ -120,43 +177,71 @@ I think I will have to narrow down at a particular time point of interest, find 
 
 ---
 
-Data were normalised and scaled as previously, and ANOVA perfromed to identify significant features (p < 0.05). Number of significant features is 100 (FDR adjusted p value = 0.56393).
+Data were normalised and scaled as previously, and ANOVA perfromed to identify significant features (p < 0.05). Number of significant features is 336 (FDR adjusted p value = 0.33183).
 
-Clustered using all features | Clustered using sig 100 features
+Clustered using all features | Clustered using sig 336 features
 :-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/FirstTimePoint-AllSamples/AllFeatures-ClusteredFirstTimePoint.svg) | ![clustered using sig 100 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/FirstTimePoint-AllSamples/Sig100Features-ClusteredFirstTimePoint.svg)
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint/AllFeaturesRedSamplesFirstTimePoint.svg) | ![clustered using sig 251 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint/Sig336FeaturesRedSamplesFirstTimePoint.svg)
 
-Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/FirstTimePoint-AllSamples`.
+Output was saved: `/Metabolomics/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint`.
 
 #### Second Time point only
 
 ---
 
-I identified 71 significant features with P = 0.05, FDR adjusted = 0.68135.
+I identified 178 significant features with P = 0.05, FDR adjusted = 0.58178.
 
-Clustered using all features | Clustered using sig 71 features
+Clustered using all features | Clustered using sig 178 features
 :-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples/AllFeatures-ClusteredSecondTimePoint.svg) | ![clustered using sig 71 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples/Sig72Features-ClusteredSecondTimePoint.svg)
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedGroupsSecondTimePoint/AllFeaturesRedGroupsSecondTimePoint.png) | ![clustered using sig 178 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedGroupsSecondTimePoint/Sig178FeaturesRedGroupsSecondTimePoint.svg)
 
 Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples`.
 
-There are a lot fewer significant features at this time point. Why? And how do I pull out more? I wanted to focus on this time point due to the symptom score overlap.
-
-#### Third Time point only
+There are fewer significant features at this time point. I'm wondering if this is due to the similarity of symptoms? Interestingly Control clusters separately, and Fusarium and drought does too - xvm seems to be spread among drought and Fusarium.
 
 ---
 
-I identified 146 significant features with P = 0.05, FDR adjusted = 0.39259.
+### Venn Diagram of shared sig features over time
 
-Clustered using all features | Clustered using sig 146 features
-:-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/ThirdTimePoint-AllSamples/AllFeatures-ClusteredAllSamples.svg) | ![Clustered using sig 146 features ](/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/ThirdTimePoint-AllSamples/Sig149Features-ClusteredAllSamples.svg)
+A list of significant features was used to generate a Venn Diagram to identify which of these significant features are shared over time. After copying and pasting a list of the significant features into a `csv` file, I used [`SharedFeaturesVenn.R`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/SharedFeaturesVenn.R) to build the Venn diagram.
 
-Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/ThirdTimePoint-AllSamples`.
+![venn of shared features](/docs/figures/SharedFeaturesVenn_Time.png)
 
-Samples don't separate into treatment as well at this timepoint. I think it may be becuase some Plants were dead by now, especially in the drought treatment.
+*Figure 1: Venn of the shared features between timepoints when using p<0.05 for each timepoint individually. T1 = first time point, T2 = second time point, T3 = third time point.*
 
----
+22 of the significant features identified were shared between all time points.
+
+- M367.15T410.425
+- M567.43T1421.35
+- M832.307T992.353
+- M449.365T1540.699
+- M668.509T1456.373
+- M898.349T936.403
+- M519.225T1025.439
+- M438.146T926.75
+- M618.492T1624.789
+- M956.379T959.199
+- M660.517T1423.005
+- M564.206T918.312
+- M817.32T1025.439
+- M593.49T1539.529
+- M593.49T1490.213
+- M593.485T1401.37
+- M555.454T1439.586
+- M869.334T919.017
+- M564.208T942.149
+- M592.477T1439.652
+- M547.402T1437.709
+- M593.49T1557.453
+
+### Features of interest
+
+I was mindful of the shared features which were identified in using the [Venn diagram](#venn-diagram-of-shared-sig-features-over-time). Its better to look for features which appear over a longer time period as targets for biomarkers. No point having a marker that can only be used for a day or so, and it narrows down the number of features to process! Below is a table of the significant features that are shared between two time points.
+
+**A lot of these features have really early retention times...?**
+
+
+I plugged the `.mzXML` files into XCMS online to see whats going on with the data and see if the online version is better at identifying more features with later retenetion times.
 
 ### MetaboAnalyst Secondary Analysis
 
@@ -174,62 +259,6 @@ ExtractColumns.py SecondTimePointSigFeaturesList.csv MetaboAnalyst_Input-SecondT
 ```
 
 I then edited the csv file so only one time point (corresponding to the dir) were present in the csv.
-
-### Venn Diagram of shared sig features over time
-
-A list of significant features was used to generate a Venn Diagram to identify which of these significant features are shared over time. After copying and pasting a list of the significant features into a `csv` file, I used [`SharedFeaturesVenn.R`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/SharedFeaturesVenn.R) to build the Venn diagram.
-
-![venn of shared features](/docs/figures/Time-SharedFeaturesVenn.png)
-
-*Figure 1: Venn of the shared features between timepoints when using p<0.05 for each timepoint individually. T1 = first time point, T2 = second time point, T3 = third time point.*
-
-13 of the significant features identified were shared between all time points. More significant features are shared between the first time point and the third timepoint, than between the second and first and second and third,  but this is probbaly becuase the total number of siginifant features at each time point. The first time point had 100 sig features, the second had 71, and the third had 143. The majority of the significant features were not shared between timepoints.
-
-### Features of interest
-
-I was mindful of the shared features which were identified in using the [Venn diagram](#venn-diagram-of-shared-sig-features-over-time). Its better to look for features which appear over a longer time period as targets for biomarkers. No point having a marker that can only be used for a day or so, and it narrows down the number of features to process! Below is a table of the significant features that are shared between two or more time points.
-
-**A lot of these features have really early retention times...?**
-
-| **Shared all time points** | **First and second** | **First and third** | **Second and third** |
-|---|---|---|---|
-| M996.14T12.55 | M996.14T12.55 | M996.14T12.55 | M922.81T11.54 |
-| M922.81T11.54 | M922.81T11.54 | M922.81T11.54 | M996.14T12.55 |
-| M694.85T18.56 | M694.85T18.56 | M1183.77T11.73 | M1361.41T13.55 |
-| M1199.76T12.55 | M1394.72T17.56 | M694.85T18.56 | M800.83T18.56 |
-| M854.18T12.55 | M1121.45T12.55 | M1036.13T12.55 | M1199.76T12.55 |
-| M953.15T13.55 | M680.86T11.54 | M1031.79T17.56 | M1092.78T17.56 |
-| M834.82T18.56 | M1343.06T12.55 | M990.29T17.56 | M854.18T12.55 |
-| M1361.41T13.55 | M1889.14T13.55 | M1206.44T13.04 | M1068.29T16.56 |
-| M1068.29T16.56 | M1199.76T12.55 | M1199.76T12.55 | M989.8T17.56 |
-| M1206.09T17.56 | M854.18T12.55 | M854.18T12.55 | M1814.39T13.55 |
-| M989.8T17.56 | M1031.8T12.47 | M1108.78T17.55 | M694.85T18.56 |
-| M1814.39T13.55 | M1137.11T17.55 | M953.15T13.55 | M1189.76T17.56 |
-| M1092.78T17.56 | M1282.25T13.55 | M943.31T17.56 | M1206.09T17.56 |
-|  | M953.15T13.55 | M1146.77T17.56 | M953.15T13.55 |
-|  | M1334.74T12.55 | M1045.29T17.55 | M788.84T18.56 |
-|  | M834.82T18.56 | M834.82T18.56 | M1310.08T13.55 |
-|  | M392.9T19.57 | M1361.41T13.55 | M1220.5T13.6 |
-|  | M1361.41T13.55 | M1312.74T17.56 | M834.82T18.56 |
-|  | M1068.29T16.56 | M1068.29T16.56 | M1206.76T17.55 |
-|  | M1206.09T17.56 | M938.31T16.56 |  |
-|  | M536.9T12.55 | M1206.09T17.56 |  |
-|  | M842.82T11.54 | M1034.29T16.62 |  |
-|  | M989.8T17.56 | M1034.8T17.55 |  |
-|  | M1008.13T17.48 | M989.8T17.56 |  |
-|  | M1814.39T13.55 | M1510.46T13.05 |  |
-|  | M831.83T17.56 | M1814.39T13.55 |  |
-|  | M854.82T11.54 | M360.93T17.56 |  |
-|  | M1363.73T17.55 | M956.3T17.56 |  |
-|  | M1033.8T17.55 | M1048.79T12.55 |  |
-|  | M1092.78T17.56 | M1463.45T13.55 |  |
-|  |  | M745.85T17.56 |  |
-|  |  | M1092.78T17.56 |  |
-
-I plugged the `.mzXML` files into XCMS online to see whats going on with the data and see if the online version is better at identifying more features with later retenetion times. 
-
-
-
 
 ####  MetaboAnalyst thresholds
 
