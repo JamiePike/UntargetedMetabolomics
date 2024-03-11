@@ -330,7 +330,7 @@ Feature of interest but does not meet the FC thresholds.
 *M629.464T1456.367*
 Feature of interest but does not meet the FC thresholds.
 
-*~rt=1473~*
+*rt=1473*
 Includes Features with 4 features with rt of around 1473, 3 features with the same rt have a FC >2.0 - However, there are features identified in DroVsFoc Venn set that also share the same rt, and have similar FC values to the features from rt=1473 that were identified as unique to Foc.
 
 m/z of features that elute at 1473:
