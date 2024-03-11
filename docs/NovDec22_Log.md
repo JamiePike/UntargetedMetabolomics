@@ -309,3 +309,64 @@ open  Sig48-ConVsDroPairwiseFeaturesList.csv
 # extract columns command
 python /Metabolomics/bin/ExtractColumns.py Sig48-ConVsDroPairwiseFeaturesList.csv MetaboAnalyst_Input-SecondTimePoint-Sig171Features.csv > MetaboAnalyst_Input-Sig48-ConVsDroPairwiseFeatures.csv 
 ```
+
+#### Looking at features of interest
+
+Potentially unique (n=18) Fusarium vs control features
+
+*M585.283T918.479*
+Feature that is significantly different from Foc vs mock and not identified as sig in the other datasets. It was significantly differerent in Foc vs all other second time point treatments when conduciting Tukeys pairwise on ANOVA data.
+It had a log2FC of -1.1469 when compared to control.
+Its a very small peak in the other samples however, with no obvious adducts to help with annotations... come back to this.
+
+*M569.292T994.771*
+Feature that is significantly different from Foc vs mock and not identified as sig in the other datasets. It was significantly differerent in Foc vs all other second time point treatments when conduciting Tukeys pairwise on ANOVA data.
+It had a log2FC of -1.0769 when compared to control.
+Again, peaks are vary small for this feature and finding adducts in the noise is a challenge.
+
+*M331.187T1104.601*
+Feature of interest but does not meet the FC thresholds.
+
+*M629.464T1456.367*
+Feature of interest but does not meet the FC thresholds.
+
+*~rt=1473~*
+Includes Features with 4 features with rt of around 1473, 3 features with the same rt have a FC >2.0 - However, there are features identified in DroVsFoc Venn set that also share the same rt, and have similar FC values to the features from rt=1473 that were identified as unique to Foc.
+
+m/z of features that elute at 1473:
+
+unique to Foc | unique to Xvm | Unique to dro | shared | xvm and foc | dro and foc| dro and xvm
+:------------:|:-------------:|:-------------:|:------:|:-----------:|:----------:|:----------:
+423.321       | 576.484       | none          | none   | 628.514     | 330.261    | -
+629.459       | -             |   -           | -      | -           | 575.479    | -
+605.416       | -             |   -           | -      | -           | -          | -
+629.463       | -             |   -           | -      | -           | -          | -
+
+628.514 had log2FC of 1.0525 in Xvm compared to control. M628.514T1473.756 was also found in the FC data for Foc compared to control, recording a log2FC of 1.2184.
+
+Further, all the features of interest at this rt that are supposed to be unique to foc have very low peak intesities (~1000).
+
+*M449.347T1490.033*
+log2FC in Foc compared to mock of 1.0439, sig dif from Foc vs Mock and distinguishes Foc in the ANOVA - Tukeys. Lots of features at this rt in the ANOVA...
+Again, intentity is low ~1000. I'll keep looking for larger peaks.
+
+*M669.531T1507.08*
+A feature with a m/z difference of 120 from feature M549.431T1507.08 669->549, which is the equivalent to the m/z of DMSO (dimethyl sulfoxide) + ACN ([M+CH3CN+H]+), included in elcetrospray solvents. M549.431T1507.08 was included in the shared group of features.
+
+*M535.447T1540.43*
+M575.481T1540.694 shared between drought and Foc. 575->535 loss of 40, which I cant find as a common adduct or contaminant. Identified as sig different in Foc compared to all other treatments in one-way ANOVA.
+Log2FC of 1.2125 compared to the mock inoculated plants.
+Another features identified at the same rt (1540.699) with m/z of 449. The difference is 86 (535->449), which doesn't appear as the m/z of anything on any common adducts or contaminants lists.
+There is a further feature at rt=1540, which has a m/z of 468. 468- 449 = 19. m/z of 19 correspondes to M+H+K.
+Otherwise, its just too low a peak intensity to really pull anything out. There's a lot of noise around it too.
+
+*M516.411T1568.021*
+Didn't have a log2FC recorded, so no sig fold change indicates it is not as good a biomarker.
+Again, the peak intensity is 800, just above the noise.
+
+*M578.503T1590.788*
+Didn't have a log2FC recorded, so no sig fold change indicates it is not as good a biomarker.
+Again, the peak intensity is 800, just above the noise. Its very challenging to predict what the feature might be and separate it (and adducts/fragments) from the noise effectively.
+
+*M295.151T1624.873*
+359-> 295 = 64. +64 is obvs weight of M+ACN+Na.
