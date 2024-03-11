@@ -100,7 +100,7 @@ Clustered using all features | Clustered using sig 618 features
 :-------:|:-------:
 ![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesAllSamplesAllGroups/AllFeaturesAllSamples_Clustered.svg) | ![clustered using sig 618 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesAllSamplesAllGroups/Sig618FeaturesAllSamples_Clustered.svg)
 
-Interestingly a lot of the significant features with the same profile, they also have similar masses and retention times... likely adducts?
+Interestingly a lot of the significant features with the same profile, they also have similar masses and retention times. They could be adducts missed by CAMERA. 
 
 All results were saved here: `/Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/NoGrouping-AllSamples`
 
@@ -132,9 +132,13 @@ I removed the outliers and processed the data again. This time I identified 657 
 
 Clustered using all features | Clustered using sig 657 features
 :-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroups/AllFeaturesRedSamplesRedGroups.svg) | ![clustered using sig 657 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroups/Sig657FeaturesRedSamplesRedGroups..svg)
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroups-IncludingQCs/AllFeaturesRedSamplesRedGroups.svg) | ![clustered using sig 657 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroups-IncludingQCs/Sig657FeaturesRedSamplesRedGroups..svg)
 
 Now looking at the clustering, samples mostly cluster by time. There are some outliers, especially among the controls,  but there is an overall trend to time points.
+
+The same is observed when I remove the `others` group and cluster using the remianing 633 significant features.
+
+![significant 633 features](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/SigFeaturesRedSamplesRedGroups/heatmap_4_dpi72.pdf)
 
 Normalised distribution of features | Normalised distribution of reduced samples
 :-------:|:-------:
@@ -177,11 +181,23 @@ I think I will have to narrow down at a particular time point of interest, find 
 
 ---
 
-Data were normalised and scaled as previously, and ANOVA perfromed to identify significant features (p < 0.05). Number of significant features is 336 (FDR adjusted p value = 0.33183).
+Data were normalised and scaled as previously, and ANOVA perfromed to identify significant features (p < 0.05).
+
+*Including QCs*
+
+Number of significant features is 336.
 
 Clustered using all features | Clustered using sig 336 features
 :-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint/AllFeaturesRedSamplesFirstTimePoint.svg) | ![clustered using sig 251 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint/Sig336FeaturesRedSamplesFirstTimePoint.svg)
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint-IncludingQCs/AllFeaturesRedSamplesFirstTimePoint.svg) | ![clustered using sig 336 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint-IncludingQCs/Sig336FeaturesRedSamplesFirstTimePoint.svg)
+
+*Excluding QCs*
+
+Number of significant features is 232 (FDR adjusted p value = 0.477059).
+
+Clustered using all features | Clustered using sig 233 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint/AllFeaturesRedSamplesFirstTimePoint.svg) | ![clustered using sig 232 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint/Sig232Features_heatmap_9_dpi72-ForThesis.pdf)
 
 Output was saved: `/Metabolomics/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesFirstTimePoint`.
 
@@ -189,11 +205,19 @@ Output was saved: `/Metabolomics/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_Comb
 
 ---
 
+*Including QCs*
+
 I identified 178 significant features with P = 0.05, FDR adjusted = 0.58178.
 
 Clustered using all features | Clustered using sig 178 features
 :-------:|:-------:
-![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedGroupsSecondTimePoint/AllFeaturesRedGroupsSecondTimePoint.png) | ![clustered using sig 178 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedGroupsSecondTimePoint/Sig178FeaturesRedGroupsSecondTimePoint.svg)
+![Clustered using all features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedGroupsSecondTimePoint-IncludingQCs/AllFeaturesRedGroupsSecondTimePoint.png) | ![clustered using sig 178 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedGroupsSecondTimePoint-IncludingQCs/Sig178FeaturesRedGroupsSecondTimePoint.svg)
+
+*Excluding QCs*
+
+I identified 171 significant features with P = 0.05, FDR adjusted = 0.58178.
+
+![clustered using sig 171 features ](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroupsSecondTimePoint/Sig171FeaturesRedSamplesRedGroups-SecondTimePoint.png)
 
 Output was saved: `Metabolomics/NovDec22/MetaboAnalyst/05_EarlySamplesRemoved_121023_Analysis/SecondTimePoint-AllSamples`.
 
@@ -209,85 +233,79 @@ A list of significant features was used to generate a Venn Diagram to identify w
 
 *Figure 1: Venn of the shared features between timepoints when using p<0.05 for each timepoint individually. T1 = first time point, T2 = second time point, T3 = third time point.*
 
-22 of the significant features identified were shared between all time points.
+6 of the significant features identified were shared between both time points - which is really low. I don't think i can focus on these, as they are within the margin of error.
 
-- M367.15T410.425
-- M567.43T1421.35
-- M832.307T992.353
 - M449.365T1540.699
-- M668.509T1456.373
-- M898.349T936.403
-- M519.225T1025.439
 - M438.146T926.75
-- M618.492T1624.789
+- M832.307T992.353
 - M956.379T959.199
-- M660.517T1423.005
-- M564.206T918.312
-- M817.32T1025.439
-- M593.49T1539.529
-- M593.49T1490.213
-- M593.485T1401.37
-- M555.454T1439.586
 - M869.334T919.017
-- M564.208T942.149
-- M592.477T1439.652
-- M547.402T1437.709
-- M593.49T1557.453
+- M433.152T909.874
 
-### Features of interest
+It aligns well with the initial observation, that time was more of a distinguishing factor than treatment. I think, for that reason, I need to focus on a specifc time point - I chose the second time point. This is due to the overlap in external symptom score between Xvm and Foc.
 
-I was mindful of the shared features which were identified in using the [Venn diagram](#venn-diagram-of-shared-sig-features-over-time). Its better to look for features which appear over a longer time period as targets for biomarkers. No point having a marker that can only be used for a day or so, and it narrows down the number of features to process! Below is a table of the significant features that are shared between two time points.
-
-**A lot of these features have really early retention times...?**
-
-
-I plugged the `.mzXML` files into XCMS online to see whats going on with the data and see if the online version is better at identifying more features with later retenetion times.
+Folder: `/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroupsSecondTimePoint`
 
 ### MetaboAnalyst Secondary Analysis
 
-Once the significant features were identified (raw p <0.05), I separated these from the original input file using the [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py). This reduced the set of features that can be uploaded to MetaboAnaylst.
+I separated the significant 171 features from the original input file using the [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py). This reduced the set of features that can be uploaded to MetaboAnaylst.
 
 For this, I symlinked the original MetaboAnalyst input file to the MetaboAnalyst output directory for each timepoint, I manually generated a csv file listing the columns to extract for that timepoint (significant (p <0.05) features identified by preliminary anova)(including sodium_formate and text), and used them as input for [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py).
 
 ```bash
+#move into the directory
+cd /NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/AllFeaturesRedSamplesRedGroupsSecondTimePoint
+
 # generate csv of features to extract
-touch  SecondTimePointSigFeaturesList.csv
+touch  Sig171FeaturesList.csv
+open Sig171FeaturesList.csv
 # I then pasted the data manually for them the MetaboAnalyst anova_posthoc.csv file. 
 
 # extract columns command
-ExtractColumns.py SecondTimePointSigFeaturesList.csv MetaboAnalyst_Input-SecondTimePoint.csv > MetaboAnalyst_Input-SecondTimePoint_Sig71Features.csv
+python /Metabolomics/bin/ExtractColumns.py Sig171FeaturesList.csv MetaboAnalyst_Input-SecondTimePoint.csv > MetaboAnalyst_Input-SecondTimePoint-Sig171Features.csv 
 ```
 
-I then edited the csv file so only one time point (corresponding to the dir) were present in the csv.
+Using the significant features at the second time point, where symptom score overlap for Foc and  Xvm, samples separate using the PCA.
+
+![PCA of second time point sig features](/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/Sig178FeaturesRedSamplesSecondTimePoint/Sig178FeaturesRedSamplesSecondTimePoint/pca_score2d_2_dpi72.png)
 
 ####  MetaboAnalyst thresholds
 
-I think it would now be interesting to look at pairwise comparisons of these significant features, how do we distinguish Foc from Con or Dro at T1, T2, and T3; or Foc from Xvm at T2 - considering symptom scores overlap?
+I think it would now be interesting to look at pairwise comparisons of these significant features and distinguish the different stresses when compared to the control.
 
-To do this I performed a pairwise comparison of each group to control at T2, then built a Venn diagram to see what is sig compared to control at T2 in each treatment. I chose T2 because of symptom score overlap for Xvm and Foc.
+To do this I performed a pairwise comparison of each group to control at T2, then built a Venn diagram to see what is significant compared to control at T2 in each treatment. I chose T2 because of symptom score overlap for Xvm and Foc.
 
 - Normalised  by reference feature (Sodium Formate) and log transformed (base 10).
-- FC threshold > 1.0 and always Treatment/Control
-- For t-test, group variance was set to `Unequal` for Dro v Con and Foc v Con, as one of the Con and one of the Xvm samples was removed pre IPO, and i used raw P value of 0.05
-- For volcano plots I used the same FC and statistical significance tests and thresholds.
-- Also generated a PCA and labeled the samples, as well as a dendrogram and heatmap  (euclidean dist and ward clustering)
+- FC threshold > 2.0 and always Treatment/Control
+- For t-test, group variance was set to `Unequal` for as, unfortunetly, there was only two samples for the control group at this time point. I used raw P value of 0.05
+- For volcano plots I used the same FC (2.0) and statistical significance tests (p <0.1).
+- Also generated a PLSDA, as well as a dendrogram and heatmap  (euclidean dist and ward clustering)
 
-Time | Pairwise | Fold change   | No. of Sig features
-:---:|:--------:|:-------------:|:-------------------:
-T2   |Dro v Con | 12 up, 20 down| 3
-T2   |Foc v Con | 10 up, 22 down| 10
-T2   |Xvm v Con | 15 up, 17 down| 3
+Time | Pairwise | Fold change (treatment/control)   | No. of Sig features | Sig Up   | Sig Down
+:---:|:--------:|:---------------------------------:|:-------------------:|:--------:|:--------:
+T2   |Dro v Con | 15 up, 18 down| 48    |6      | 8
+T2   |Foc v Con | 38 up, 30 down| 63    |23     | 19
+T2   |Xvm v Con | 17 up, 22 down| 48    |10     | 13
 
 #### Venn Diagram of shared features from control vs treatment pairwise comparisons T2
 
-![venn of shared features from con v treatment pairwise comparisons](figures/Pairwise_SharedFeaturesVenn.png)
+![venn of shared features from con v treatment pairwise comparisons](/docs/figures/Pairwise_SharedFeaturesVenn_SecondTimePoint.png)
 
 *Figure 2: Venn of the shared significant (p<0.05) features between treatments T2. Using the significant features from the previous ANOVA, each treatment was compared to the control for a pairwise analysis. Significant features were extracted and then shared features were identified using `SharedFeaturesVenn.R`. Dro = significant features (p <0.05) from drought vs control pairwise analysis; Foc = significant features (p <0.05) from Fusarium vs control pairwise analysis; Xvm = significant features (p <0.05) from Xanthomonas vs control pairwise analysis.*
 
-Of these features, **M830.837T11.111** was identified a significantly different from the control in every treatment (shared feature in centre of Venn), and may be a marker of wilting/water stress. **But, it has a retention time of 11.111?**
+Next, I pulled out the significant features from each group to place in a Venn Diagram and look for shared/unique features. I used the [`ExtractColumns.py`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/ExtractColumns.py) script again.
 
-**M883.492T15.092** was identified a significantly different from the control in the drought and Fusarium treatments and has a similar mass and retention time to **M831.338T16.12**, which was identified as [a feature of interest](#features-of-interest) from the comparison of significant features over time.
+```bash
+# EXAMPLE:
 
----
+#move into the directory
+cd /NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/Sig171FeaturesRedSamplesConVsDroSecondTimePoint-Pairwise
 
-### Time as a factor
+# generate csv of features to extract
+touch  Sig48-ConVsDroPairwiseFeaturesList.csv
+open  Sig48-ConVsDroPairwiseFeaturesList.csv
+# I then pasted the data manually for them the MetaboAnalyst t_test.csv file. 
+
+# extract columns command
+python /Metabolomics/bin/ExtractColumns.py Sig48-ConVsDroPairwiseFeaturesList.csv MetaboAnalyst_Input-SecondTimePoint-Sig171Features.csv > MetaboAnalyst_Input-Sig48-ConVsDroPairwiseFeatures.csv 
+```

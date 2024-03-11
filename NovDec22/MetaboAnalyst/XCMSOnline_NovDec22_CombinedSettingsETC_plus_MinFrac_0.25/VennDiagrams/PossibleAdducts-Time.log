@@ -1,0 +1,779 @@
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 1488.518
+Matching data:
+ - m/z 353.341, retention time 1488.518, row 1, column 0
+ - m/z 395.288, retention time 1490.071, row 75, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 1540.43
+Matching data:
+ - m/z 535.447, retention time 1540.43, row 8, column 1
+ - m/z 575.481, retention time 1540.694, row 51, column 1
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 1540.43
+Matching data:
+ - m/z 535.447, retention time 1540.43, row 8, column 1
+ - m/z 575.481, retention time 1540.694, row 51, column 1
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 1423.013
+Matching data:
+ - m/z 624.432, retention time 1423.013, row 11, column 0
+ - m/z 646.455, retention time 1423.013, row 61, column 0
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 1557.453
+Matching data:
+ - m/z 576.484, retention time 1557.453, row 12, column 1
+ - m/z 594.498, retention time 1557.26, row 156, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 843.183
+Matching data:
+ - m/z 844.318, retention time 843.183, row 14, column 0
+ - m/z 846.32, retention time 843.183, row 111, column 0
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 1591.049
+Matching data:
+ - m/z 558.46, retention time 1591.049, row 14, column 1
+ - m/z 577.49, retention time 1591.335, row 61, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 858.821
+Matching data:
+ - m/z 850.319, retention time 858.821, row 15, column 0
+ - m/z 852.321, retention time 857.905, row 81, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1439.586
+Matching data:
+ - m/z 621.422, retention time 1439.586, row 16, column 0
+ - m/z 623.428, retention time 1439.576, row 99, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 828.514
+Matching data:
+ - m/z 662.261, retention time 828.514, row 21, column 0
+ - m/z 701.265, retention time 828.514, row 137, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 828.514
+Matching data:
+ - m/z 662.261, retention time 828.514, row 21, column 0
+ - m/z 701.265, retention time 828.514, row 137, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1573.977
+Matching data:
+ - m/z 541.474, retention time 1573.977, row 22, column 1
+ - m/z 542.478, retention time 1573.977, row 11, column 1
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 1389.456
+Matching data:
+ - m/z 590.465, retention time 1389.456, row 24, column 0
+ - m/z 613.48, retention time 1389.147, row 214, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 843.183
+Matching data:
+ - m/z 811.341, retention time 843.183, row 25, column 0
+ - m/z 844.318, retention time 843.183, row 14, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 843.183
+Matching data:
+ - m/z 811.341, retention time 843.183, row 25, column 0
+ - m/z 850.318, retention time 843.183, row 31, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 843.183
+Matching data:
+ - m/z 811.341, retention time 843.183, row 25, column 0
+ - m/z 850.318, retention time 843.183, row 31, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 843.183
+Matching data:
+ - m/z 811.341, retention time 843.183, row 25, column 0
+ - m/z 849.314, retention time 843.183, row 77, column 0
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 975.822
+Matching data:
+ - m/z 809.342, retention time 975.822, row 26, column 0
+ - m/z 833.305, retention time 975.822, row 198, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 1295.888
+Matching data:
+ - m/z 415.326, retention time 1295.888, row 27, column 1
+ - m/z 455.315, retention time 1295.888, row 28, column 1
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 827.274
+Matching data:
+ - m/z 809.346, retention time 827.274, row 30, column 0
+ - m/z 827.318, retention time 827.274, row 13, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 843.183
+Matching data:
+ - m/z 850.318, retention time 843.183, row 31, column 0
+ - m/z 889.305, retention time 842.452, row 154, column 1
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 843.183
+Matching data:
+ - m/z 850.318, retention time 843.183, row 31, column 0
+ - m/z 889.305, retention time 842.452, row 154, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 893.689
+Matching data:
+ - m/z 512.178, retention time 893.689, row 33, column 0
+ - m/z 513.176, retention time 893.689, row 114, column 0
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 941.458
+Matching data:
+ - m/z 809.345, retention time 941.458, row 37, column 0
+ - m/z 827.321, retention time 940.951, row 82, column 0
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 941.458
+Matching data:
+ - m/z 809.345, retention time 941.458, row 37, column 0
+ - m/z 833.318, retention time 940.951, row 224, column 0
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 1624.418
+Matching data:
+ - m/z 609.518, retention time 1624.418, row 43, column 1
+ - m/z 628.529, retention time 1624.373, row 159, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1624.961
+Matching data:
+ - m/z 617.489, retention time 1624.961, row 44, column 1
+ - m/z 618.492, retention time 1624.789, row 93, column 1
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 940.819
+Matching data:
+ - m/z 817.317, retention time 940.819, row 45, column 1
+ - m/z 836.312, retention time 942.609, row 201, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 1509.9
+Matching data:
+ - m/z 494.563, retention time 1509.9, row 47, column 1
+ - m/z 533.435, retention time 1510.689, row 42, column 1
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 1473.203
+Matching data:
+ - m/z 549.424, retention time 1473.203, row 49, column 1
+ - m/z 628.514, retention time 1473.756, row 121, column 1
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 1423.013
+Matching data:
+ - m/z 472.321, retention time 1423.013, row 51, column 0
+ - m/z 494.565, retention time 1422.678, row 157, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1473.048
+Matching data:
+ - m/z 575.479, retention time 1473.048, row 52, column 1
+ - m/z 576.484, retention time 1473.551, row 32, column 1
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 942.609
+Matching data:
+ - m/z 875.328, retention time 942.609, row 53, column 0
+ - m/z 894.338, retention time 940.951, row 177, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 942.609
+Matching data:
+ - m/z 904.347, retention time 942.609, row 54, column 0
+ - m/z 942.381, retention time 940.951, row 154, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 942.609
+Matching data:
+ - m/z 904.347, retention time 942.609, row 54, column 0
+ - m/z 905.364, retention time 942.609, row 187, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 942.609
+Matching data:
+ - m/z 904.347, retention time 942.609, row 54, column 0
+ - m/z 937.361, retention time 940.951, row 220, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 841.952
+Matching data:
+ - m/z 806.333, retention time 841.952, row 56, column 0
+ - m/z 844.318, retention time 843.183, row 14, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 841.952
+Matching data:
+ - m/z 806.333, retention time 841.952, row 56, column 0
+ - m/z 846.32, retention time 843.183, row 111, column 0
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 1456.538
+Matching data:
+ - m/z 603.415, retention time 1456.538, row 57, column 0
+ - m/z 621.419, retention time 1456.849, row 38, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1591.335
+Matching data:
+ - m/z 577.49, retention time 1591.335, row 61, column 1
+ - m/z 578.503, retention time 1590.788, row 107, column 1
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 1624.873
+Matching data:
+ - m/z 295.151, retention time 1624.873, row 62, column 1
+ - m/z 329.158, retention time 1625.781, row 34, column 1
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 1624.418
+Matching data:
+ - m/z 629.509, retention time 1624.418, row 65, column 1
+ - m/z 669.562, retention time 1624.559, row 76, column 1
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 1624.418
+Matching data:
+ - m/z 629.509, retention time 1624.418, row 65, column 1
+ - m/z 669.562, retention time 1624.559, row 76, column 1
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 843.183
+Matching data:
+ - m/z 779.29, retention time 843.183, row 66, column 0
+ - m/z 811.341, retention time 843.183, row 25, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 1456.367
+Matching data:
+ - m/z 629.464, retention time 1456.367, row 70, column 1
+ - m/z 668.509, retention time 1456.373, row 104, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 1456.367
+Matching data:
+ - m/z 629.464, retention time 1456.367, row 70, column 1
+ - m/z 668.509, retention time 1456.373, row 104, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 958.024
+Matching data:
+ - m/z 809.345, retention time 958.024, row 71, column 0
+ - m/z 848.316, retention time 959.199, row 48, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 958.024
+Matching data:
+ - m/z 809.345, retention time 958.024, row 71, column 0
+ - m/z 848.316, retention time 959.199, row 48, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1456.399
+Matching data:
+ - m/z 574.467, retention time 1456.399, row 73, column 0
+ - m/z 575.479, retention time 1456.772, row 141, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1356.203
+Matching data:
+ - m/z 691.436, retention time 1356.203, row 73, column 1
+ - m/z 692.521, retention time 1354.385, row 153, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 843.183
+Matching data:
+ - m/z 849.314, retention time 843.183, row 77, column 0
+ - m/z 850.318, retention time 843.183, row 31, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 843.183
+Matching data:
+ - m/z 849.314, retention time 843.183, row 77, column 0
+ - m/z 889.305, retention time 842.452, row 154, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1423.013
+Matching data:
+ - m/z 623.428, retention time 1423.013, row 78, column 0
+ - m/z 624.432, retention time 1423.013, row 11, column 0
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 1423.013
+Matching data:
+ - m/z 623.428, retention time 1423.013, row 78, column 0
+ - m/z 646.455, retention time 1423.013, row 61, column 0
+
+Potential adduct found: M+ACN+Na
+Reference data: m/z difference 64.01577, retention time 1574.327
+Matching data:
+ - m/z 477.398, retention time 1574.327, row 78, column 1
+ - m/z 541.474, retention time 1573.977, row 22, column 1
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 857.905
+Matching data:
+ - m/z 981.368, retention time 857.905, row 80, column 0
+ - m/z 1023.387, retention time 857.905, row 139, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1339.916
+Matching data:
+ - m/z 677.438, retention time 1339.916, row 81, column 1
+ - m/z 679.436, retention time 1338.726, row 138, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 940.951
+Matching data:
+ - m/z 827.321, retention time 940.951, row 82, column 0
+ - m/z 861.315, retention time 941.124, row 181, column 0
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 940.951
+Matching data:
+ - m/z 827.321, retention time 940.951, row 82, column 0
+ - m/z 905.364, retention time 942.609, row 187, column 0
+
+Potential adduct found: M+NH4
+Reference data: m/z difference 18.03383, retention time 1423.013
+Matching data:
+ - m/z 477.343, retention time 1423.013, row 84, column 1
+ - m/z 494.565, retention time 1422.678, row 157, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 940.951
+Matching data:
+ - m/z 984.382, retention time 940.951, row 85, column 0
+ - m/z 986.389, retention time 942.609, row 112, column 0
+
+Potential adduct found: M+ACN+Na
+Reference data: m/z difference 64.01577, retention time 1557.26
+Matching data:
+ - m/z 471.336, retention time 1557.26, row 96, column 1
+ - m/z 534.444, retention time 1557.26, row 75, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1439.576
+Matching data:
+ - m/z 623.428, retention time 1439.576, row 99, column 0
+ - m/z 624.436, retention time 1440.08, row 88, column 0
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 1557.453
+Matching data:
+ - m/z 430.319, retention time 1557.453, row 104, column 1
+ - m/z 471.336, retention time 1557.26, row 96, column 1
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 1356.524
+Matching data:
+ - m/z 652.416, retention time 1356.524, row 106, column 1
+ - m/z 691.436, retention time 1356.203, row 73, column 1
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 1356.524
+Matching data:
+ - m/z 652.416, retention time 1356.524, row 106, column 1
+ - m/z 691.436, retention time 1356.203, row 73, column 1
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 959.199
+Matching data:
+ - m/z 956.379, retention time 959.199, row 109, column 0
+ - m/z 990.389, retention time 957.42, row 184, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1473.698
+Matching data:
+ - m/z 629.459, retention time 1473.698, row 115, column 1
+ - m/z 630.465, retention time 1474.173, row 153, column 1
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 940.951
+Matching data:
+ - m/z 907.344, retention time 940.951, row 117, column 0
+ - m/z 986.389, retention time 942.609, row 112, column 0
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 1421.35
+Matching data:
+ - m/z 567.43, retention time 1421.35, row 118, column 1
+ - m/z 646.455, retention time 1423.013, row 61, column 0
+
+Potential adduct found: M+ACN+Na
+Reference data: m/z difference 64.01577, retention time 940.951
+Matching data:
+ - m/z 753.276, retention time 940.951, row 119, column 0
+ - m/z 817.317, retention time 940.819, row 45, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1473.756
+Matching data:
+ - m/z 628.514, retention time 1473.756, row 121, column 1
+ - m/z 629.459, retention time 1473.698, row 115, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1473.756
+Matching data:
+ - m/z 628.514, retention time 1473.756, row 121, column 1
+ - m/z 629.463, retention time 1474.173, row 135, column 1
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1473.756
+Matching data:
+ - m/z 628.514, retention time 1473.756, row 121, column 1
+ - m/z 630.465, retention time 1474.173, row 153, column 1
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 957.42
+Matching data:
+ - m/z 857.33, retention time 957.42, row 124, column 0
+ - m/z 897.335, retention time 957.42, row 150, column 0
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 957.42
+Matching data:
+ - m/z 857.33, retention time 957.42, row 124, column 0
+ - m/z 935.358, retention time 959.199, row 217, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1423.012
+Matching data:
+ - m/z 648.466, retention time 1423.012, row 127, column 0
+ - m/z 649.479, retention time 1423.325, row 169, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 813.875
+Matching data:
+ - m/z 700.272, retention time 813.875, row 131, column 0
+ - m/z 734.266, retention time 813.875, row 67, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 1523.593
+Matching data:
+ - m/z 510.367, retention time 1523.593, row 131, column 1
+ - m/z 549.428, retention time 1523.962, row 60, column 1
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 1523.593
+Matching data:
+ - m/z 510.367, retention time 1523.593, row 131, column 1
+ - m/z 549.428, retention time 1523.962, row 60, column 1
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 926.75
+Matching data:
+ - m/z 833.319, retention time 926.75, row 133, column 0
+ - m/z 855.342, retention time 925.437, row 176, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1474.173
+Matching data:
+ - m/z 629.463, retention time 1474.173, row 135, column 1
+ - m/z 630.465, retention time 1474.173, row 153, column 1
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 1422.678
+Matching data:
+ - m/z 534.402, retention time 1422.678, row 137, column 1
+ - m/z 557.468, retention time 1423.166, row 27, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 1422.678
+Matching data:
+ - m/z 534.402, retention time 1422.678, row 137, column 1
+ - m/z 567.43, retention time 1421.35, row 118, column 1
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 812.644
+Matching data:
+ - m/z 984.375, retention time 812.644, row 140, column 0
+ - m/z 1018.384, retention time 812.644, row 134, column 0
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 959.199
+Matching data:
+ - m/z 862.322, retention time 959.199, row 144, column 0
+ - m/z 903.354, retention time 957.42, row 105, column 0
+
+Potential adduct found: M+ACN+Na
+Reference data: m/z difference 64.01577, retention time 957.42
+Matching data:
+ - m/z 897.335, retention time 957.42, row 150, column 0
+ - m/z 960.389, retention time 959.199, row 204, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 957.42
+Matching data:
+ - m/z 897.335, retention time 957.42, row 150, column 0
+ - m/z 935.358, retention time 959.199, row 217, column 0
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 940.951
+Matching data:
+ - m/z 942.381, retention time 940.951, row 154, column 0
+ - m/z 984.382, retention time 940.951, row 85, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 1422.678
+Matching data:
+ - m/z 494.565, retention time 1422.678, row 157, column 1
+ - m/z 534.402, retention time 1422.678, row 137, column 1
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 1422.678
+Matching data:
+ - m/z 494.565, retention time 1422.678, row 157, column 1
+ - m/z 534.402, retention time 1422.678, row 137, column 1
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 935.639
+Matching data:
+ - m/z 895.359, retention time 935.639, row 158, column 0
+ - m/z 974.38, retention time 936.403, row 113, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1624.373
+Matching data:
+ - m/z 628.529, retention time 1624.373, row 159, column 1
+ - m/z 629.509, retention time 1624.418, row 65, column 1
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 1624.373
+Matching data:
+ - m/z 628.529, retention time 1624.373, row 159, column 1
+ - m/z 669.562, retention time 1624.559, row 76, column 1
+
+Potential adduct found: M+ACN+Na
+Reference data: m/z difference 64.01577, retention time 901.88
+Matching data:
+ - m/z 885.332, retention time 901.88, row 161, column 0
+ - m/z 949.356, retention time 902.335, row 102, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 919.58
+Matching data:
+ - m/z 847.317, retention time 919.58, row 164, column 0
+ - m/z 849.321, retention time 917.809, row 7, column 0
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 919.58
+Matching data:
+ - m/z 847.317, retention time 919.58, row 164, column 0
+ - m/z 869.334, retention time 919.017, row 130, column 1
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 919.58
+Matching data:
+ - m/z 847.317, retention time 919.58, row 164, column 0
+ - m/z 869.334, retention time 919.017, row 205, column 0
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 918.929
+Matching data:
+ - m/z 807.348, retention time 918.929, row 164, column 1
+ - m/z 849.321, retention time 917.809, row 7, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 918.929
+Matching data:
+ - m/z 807.348, retention time 918.929, row 164, column 1
+ - m/z 847.317, retention time 919.58, row 164, column 0
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 1473.993
+Matching data:
+ - m/z 605.416, retention time 1473.993, row 165, column 1
+ - m/z 628.514, retention time 1473.756, row 121, column 1
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 959.199
+Matching data:
+ - m/z 956.379, retention time 959.199, row 167, column 1
+ - m/z 990.389, retention time 957.42, row 184, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1423.325
+Matching data:
+ - m/z 649.479, retention time 1423.325, row 169, column 0
+ - m/z 650.482, retention time 1423.013, row 194, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 1423.012
+Matching data:
+ - m/z 639.424, retention time 1423.012, row 170, column 0
+ - m/z 640.427, retention time 1423.35, row 6, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 887.472
+Matching data:
+ - m/z 898.344, retention time 887.472, row 172, column 0
+ - m/z 936.359, retention time 886.012, row 206, column 0
+
+Potential adduct found: M+Na
+Reference data: m/z difference 22.98922, retention time 943.327
+Matching data:
+ - m/z 963.375, retention time 943.327, row 173, column 0
+ - m/z 986.389, retention time 942.609, row 112, column 0
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 940.951
+Matching data:
+ - m/z 894.338, retention time 940.951, row 177, column 0
+ - m/z 972.391, retention time 940.951, row 68, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 941.124
+Matching data:
+ - m/z 861.315, retention time 941.124, row 181, column 0
+ - m/z 894.338, retention time 940.951, row 177, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 957.42
+Matching data:
+ - m/z 990.389, retention time 957.42, row 184, column 0
+ - m/z 1023.385, retention time 959.199, row 49, column 0
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 957.42
+Matching data:
+ - m/z 990.389, retention time 957.42, row 184, column 0
+ - m/z 1070.408, retention time 957.42, row 203, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 959.178
+Matching data:
+ - m/z 808.349, retention time 959.178, row 185, column 0
+ - m/z 848.316, retention time 959.199, row 48, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 959.178
+Matching data:
+ - m/z 808.349, retention time 959.178, row 185, column 0
+ - m/z 809.345, retention time 958.024, row 71, column 0
+
+Potential adduct found: M+DMSO+H
+Reference data: m/z difference 79.02121, retention time 942.609
+Matching data:
+ - m/z 905.364, retention time 942.609, row 187, column 0
+ - m/z 984.382, retention time 940.951, row 85, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 942.609
+Matching data:
+ - m/z 905.364, retention time 942.609, row 187, column 0
+ - m/z 907.344, retention time 940.951, row 117, column 0
+
+Potential adduct found: M+H
+Reference data: m/z difference 1.00728, retention time 872.624
+Matching data:
+ - m/z 805.331, retention time 872.624, row 188, column 0
+ - m/z 806.333, retention time 872.624, row 28, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 935.639
+Matching data:
+ - m/z 850.319, retention time 935.639, row 195, column 0
+ - m/z 883.336, retention time 936.403, row 86, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 941.141
+Matching data:
+ - m/z 822.329, retention time 941.141, row 197, column 0
+ - m/z 861.315, retention time 941.124, row 181, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 941.141
+Matching data:
+ - m/z 822.329, retention time 941.141, row 197, column 0
+ - m/z 861.315, retention time 941.124, row 181, column 0
+
+Potential adduct found: M+K
+Reference data: m/z difference 38.96316, retention time 942.609
+Matching data:
+ - m/z 836.312, retention time 942.609, row 201, column 0
+ - m/z 875.328, retention time 942.609, row 53, column 0
+
+Potential adduct found: M+Ca
+Reference data: m/z difference 39.96204, retention time 942.609
+Matching data:
+ - m/z 836.312, retention time 942.609, row 201, column 0
+ - m/z 875.328, retention time 942.609, row 53, column 0
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 959.199
+Matching data:
+ - m/z 960.389, retention time 959.199, row 204, column 0
+ - m/z 1002.386, retention time 959.199, row 162, column 0
+
+Potential adduct found: M+CH3OH+H
+Reference data: m/z difference 33.03349, retention time 924.482
+Matching data:
+ - m/z 785.299, retention time 924.482, row 212, column 0
+ - m/z 819.303, retention time 925.437, row 110, column 0
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 940.951
+Matching data:
+ - m/z 833.318, retention time 940.951, row 224, column 0
+ - m/z 875.328, retention time 942.609, row 53, column 0
+
+Potential adduct found: M+ACN+H
+Reference data: m/z difference 41.03383, retention time 1590.788
+Matching data:
+ - m/z 436.428, retention time 1590.788, row 231, column 0
+ - m/z 477.407, retention time 1590.788, row 85, column 1
+
+
+Summary Table:
+Adduct          | Total | Within Column | Between Columns
+---------------------------------------------------------
+M+H             | 29    | 26            | 3              
+M+Na            | 12    | 9             | 3              
+M+K             | 16    | 14            | 2              
+M+NH4           | 9     | 7             | 2              
+M+CH3OH+H       | 14    | 13            | 1              
+M+Ca            | 18    | 14            | 4              
+M+ACN+H         | 12    | 10            | 2              
+M+ACN+Na        | 5     | 4             | 1              
+M+DMSO+H        | 9     | 8             | 1              
+
+Column-wise Counts:
+Within Column 0
+ - M+H: 16
+ - M+Na: 8
+ - M+K: 10
+ - M+NH4: 4
+ - M+CH3OH+H: 11
+ - M+Ca: 8
+ - M+ACN+H: 6
+ - M+ACN+Na: 2
+ - M+DMSO+H: 7
+Within Column 1
+ - M+H: 10
+ - M+Na: 1
+ - M+K: 4
+ - M+NH4: 3
+ - M+CH3OH+H: 2
+ - M+Ca: 6
+ - M+ACN+H: 4
+ - M+ACN+Na: 2
+ - M+DMSO+H: 1

@@ -3,7 +3,10 @@
 # -------------- Set up -------------- #
 # load packages
 suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(patchwork))
 suppressPackageStartupMessages(library(tidyverse))
+
+
 # set working dir and load the data
 setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/SymptomsScores")
 rawdat <- read.csv("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/SymptomsScores/rawdata.csv")
@@ -37,7 +40,7 @@ internal_mean <- do.call(data.frame, aggregate(
     by = list(time = rawdat$Timepoint_no., treatment = rawdat$Treatment_group),
     FUN = stats))
 # build plot of internal symptom score over time
-external_plot <- ggplot(data = internal_mean, aes(x = time, y = x.Mean, col = treatment)) +
+internal_plot <- ggplot(data = internal_mean, aes(x = time, y = x.Mean, col = treatment)) +
     geom_errorbar(aes(ymin=x.Mean-x.SD, ymax=x.Mean+x.SD), width=.035, alpha = 0.5, linetype = 5) +
     geom_line() + geom_point() +
     scale_color_manual(values=c("#999999", "#56B4E9", "#E69F00", "#e94646e6"), labels = c("Mock", "Drought", "Fusarium", "Xanthomonas")) +
@@ -47,3 +50,8 @@ external_plot <- ggplot(data = internal_mean, aes(x = time, y = x.Mean, col = tr
     theme(legend.position="bottom")
 # save the plot
 ggsave("Internal_plot.png")
+
+combined <- external_plot + internal_plot & theme(legend.position = "bottom")
+combined + plot_layout(guides = "collect") + plot_annotation(tag_levels = c("a", "b"))
+
+ggsave("Combined_Sympotoms_plot.png")
