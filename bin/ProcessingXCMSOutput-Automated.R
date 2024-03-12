@@ -34,12 +34,12 @@
 # Define the input file path and sample lists. 
 
 # Set your working directory.
-setwd("/Users/jamiepike/Downloads/XCMSOnline_NovDec_IPOBasic_Neg_MinFrac0.25")
+setwd("/Users/u1983390/Downloads/results")
 # Replace with your data file.
 data_file <- "./XCMS.annotated.diffreport.csv"
 
 # Replace with your sample list - (you can just copy and paste from the csv if you use terminal to cat the file!)
-sample_list  <- c("X16_C9.3_neg","X19_C9.2_neg","X21_C9.4_neg","X45_C9.1_neg","X13_D9.4_neg","X20_D9.1_neg","X49_D9.2_neg","X26_F9.1_neg","X34_F9.2_neg","X36_F9.3_neg","X46_F9.4_neg","X14_X9.2_neg","X23_X9.1_neg","X27_X9.3_neg","X40_X9.4_neg","X02_C12.2_neg","X18_C12.3_neg","X33_C12.4_neg","X12_D12.2_neg","X28_D12.3_neg","X44_D12.1_neg","X52_D12.4_neg","X05_F12.4_neg","X22_F12.1_neg","X38_F12.2_neg","X43_F12.3_neg","X09_X12.3_neg","X32_X12.2_neg","X41_X12.1_neg","X15_C15.4_neg","X31_C15.3_neg","X47_C15.1_neg","X50_C15.2_neg","X04_D15.4_neg","X06_D15.2_neg","X35_D15.1_neg","X37_D15.3_neg","X17_F15.3_neg","X25_F15.1_neg","X30_F15.2_neg","X51_F15.4_neg","X08_X15.4_neg","X11_X15.3_neg","X29_X15.1_neg","X42_X15.2_neg","X53_Blank_neg","X10_QC1_neg","X24_QC.2_neg","X39_QC3_neg")
+sample_list  <- c("X16_C9.3_neg","X19_C9.2_neg","X21_C9.4_neg","X45_C9.1_neg","X13_D9.4_neg","X20_D9.1_neg","X49_D9.2_neg", "X48_D9.3_neg","X26_F9.1_neg","X34_F9.2_neg","X36_F9.3_neg","X46_F9.4_neg","X14_X9.2_neg","X23_X9.1_neg","X27_X9.3_neg","X40_X9.4_neg","X02_C12.2_neg","X18_C12.3_neg","X33_C12.4_neg","X12_D12.2_neg","X28_D12.3_neg","X44_D12.1_neg","X52_D12.4_neg","X05_F12.4_neg","X22_F12.1_neg","X38_F12.2_neg","X43_F12.3_neg","X09_X12.3_neg","X32_X12.2_neg","X41_X12.1_neg","X15_C15.4_neg","X31_C15.3_neg","X47_C15.1_neg","X50_C15.2_neg","X04_D15.4_neg","X06_D15.2_neg","X35_D15.1_neg","X37_D15.3_neg","X17_F15.3_neg","X25_F15.1_neg","X30_F15.2_neg","X51_F15.4_neg","X08_X15.4_neg","X11_X15.3_neg","X29_X15.1_neg","X42_X15.2_neg","X53_Blank_neg","X10_QC1_neg","X24_QC.2_neg","X39_QC3_neg")
 ###################################
 #Filtering
 ###################################

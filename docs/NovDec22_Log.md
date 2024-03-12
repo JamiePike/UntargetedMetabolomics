@@ -56,21 +56,25 @@ All the features I was identifying using this method were from the first minute,
 
 I tired different XMCS parameter sets. [XCMS online](https://xcmsonline.scripps.edu) 
 
-| **Folder   name** | **Number of features** | **Number of features with n peaks   > n samples** | **Number of features with n peaks   > double n samples** | **Features within 30 second rtmed   filter** | **Features without peaks in blank   samples** | **Used features as a % of all   features identified** | **Polarity** | **RT format** | **method (feature identification)** | **ppm** | **snthr** | **peakwidth** | **mzdiff** | **prefilter peaks** | **prefilter intensity** | **noise** | **method (rt correction)** | **profStep** | **method (grouping)** | **bw** | **mzwid** | **minfrac** | **minsamp** |
+| Folder   name | Number of features | Number of features with n peaks   > n samples | Number of features with n peaks   > double n samples  | Features within 30 second rtmed   filter | Features without peaks in blank   samples | Used features as a % of all   features identified  | Polarity | RT format | method (feature identification) | ppm | snthr | peakwidth | mzdiff | prefilter peaks  | prefilter intensity  | noise | method (rt correction) | profStep | method (grouping) | bw | mzwid | minfrac | minsamp |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| XCMSOnline_BrukerQTOFDefault | 2302 | 293 | 3 | 19 | 14 | 0.83% | pos | minutes | centWave | 10 | 6 | 5,20 | 0.01 | 3 | 100 | 100 | obiwarp | 1 | density | 5 | 0.015 | 0.5 | 1 |
-| XCMSOnline_CustomSettings | 832 | 0 | 0 | 135 | 86 | 16.23% | pos | seconds | centWave | 10 | 10 | 5,80 | 0.005 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.015 | 0.5 | 1 |
-| XCMSOnline_NovDecUpdatedSettings | 9248 | 1039 | 0 | 1325 | 466 | 14.33% | pos | minutes | centWave | 47 | 6 | 40,85 | -0.0081 | 3 | 100 | 100 | obiwarp | 1 | density | 1 | 0.026 | 0.75 | 1 |
-| XCMSOnline_NovDecUpdatedSettingsV2 | 3289 | 373 | 0 | 155 | 74 | 4.71% | pos | minutes | centWave | 47 | 10 | 35,90 | -0.0081 | 3 | 100 | 800 | obiwarp | 1 | density | 1 | 0.026 | 0.75 | 1 |
-| XCMSOnline_NovDecUpdatesSettingsV3 | 16664 | 1145 | 2 | 2458 | 1759 | 14.75% | pos | minutes | centWave | 47 | 10 | 35,90 | -0.0081 | 3 | 100 | 100 | obiwarp | 1 | density | 1 | 0.026 | 0.5 | 1 |
-| XCMSOnline_NovDec_withAprMaySettings | 1429 | 200 | 2 | 75 | 45 | 5.25% | pos | seconds | centWave | 10 | 10 | 16.8,50 | -0.001 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
-| XCMSOnline_NovDecSecondTimePoint_AprMay21Settings | 1180 | 157 | 1 | 65 | 35 | 5.51% | pos | seconds | centWave | 10 | 10 | 16.8,50 | -0.001 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
-| XCMSOnline_NovDec22_CombinedAprMayAndNovDecParameters | 1725 | 249 | 0 | 102 | 80 | 5.91% | pos | seconds | centWave | 10 | 10 | 16.8,84.5 | -0.001 | 3 | 100 | 800 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 2 |
-| XCMSOnline_NovDec22_CombinedSettings_NoiseLower | 2286 | 301 | 0 | 169 | 147 | 7.39% | pos | seconds | centWave | 10 | 6 | 16.8,84.5 | -0.001 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 2 |
-| XCMSOnline_NovDec22_CombinedSettings_NoiseLower_v2 | 1622 | 3 | 0 | 189 | 131 | 11.65% | pos | seconds | centWave | 10 | 6 | 10,90 | 0.005 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.5 | 1 |
-| XCMSOnline_NovDec22_CombinedSettings_NoiseLower_V3 | 699 | 0 | 0 | 241 | 121 | 34.48% | pos | seconds | centWave | 10 | 10 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
-| XCMSOnline_NovDec22_CombinedSettings_NoiseLower_V4 | 3564 | 0 | 0 | 794 | 538 | 22.28% | pos | seconds | centWave | 47 | 6 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.026 | 0.4 | 1 |
-| XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25 | 9901 | 0 | 0 | 4206 | 3931 | 42.48% | pos | seconds | centWave | 47 | 6 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.026 | 0.25 | 1 |
+| Pos_XCMSOnline_BrukerQTOFDefault | 2302 | 293 | 3 | 19 | 14 | 0.83% | pos | minutes | centWave | 10 | 6 | 5,20 | 0.01 | 3 | 100 | 100 | obiwarp | 1 | density | 5 | 0.015 | 0.5 | 1 |
+| Pos_XCMSOnline_CustomSettings | 832 | 0 | 0 | 135 | 86 | 16.23% | pos | seconds | centWave | 10 | 10 | 5,80 | 0.005 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.015 | 0.5 | 1 |
+| Pos_XCMSOnline_NovDecUpdatedSettings | 9248 | 1039 | 0 | 1325 | 466 | 14.33% | pos | minutes | centWave | 47 | 6 | 40,85 | -0.0081 | 3 | 100 | 100 | obiwarp | 1 | density | 1 | 0.026 | 0.75 | 1 |
+| Pos_XCMSOnline_NovDecUpdatedSettingsV2 | 3289 | 373 | 0 | 155 | 74 | 4.71% | pos | minutes | centWave | 47 | 10 | 35,90 | -0.0081 | 3 | 100 | 800 | obiwarp | 1 | density | 1 | 0.026 | 0.75 | 1 |
+| Pos_XCMSOnline_NovDecUpdatesSettingsV3 | 16664 | 1145 | 2 | 2458 | 1759 | 14.75% | pos | minutes | centWave | 47 | 10 | 35,90 | -0.0081 | 3 | 100 | 100 | obiwarp | 1 | density | 1 | 0.026 | 0.5 | 1 |
+| Pos_XCMSOnline_NovDec_withAprMaySettings | 1429 | 200 | 2 | 75 | 45 | 5.25% | pos | seconds | centWave | 10 | 10 | 16.8,50 | -0.001 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
+| Pos_XCMSOnline_NovDecSecondTimePoint_AprMay21Settings | 1180 | 157 | 1 | 65 | 35 | 5.51% | pos | seconds | centWave | 10 | 10 | 16.8,50 | -0.001 | 3 | 100 | 1000 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
+| Pos_XCMSOnline_NovDec22_CombinedAprMayAndNovDecParameters | 1725 | 249 | 0 | 102 | 80 | 5.91% | pos | seconds | centWave | 10 | 10 | 16.8,84.5 | -0.001 | 3 | 100 | 800 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 2 |
+| Pos_XCMSOnline_NovDec22_CombinedSettings_NoiseLower | 2286 | 301 | 0 | 169 | 147 | 7.39% | pos | seconds | centWave | 10 | 6 | 16.8,84.5 | -0.001 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 2 |
+| Pos_XCMSOnline_NovDec22_CombinedSettings_NoiseLower_v2 | 1622 | 3 | 0 | 189 | 131 | 11.65% | pos | seconds | centWave | 10 | 6 | 10,90 | 0.005 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.5 | 1 |
+| Pos_XCMSOnline_NovDec22_CombinedSettings_NoiseLower_V3 | 699 | 0 | 0 | 241 | 121 | 34.48% | pos | seconds | centWave | 10 | 10 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.019 | 0.4 | 1 |
+| Pos_XCMSOnline_NovDec22_CombinedSettings_NoiseLower_V4 | 3564 | 0 | 0 | 794 | 538 | 22.28% | pos | seconds | centWave | 47 | 6 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.026 | 0.4 | 1 |
+| Pos_XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25 | 9901 | 0 | 0 | 4206 | 3931 | 42.48% | pos | seconds | centWave | 47 | 6 | 5,90 | -0.0081 | 3 | 100 | 400 | obiwarp | 1 | density | 5 | 0.026 | 0.25 | 1 |
+| Neg_XCMSOnline_NovDec_IPODeafult | 2378 | 30 | 0 | 769 | 680 | 32.34% | neg | seconds | centWave | 43 | 10 | 15.8,75 | -0.012 | 3 | 100 | 1000 | obiwarp | 1 | density | 12 | 0.026 | 0.94 | 1 |
+| Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25 | 9520 | 30 | 0 | 2930 | 2841 | 30.78% | neg | seconds | centWave | 43 | 10 | 15.8,75 | -0.012 | 3 | 100 | 1000 | obiwarp | 1 | density | 12 | 0.026 | 0.25 | 1 |
+| Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise400 | 58684 |  |  | 10275 |  | 17.51% | neg | seconds | centWave | 43 | 10 | 15.8,75 | -0.012 | 3 | 100 | 400 | obiwarp | 1 | density | 12 | 0.026 | 0.25 | 1 |
+| Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800 | 15935 | 44 | 1 | 3918 | 3800 | 24.59% | neg | seconds | centWave | 43 | 10 | 15.8,75 | -0.012 | 3 | 100 | 800 | obiwarp | 1 | density | 12 | 0.026 | 0.25 | 1 |
 
 The features were filtered using the custom R script, `/Metabolomics/bin/ProcessingXCMSOutput-Automated.R`.
 
@@ -84,13 +88,13 @@ I have previously tried other XCMS results in MetaboAnalyst, but the number of f
 
 -> `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/10_BlankGroup_171123_Analysis`.
 
-## MetaboAnalyst
+## Positive mode  - MetaboAnalyst
 
 Once processed using the filtering R script, data were uploaded to MetaboAnalyst, normalised (using the Sodium formate peak), log transformed and scaled (pareto scaling).
 
-### Positive mode Preliminary Analysis
+### Preliminary Analysis
 
-All results saved here: `/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25`.
+All results saved here: `/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25`.
 
 First, I just took the MetaboAnalyst_Input.csv, where all groups and timepoints were separated and loaded it in MetaboAnalyst. I then normalised the data to the sodium_formate peaks, pareto scaled and log transformed. Next, I performed an ANOVA, with raw p value <0.05, FDR adjusted p value = 0.18457. This generated 618 significant features out of 2291 features.
 
@@ -314,23 +318,23 @@ python /Metabolomics/bin/ExtractColumns.py Sig48-ConVsDroPairwiseFeaturesList.cs
 
 Potentially unique (n=18) Fusarium vs control features
 
-*M585.283T918.479*
+**M585.283T918.479**
 Feature that is significantly different from Foc vs mock and not identified as sig in the other datasets. It was significantly differerent in Foc vs all other second time point treatments when conduciting Tukeys pairwise on ANOVA data.
 It had a log2FC of -1.1469 when compared to control.
 Its a very small peak in the other samples however, with no obvious adducts to help with annotations... come back to this.
 
-*M569.292T994.771*
+**M569.292T994.771**
 Feature that is significantly different from Foc vs mock and not identified as sig in the other datasets. It was significantly differerent in Foc vs all other second time point treatments when conduciting Tukeys pairwise on ANOVA data.
 It had a log2FC of -1.0769 when compared to control.
 Again, peaks are vary small for this feature and finding adducts in the noise is a challenge.
 
-*M331.187T1104.601*
+**M331.187T1104.601**
 Feature of interest but does not meet the FC thresholds.
 
-*M629.464T1456.367*
+**M629.464T1456.367**
 Feature of interest but does not meet the FC thresholds.
 
-*rt=1473*
+**rt=1473**
 Includes Features with 4 features with rt of around 1473, 3 features with the same rt have a FC >2.0 - However, there are features identified in DroVsFoc Venn set that also share the same rt, and have similar FC values to the features from rt=1473 that were identified as unique to Foc.
 
 m/z of features that elute at 1473:
@@ -346,27 +350,147 @@ unique to Foc | unique to Xvm | Unique to dro | shared | xvm and foc | dro and f
 
 Further, all the features of interest at this rt that are supposed to be unique to foc have very low peak intesities (~1000).
 
-*M449.347T1490.033*
+**M449.347T1490.033**
 log2FC in Foc compared to mock of 1.0439, sig dif from Foc vs Mock and distinguishes Foc in the ANOVA - Tukeys. Lots of features at this rt in the ANOVA...
 Again, intentity is low ~1000. I'll keep looking for larger peaks.
 
-*M669.531T1507.08*
+I have also found a significant features from Xvm at this rt: M339.172T1490.329, but again the intensity is ~1000.
+
+**M669.531T1507.08**
 A feature with a m/z difference of 120 from feature M549.431T1507.08 669->549, which is the equivalent to the m/z of DMSO (dimethyl sulfoxide) + ACN ([M+CH3CN+H]+), included in elcetrospray solvents. M549.431T1507.08 was included in the shared group of features.
 
-*M535.447T1540.43*
+**M535.447T1540.43**
 M575.481T1540.694 shared between drought and Foc. 575->535 loss of 40, which I cant find as a common adduct or contaminant. Identified as sig different in Foc compared to all other treatments in one-way ANOVA.
 Log2FC of 1.2125 compared to the mock inoculated plants.
 Another features identified at the same rt (1540.699) with m/z of 449. The difference is 86 (535->449), which doesn't appear as the m/z of anything on any common adducts or contaminants lists.
 There is a further feature at rt=1540, which has a m/z of 468. 468- 449 = 19. m/z of 19 correspondes to M+H+K.
 Otherwise, its just too low a peak intensity to really pull anything out. There's a lot of noise around it too.
 
-*M516.411T1568.021*
+**M516.411T1568.021**
 Didn't have a log2FC recorded, so no sig fold change indicates it is not as good a biomarker.
 Again, the peak intensity is 800, just above the noise.
 
-*M578.503T1590.788*
+**M578.503T1590.788**
 Didn't have a log2FC recorded, so no sig fold change indicates it is not as good a biomarker.
 Again, the peak intensity is 800, just above the noise. Its very challenging to predict what the feature might be and separate it (and adducts/fragments) from the noise effectively.
 
-*M295.151T1624.873*
+**M295.151T1624.873**
 359-> 295 = 64. +64 is obvs weight of M+ACN+Na.
+
+## Negative mode - MetaboAnalyst
+
+All results saved here: `/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/`.
+
+### Preliminary Analysis of negeative mode
+
+#### All features all samples
+
+First, I just took the MetaboAnalyst_Input.csv, where all groups and timepoints were separated and loaded it in MetaboAnalyst. I then normalised the data to the sodium_formate peaks, pareto scaled and log transformed. Next, I performed an ANOVA, with raw p value <0.05, FDR adjusted p value threshold = 0.3693. The FDR adjusted did was the same value 0.3692 for some features which had a p value of > 0.05, so i subtracted them from the total set produced by MetaboAnalayst (using output csv). This generated, 277 significant features out of 2181 features. *This is a lot less that the number in [positive mode](#positive-mode---metaboanalyst).*
+
+I generated heatmaps from these to see how the samples grouped:
+
+Clustered using all features | Clustered using sig 277 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesAllSamplesAllGroups/AllFeaturesAllSamplesAllGroups.svg) | ![clustered using sig 277 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesAllSamplesAllGroups/Sig277FeaturesAllSamplesAllGroups.svg)
+
+All results were saved here: `/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesAllSamplesAllGroups`
+
+I noticed a group of outlier samples, alike pos mode. Interestingly, these samples aren't all the same?
+
+Pos outliers | Neg outliers
+:-----------:|:------------:
+BLANK_2      | BLANK_2
+ --          | F9.2
+F9.4         | F9.4
+C12.1        | --
+F12.3        | --
+ --          | X12.3
+ --          | D12.1
+ --          | X15.2
+D15.4        | D15.4
+D15.3        | D15.3
+D15.1        | D15.1
+F15.1        | F15.1
+F15.3        | F15.3
+
+As a result, and considering the symptom development in plants by the third time point. I will exclude these samples from the analysis (except BLANK_2), and will remove the third time point entirely.
+
+Further, I can see that the samples dont follow a normal distribution. I tried a few different apporoaches and none worked. I think this is due to the group of outlier samples.
+
+Normalised distribution of features | Normalised distribution of samples
+:-------:|:-------:
+![Normalised distribution of features](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesAllSamplesAllGroups/norm_0_dpi72.png) | ![Normalised distribution of samples](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesAllSamplesAllGroups/snorm_0_dpi72.png)
+
+#### After the outliers have been removed
+
+After removing the outliers, 453 significant features were identified (p <0.05). Again, the FDR value (0.23697) was the same for features with raw p <0.05 and >0.05. I set the FDR threshold to 0.23698 for the ANOVA plot on metaboAnalyst, but generated the heatmap using the 453 features.
+
+I generated heatmaps from these to see how the samples grouped:
+
+Clustered using all features | Clustered using sig 277 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesRedGroups/AllFeaturesRedSamplesRedGroups.svg) | ![clustered using sig 277 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesRedGroups/Sig453FeaturesRedSamplesRedGroups.svg)
+
+Again, there's general separation by time but no clear groupings apart from second time point drought.
+
+Normalised distribution of features | Normalised distribution of samples
+:-------:|:-------:
+![Normalised distribution of features](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesRedGroups/norm_0_dpi72.png) | ![Normalised distribution of samples](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesRedGroups/Sig453FeaturesRedSamplesRedGroups.svg)
+
+#### Separated by time point
+
+**Just time points**
+
+FDR adjusted: 0.15134
+raw p value: 0.05
+n significant: 720
+
+They don't separate as well in to time only groups.
+
+Clustered using all features | Clustered using sig 720 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesTimeGroups/AllFeaturesRedSamplesTimeGroups.svg) | ![clustered using sig 720 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesTimeGroups/Sig720FeaturesRedSamplesTimeGroups.svg)
+
+**First time point only**
+
+*inlcuding qcs*
+
+FDR adjusted: 0.69292 (but this also incldues samples with raw p >0.05)
+raw p value: 0.05
+n significant: 59
+
+Clustered using all features | Clustered using sig 59 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesFirstTimePointOnly-IncludingQCs/AllFeaturesRedSamplesFirstTimePointOnly.svg) | ![clustered using sig 59 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesFirstTimePointOnly-IncludingQCs/Sig59FeaturesRedSamplesFirstTimePointOnly.svg)
+
+*excluding qcs*
+
+FDR adjusted: 0.99435 (but this also incldues samples with raw p >0.05)
+raw p value: 0.05
+n significant: 56
+
+Clustered using all features | Clustered using sig 56 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesFirstTimePointOnly-ExcludingQCs/AllFeaturesRedSamplesFirstTimePointOnly-IncludingQCs.svg) | ![clustered using sig 56 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesFirstTimePointOnly-ExcludingQCs/Sig56FeaturesRedSamplesFirstTimePointOnly-IncludingQCs.svg)
+
+**Second time point only**
+
+*inlcuding qcs*
+
+FDR adjusted: 0.13028 (but this also incldues samples with raw p >0.05)
+raw p value: 0.05
+n significant: 836
+
+Clustered using all features | Clustered using sig 836 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-IncludingQCs/AllFeaturesRedSamplesSecondTimePointOnly-IncludingQCs.svg) | ![clustered using sig 59 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-IncludingQCs/Sig836FeaturesRedSamplesSecondTimePointOnly-IncludingQCs.svg)
+
+*excluding qcs*
+
+FDR adjusted: 0.10829 (but this also incldues samples with raw p >0.05)
+raw p value: 0.05
+n significant: 1005
+
+Clustered using all features | Clustered using sig 1005 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs.svg) | ![clustered using sig 1005 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs/Sig1005FeaturesRedSamplesSecondTimePointOnly-ExcludingQCs.svg)
