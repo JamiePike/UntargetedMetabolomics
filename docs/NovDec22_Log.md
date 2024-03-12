@@ -494,3 +494,52 @@ n significant: 1005
 Clustered using all features | Clustered using sig 1005 features
 :-------:|:-------:
 ![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs.svg) | ![clustered using sig 1005 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs/Sig1005FeaturesRedSamplesSecondTimePointOnly-ExcludingQCs.svg)
+
+#### Distribtuion of sig features over time
+
+A list of significant features was used to generate a Venn Diagram to identify which of these significant features are shared over time. After copying and pasting a list of the significant features into a `csv` file, I used [`SharedFeaturesVenn.R`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/SharedFeaturesVenn.R) to build the Venn diagram.
+
+![venn of shared features](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/VennDiagrams/SharedFeaturesVenn_Time.png)
+
+Now, as I did for positive mode, I will extract only the significant features at the second time point and generate figures, as well as examine grouping using PCA and PLSDA. I used the ExtractColumn.py scirpt, once again.
+
+```bash
+#move into the directory
+cd /NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs
+
+# generate csv of features to extract
+touch  Sig1005FeaturesList.csv
+open Sig1005FeaturesList.csv
+# I then pasted the data manually for them the MetaboAnalyst anova_posthoc.csv file. 
+
+# extract columns command
+python /Metabolomics/bin/ExtractColumns.py Sig1005FeaturesList.csv MetaboAnalyst_Input.csv > MetaboAnalyst_Sig1005Features_Input.csv
+```
+Using the significant features at the second time point, where symptom score overlap for Foc and  Xvm, samples separate using the PCA.
+
+![PCA of second time point sig features](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/Sig1005FeaturesRedSampleSecondTimePoint-ExclusingQCs/pca_score2d_1_dpi300.png)
+
+####  MetaboAnalyst thresholds
+
+The same as for positive mode, I will now look at pairwise comparisons of these 1005 significant features and distinguish the different stresses when compared to the control.
+
+To do this I performed a pairwise comparison of each group to control at T2, then built a Venn diagram to see what is significant compared to control at T2 in each treatment. I chose T2 because of symptom score overlap for Xvm and Foc.
+
+- Normalised  by reference feature (Sodium Formate) and log transformed (base 10).
+- FC threshold > 2.0 and always Treatment/Control
+- For t-test, group variance was set to `Unequal` for as, unfortunetly, there was only two samples for the Xvm group at this time point. I used raw P value of 0.05
+- For volcano plots I used the same FC (2.0) and statistical significance tests (p <0.1).
+- Also generated a PLSDA, as well as a dendrogram and heatmap  (euclidean dist and ward clustering)
+
+Time | Pairwise | Fold change (treatment/control)   | No. of Sig features
+:---:|:--------:|:---------------------------------:|:-------------------:
+T2   |Dro v Con | 46 up, 195 down| 162
+T2   |Foc v Con | 2 up, 979 down| 916
+T2   |Xvm v Con | 431 up, 33 down| 249
+
+#### Venn Diagram of shared features from control vs treatment pairwise comparisons T2
+
+![venn of shared features from con v treatment pairwise comparisons](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/VennDiagrams/SharedFeaturesVenn_SecondTimePoint_SigFeatures.png)
+
+*Figure 2: Venn of the shared significant (p<0.05) features between treatments T2. Using the significant features from the previous ANOVA, each treatment was compared to the control for a pairwise analysis. Significant features were extracted and then shared features were identified using `SharedFeaturesVenn.R`. Dro = significant features (p <0.05) from drought vs control pairwise analysis; Foc = significant features (p <0.05) from Fusarium vs control pairwise analysis; Xvm = significant features (p <0.05) from Xanthomonas vs control pairwise analysis.*
+
