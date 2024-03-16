@@ -314,7 +314,7 @@ open  Sig48-ConVsDroPairwiseFeaturesList.csv
 python /Metabolomics/bin/ExtractColumns.py Sig48-ConVsDroPairwiseFeaturesList.csv MetaboAnalyst_Input-SecondTimePoint-Sig171Features.csv > MetaboAnalyst_Input-Sig48-ConVsDroPairwiseFeatures.csv 
 ```
 
-#### Looking at features of interest
+#### Looking at features of interest - positive
 
 Potentially unique (n=18) Fusarium vs control features
 
@@ -495,6 +495,20 @@ Clustered using all features | Clustered using sig 1005 features
 :-------:|:-------:
 ![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs.svg) | ![clustered using sig 1005 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs/Sig1005FeaturesRedSamplesSecondTimePointOnly-ExcludingQCs.svg)
 
+#### Second time point non-parametric anova 
+
+Data did not follow a normal distribution at this time point, so I also performed a non-parametric ANOVA. This identified 806 significant features  FDR adjusted = 0.13166
+
+*excluding qcs*
+
+FDR adjusted: 0.13166 (but this also incldues samples with raw p >0.05)
+raw p value: 0.05
+n significant: 806
+
+Clustered using all features | Clustered using sig 1005 features
+:-------:|:-------:
+![Clustered using all features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs.svg) | ![clustered using sig 1005 features ](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/AllFeaturesRedSamplesSecondTimePointOnly-ExcludingQCs/Sig1005FeaturesRedSamplesSecondTimePointOnly-ExcludingQCs.svg)
+
 #### Distribtuion of sig features over time
 
 A list of significant features was used to generate a Venn Diagram to identify which of these significant features are shared over time. After copying and pasting a list of the significant features into a `csv` file, I used [`SharedFeaturesVenn.R`](https://github.com/JamiePike/UntargetedMetabolomics/blob/main/bin/SharedFeaturesVenn.R) to build the Venn diagram.
@@ -531,15 +545,48 @@ To do this I performed a pairwise comparison of each group to control at T2, the
 - For volcano plots I used the same FC (2.0) and statistical significance tests (p <0.1).
 - Also generated a PLSDA, as well as a dendrogram and heatmap  (euclidean dist and ward clustering)
 
-Time | Pairwise | Fold change (treatment/control)   | No. of Sig features
-:---:|:--------:|:---------------------------------:|:-------------------:
-T2   |Dro v Con | 46 up, 195 down| 162
-T2   |Foc v Con | 2 up, 979 down| 916
-T2   |Xvm v Con | 431 up, 33 down| 249
+Type |Time | Pairwise | Fold change (control/treatment)   | No. of Sig features
+:---:|:---:|:--------:|:---------------------------------:|:-------------------:
+Parametric | T2   |Dro v Con | 46 up, 195 down| 162
+Parametric | T2   |Foc v Con | 2 up, 979 down| 916
+Parametric | T2   |Xvm v Con | 431 up, 33 down| 249
+Non-Parametric | T2   |Dro v Con | 19 up, 153 down | 130
+Non-Parametric | T2   |Foc v Con | 2 up, 791 down | 683
+Non-Parametric | T2   |Xvm v Con | 28 up, 369 down | 176s
 
-#### Venn Diagram of shared features from control vs treatment pairwise comparisons T2
+#### Venn Diagram of shared features from control vs treatment pairwise comparisons T2 (negative mode)
 
 ![venn of shared features from con v treatment pairwise comparisons](/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/VennDiagrams/SharedFeaturesVenn_SecondTimePoint_SigFeatures.png)
 
 *Figure 2: Venn of the shared significant (p<0.05) features between treatments T2. Using the significant features from the previous ANOVA, each treatment was compared to the control for a pairwise analysis. Significant features were extracted and then shared features were identified using `SharedFeaturesVenn.R`. Dro = significant features (p <0.05) from drought vs control pairwise analysis; Foc = significant features (p <0.05) from Fusarium vs control pairwise analysis; Xvm = significant features (p <0.05) from Xanthomonas vs control pairwise analysis.*
 
+#### Looking at features of interest - negtaive
+
+unique to Foc
+
+**rt88**
+Theres a group fo features with an rt of 88seconds. M615.152T88.13 to M453.101T88.055 is a nuetral loss of 162 (possible loss of hexose.). Difference from M453.101T88.055 to M289.026 is 164, same as deoxy-hexose (e.g frucose). Cant quite make M333 make sense here...
+M453.101T88.055
+M615.152T88.13
+M289.026T88.643
+M289.065T88.687
+M333.06T88.804
+
+This could be something - I can come back to it.
+
+**rt89**
+Two features at this rt, difference (281) doesnt make immediate sense to me. Both have positive FC, but not same amounts.
+M559.04T89.345: Intensity is <1000
+M281.049T89.959: Intensity is >1000
+
+Come back to if i want a challenge.
+
+**rt92**
+M187.905T92.369 - Intensity consistently too low.
+M310.974T92.682 - Looks like possible spectra showing loss of 31, (2O oxygen loss). There is bigger peak at 325 (+15, e.g. O, oxidation from 325 for 310).
+
+**rt900**
+The intensities are consistently very low (<1000), so its hard to work out what they are. This has been a bit of a theme.
+
+**rt1571**
+Large peak with other large peaks - cant get numbers to add up atm, but maybe I can work it out later.

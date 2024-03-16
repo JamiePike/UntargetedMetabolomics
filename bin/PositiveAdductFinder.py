@@ -49,7 +49,7 @@ for mz1, rt1, row1, col1 in observed_data:
     for mz2, rt2, row2, col2 in observed_data:
         if mz1 != mz2 and abs(rt1 - rt2) <= 2:
             for adduct, expected_mz in positive_adducts.items():
-                if check_adduct(mz2 - mz1, expected_mz, tolerance=1):
+                if check_adduct(mz2 - mz1, expected_mz, tolerance=0.5):
                     print(f"Potential adduct found: {adduct}")
                     print(f"Reference data: m/z difference {expected_mz}, retention time {rt1}")
                     print("Matching data:")

@@ -13,8 +13,8 @@ library(tidyverse)
 library(openxlsx)
 
 # Read the TSV file
-setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/VennDiagrams/")
-data <- read.table("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/XCMSOnline_NovDec22_CombinedSettingsETC_plus_MinFrac_0.25/VennDiagrams/PairwiseFeaturesList.csv", header = T, sep = ",")
+setwd("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/VennDiagrams/")
+data <- read.table("/Volumes/Jamie_EXT/Projects/Metabolomics/NovDec22/MetaboAnalyst/Neg_XCMSOnline_NovDec_IPODeafult_MinFrac0.25_Noise800/VennDiagrams/SharedSigFeatures_SecondTimePoint.csv", header = T, sep = ",")
 
 # the data are laid out in columns, with features in a list under each header. ggvenn will identify the shared and unique features.
 # Convert data to a format suitable for ggvenn
@@ -23,6 +23,7 @@ ggvenn_data <- list(
   XvmVsM = data$XvmVsCon,
   FocVsM = data$FocVsCon
 )
+
 
 # added to drop empty elements from my data
 ggvenn_data <- ggvenn_data |> 
@@ -37,7 +38,7 @@ ggvenn_plot <- ggvenn(ggvenn_data, fill_color = c("#0073C2FF", "#EFC000FF", "#D2
   theme(text = element_text(size=20))
 
 # Save the Venn diagram
-ggsave("Pairwise_SharedFeaturesVenn_SecondTimePoint.png", plot = ggvenn_plot, width = 6, height = 4, units = "in")
+ggsave("SharedFeaturesVenn_SecondTimePoint_SigFeatures.png", plot = ggvenn_plot, width = 6, height = 4, units = "in")
 
 # --------- Output Groups --------- #
 # generate csv files of shared features.
@@ -69,5 +70,5 @@ for (col_name in names(ggvenn_data)) {
 
 
 # write shared items to a CSV with separate sheets
-write.xlsx(shared_items, "Shared_Items_Sheets_Pairwise_SecondTimePoint.xlsx")
+write.xlsx(shared_items, "Shared_Items_Sheets_Time_SecondTimePoint_SigFeatures.xlsx")
 
